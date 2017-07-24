@@ -1,0 +1,92 @@
+<div class="echo_side_menu_bar" data-ng-if="userData.permissions['SUPER_ADMIN']">
+    <div class="echo_list">
+        <div class="echo_infos">
+            <i class="fa fa-cogs"></i>
+            <span>Raydar Management</span>
+            <i class="fa fa-chevron-down echo_arrow"></i>
+        </div>
+
+        <div class="echo_list_drop">
+            <ul>
+                <li><a href="" data-ng-click="changeState('root.module', null, null)"class="list-group-item"><i class="fa fa-caret-right"></i> Module </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="echo_side_menu_bar" data-ng-if="userData.permissions['SUPER_ADMIN']">
+    <div class="echo_list">
+        <div class="echo_infos">
+            <i class="fa fa-cogs"></i>
+            <span>Company Management</span>
+            <i class="fa fa-chevron-down echo_arrow"></i>
+        </div>
+
+        <div class="echo_list_drop">
+            <ul>
+                <li>
+                    <a href="" data-ng-click="changeState('root.company', null, null)"class="list-group-item"><i class="fa fa-caret-right"></i> Company </a>
+                </li>
+                <li>
+                    <a href="" data-ng-click="changeState('root.companyModule', null, null)" class="list-group-item"><i class="fa fa-caret-right"></i> Company Module </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="echo_side_menu_bar" data-ng-if="userData.permissions['SUPER_ADMIN'] || userData.permissions['HOSP_ADMIN']">
+    <div class="echo_list">
+        <div class="echo_infos">
+            <i class="fa fa-users"></i>
+            <span>User Management</span>
+            <i class="fa fa-chevron-down echo_arrow"></i>
+        </div>
+
+        <div class="echo_list_drop">
+            <ul>
+                <li>
+                    <a href="" data-ng-click="changeState('root.user', null, null)" class="list-group-item"><i class="fa fa-caret-right"></i> User </a>
+                </li>
+                <li>
+                    <a href="" data-ng-click="changeState('root.userGroup', null, null)" class="list-group-item"><i class="fa fa-caret-right"></i> User Group</a>
+                </li>
+                <li>
+                    <a href="" data-ng-click="changeState('root.groupPermission', null, null)" class="list-group-item"><i class="fa fa-caret-right"></i> Group Permission</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="echo_side_menu_bar" data-ng-if="userData.permissions['HOSP_ADMIN']">
+    <div class="echo_list">
+        <div class="echo_infos">
+            <i class="fa fa-cubes"></i>
+            <span>Admin Setup </span>
+            <i class="fa fa-chevron-down echo_arrow"></i>
+        </div>
+        <div class="echo_list_drop">
+            <ul>
+                <li><a href="" data-ng-click="changeState('root.globalSetup', null, null)" class="list-group-item"><i class="fa fa-caret-right"></i> Global Setup</a></li>
+                <li><a href="" data-ng-click="changeState('root.doctor', null, null)" class="list-group-item"><i class="fa fa-caret-right"></i> Doctor Registration</a></li>
+                <li><a href="" data-ng-click="changeState('root.patient', null, null)"class="list-group-item"><i class="fa fa-caret-right"></i> Patient Registration</a></li>
+                <li><a href="" data-ng-click="changeState('root.appointment', null, null)"class="list-group-item"><i class="fa fa-caret-right"></i> Add Appointment</a></li>
+                <li><a href="" data-ng-click="changeState('root.invRequest', null, null)"class="list-group-item"><i class="fa fa-caret-right"></i> Inv Requests</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="echo_side_menu_bar" data-ng-if="userData.permissions['HOSP_DOCTOR']">
+    <div class="echo_list">
+        <div class="echo_infos">
+            <i class="fa fa-cubes"></i>
+            <span>Doctor </span>
+            <i class="fa fa-chevron-down echo_arrow"></i>
+        </div>
+        <div class="echo_list_drop">
+            <ul>
+                <li><a href="" data-ng-click="changeState('root.globalSetup', null, null)" class="list-group-item"><i class="fa fa-caret-right"></i> Appointment</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,82 @@
+<div class="large" id="testModal">
+
+    <div class='modal-header modalHead'>
+        <h4 class='modal-title'>Claim Form</h4>
+    </div>
+
+    <div class='modal-body'>
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12">
+                <div class="form-group mb-0">
+                    <label>Category:<span class="text-red">*</span></label>
+                    <select class="form-control" data-ng-model="claimBulkData.categoryID" data-ng-options="category.categoryID as category.shortName for category in categoryList" data-ng-change="getRuleByCategoryFieldID(claimBulkData.categoryID)">
+                        <option value="">--select--</option>
+                    </select>
+                    <div class="validationErrMsg hidden"></div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-6 col-sm-6" data-ng-repeat="fieldData in categoryFieldList" >
+                <div class="form-group mb-0">
+                    <label>{{fieldData.shortName}}:<span class="text-red">*</span></label>
+
+                    <input type="text" data-ng-if="fieldData.fieldType == 0" data-ng-model="fieldData.fieldValue" class="form-control input-sm" ng-class="{'required':fieldData.isRequire == 1}" maxlength="100">
+                    <input type="text" data-ng-if="fieldData.fieldType == 1" data-ng-model="fieldData.fieldValue" class="form-control input-sm required decimal" ng-class="{'required':fieldData.isRequire == 1}" maxlength="100">
+                    <input type="text" data-ng-if="fieldData.fieldType == 2" data-ng-model="fieldData.fieldValue" class="form-control form-control-date input-sm" ng-class="{'required':fieldData.isRequire == 1}" maxlength="100"
+                           datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true" >
+
+                    <select data-ng-if="fieldData.fieldType == 3" ng-model="fieldData.fieldValue" class="form-control input-sm" ng-class="{'required':fieldData.isRequire == 1}" >
+                        <option value="" ng-selected="{{null == fieldData.fieldValue}}" >--Select--</option>
+                        <option ng-repeat="subCategory in fieldData.subCategoryList" ng-selected="{{subCategory.subCategoryID == fieldData.fieldValue}}" value="{{subCategory.subCategoryID}}">{{subCategory.shortName}}</option>
+                    </select>
+
+                    <button class="btn btn-sm btn-primary pull-right"  data-ng-if="fieldData.fieldType == 4" data-ng-click="addImageContent(fieldData)" data-ng-show="true"><span class="fa fa-floppy-plus"></span> Add</button>
+                    <table data-ng-if="fieldData.fieldType == 4 && fieldData.imageContentList.length > 0" class="table table-bordered table-condensed table-striped table-hover fams-table">
+                        <thead>
+                        <tr class="bg-primary">
+                            <th>Image</th>
+                            <th>Delete</th>
+                        </tr>
+                        <tr data-ng-repeat="imageData in fieldData.imageContentList">
+                            <td>
+                                <span class="btn btn-sm btn-warning fileinput-button form-control" data-ng-if="imageData.imgUrl == null">
+                                    <input data-ng-file-select="onFileSelect($files, imageData, $index)" class="form-control input-sm" type="file" name="csvFile" data-ng-click="resetInputFile()" ng-class="{'required': $index == 0}"/>
+                                    <i class="fa fa-cog fa-spin imgloadingbtn" data-ng-show="uploading"></i>
+                                    <i class="fa fa-paperclip" data-ng-hide="uploading"></i>
+                                    <span >Upload</span>
+                                </span>
+                                <img alt="claimImg" data-ng-if="imageData.imgUrl != null" src="{{imageData.imgUrl}}" height="50px", width="25px" data-ng-click="showImageInPopUP(imageData.imgUrl)">
+                            </td>
+                            <td>
+                                <span data-ng-if="imageData.imgUrl != null" data-ng-click="deleteImage(fieldData.imageContentList, imageData)"></span>
+                            </td>
+                        </tr>
+                        </thead>
+                    </table>
+
+                    <!--<div data-ng-if="fieldData.fieldType == 4" class="form-group mb-0" data-ng-repeat="imageData in fieldData.imageContentList">
+                                    <span class="btn btn-sm btn-warning fileinput-button form-control" data-ng-if="imageData.imgUrl == null">
+                                        <input data-ng-file-select="onFileSelect($files, imageData, $index)" class="form-control input-sm" type="file" name="csvFile" data-ng-click="resetInputFile()" ng-class="{'required': $index == 0}"/>
+                                        <i class="fa fa-cog fa-spin imgloadingbtn" data-ng-show="uploading"></i>
+                                        <i class="fa fa-paperclip" data-ng-hide="uploading"></i>
+                                        <span >Upload</span>
+
+                                    </span>
+                        <div class="validationErrMsg hidden"></div>
+                                    <span data-ng-if="imageData.imgUrl != null" data-ng-click="deleteImage(fieldData.imageContentList, imageData)">
+                                        <i class="fa fa-close" ></i></span>
+                        <img alt="claimImg" data-ng-if="imageData.imgUrl != null" src="{{imageData.imgUrl}}" height="50px", width="25px" data-ng-click="showImageInPopUP(imageData.imgUrl)">
+                    </div>-->
+
+                    <div class="validationErrMsg hidden"></div>
+                    <div class="validationErrMsg hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer modalFoot">
+        <button title="Save Changes" id="btn_save_photo_changes" ng-disabled="mod.onGoingCropping" class="btn btnLanier btn-success" ng-click="save(categoryRule)" ><i class="fa fa-save"></i> Save</button>
+        <button class="btn btn-danger btnLanier" ng-click="close()"><i class="fa fa-close"></i> Cancel</button>
+    </div>
+</div>

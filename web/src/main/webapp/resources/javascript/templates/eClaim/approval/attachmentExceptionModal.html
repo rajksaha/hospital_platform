@@ -1,0 +1,27 @@
+<div class='modal-header modalHead'>
+    <h4 class='modal-title'>{{modalData.modalTitle || 'Information'}}</h4>
+</div>
+
+<div class='modal-body modalBody'>
+    <pre>
+        <h4>
+            You need to install a browser extension to view the document
+                                OR
+            Download the attachment to view.
+        </h4>
+    </pre>
+</div>
+
+<div class="modal-footer modalFoot">
+    <button  class="btn btn-info" ng-click="action(1)">
+        <span class="fa fa-download" aria-hidden="true"></span> Download
+    </button>
+    <button  class="btn btn-info" ng-click="action(2)">
+        <span class="fa fa-external-link " aria-hidden="true"></span> Open new Tab
+    </button>
+    <button  class="btn btn-danger btnLanier" ng-click="cancel()">
+        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Cancel
+    </button>
+</div>
+
+

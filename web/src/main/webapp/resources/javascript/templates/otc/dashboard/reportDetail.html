@@ -1,0 +1,704 @@
+<div class="generic-container">
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">eReport Details</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <tbody>
+                <tr><th width="40%">Report Number</th><td>:</td><td>{{reportData.reportName}}</td></tr>
+                <tr><th>Date</th><td>:</td><td>{{reportData.createdOn | date:'dd/MM/yy'}}</td></tr>
+                <tr><th>Report By</th><td>:</td><td>{{reportData.auditorData.firstName}}</td></tr>
+                <tr><th>Team Code</th><td>:</td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">A) Sales Performance Tracking</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>KPI</th>
+                    <th>Target</th>
+                    <th>Achievement</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr >
+                        <td>Sales</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_Sales%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>WH Sales</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_WH_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_WH_Sales%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>BR Sales</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_BW_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_BW_Sales%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>DG Sales</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_DI_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_DI_Sales%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>OTH sales </td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_OT_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_OT_Sales%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>Vs Last Month</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_LMTD_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_LMTD_Sales%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>Vs SMLY </td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_SMLYTD_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_SMLYTD_Sales%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>EP Sales</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_EP_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_EP_Sales%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>GP</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_GP")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_GP%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>V-care</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_VCare_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_VCare_Sales%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>X-stock Sales</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_XStock_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_XStock_Sales%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>Attachment Sales</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_Attachment_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_Attachment_Sales%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>RW Sales</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_RW_Qty")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_RW_Qty%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>eZen</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_EpaperEzen")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.salesPerformanceData.utdList, "UTD_EpaperEzen%")  | myCurrency }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">B)	Inventory Management Performance Tracking</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>KPI</th>
+                    <th>Target </th>
+                    <th>UTD Achievement </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr >
+                        <td>Inventory</td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_Stock_Value")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_Stock_Value%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>White</td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_WH_Stock_Value")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_WH_Stock_Value%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>Brown</td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_BW_Stock_Value")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_BW_Stock_Value%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>Digital</td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_DI_Stock_Value")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_DI_Stock_Value%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>OTH sales</td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_OT_Stock_Value")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_OT_Stock_Value%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>X-stock </td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_XStock_Value")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_XStock_Value%")  | myCurrency }}</td>
+                    </tr>
+                    <tr >
+                        <td>Stock in transit</td>
+                        <td>{{getValue(reportData.inventoryManagementData.utdList, "UTD_SIT_Value")  | myCurrency }}</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">C)	Manpower Fulfilment  Management Achievement Tracking</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>KPI</th>
+                    <th>Target </th>
+                    <th>Default</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr >
+                        <td>Lateness</td>
+                        <td>{{getValue(reportData.manPowerData.utdList, "UTD_LatenessCount")  | myCurrency }}</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr >
+                        <td>Partner Fulfillment Rate</td>
+                        <td>{{getValue(reportData.manPowerData.utdList, "UTD_Partner_Fulfillment")  | myCurrency }}</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr >
+                        <td>Trainee</td>
+                        <td>{{getValue(reportData.manPowerData.utdList, "UTD_Trainee")  | myCurrency }}</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr >
+                        <td>Credit</td>
+                        <td>{{getValue(reportData.manPowerData.utdList, "UTD_Credit")  | myCurrency }}</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr >
+                        <td>Scar</td>
+                        <td>{{getValue(reportData.manPowerData.utdList, "UTD_Scar")  | myCurrency }}</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr >
+                        <td>Minor/Major</td>
+                        <td>{{getValue(reportData.manPowerData.utdList, "UTD_MajorMinor")  | myCurrency }}</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr >
+                        <td>Productivity</td>
+                        <td>{{getValue(reportData.manPowerData.utdList, "UTD_Productivity")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.manPowerData.utdList, "UTD_HeadCount")  | myCurrency }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">D)	Loyalty Program Management Tracking</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>KPI</th>
+                    <th>Target/Benchmark</th>
+                    <th>Achievement </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr >
+                        <td>Total Active member</td>
+                        <td>{{getValue(reportData.loyalData.utdList, "UTD_Active_Member")  | myCurrency }}</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr >
+                        <td>Average spending</td>
+                        <td>{{getValue(reportData.loyalData.utdList, "UTD_Average_Spending")  | myCurrency }}</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr >
+                        <td>Renewal rate</td>
+                        <td>{{getValue(reportData.loyalData.utdList, "UTD_Renewal")  | myCurrency }}</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr >
+                        <td>P1L recruitment</td>
+                        <td>{{getValue(reportData.loyalData.utdList, "UTD_P1Lady_Recruit")  | myCurrency }}</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr >
+                        <td>Total P1 recruitment</td>
+                        <td>{{getValue(reportData.loyalData.utdList, "UTD_Total_Recruit")  | myCurrency }}</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr >
+                        <td>P1L Sales</td>
+                        <td>{{getValue(reportData.loyalData.utdList, "UTD_P1Lady_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.loyalData.utdList, "UTD_P1Lady_Sales%")  | myCurrency }}</td>>
+                    </tr>
+                    <tr >
+                        <td>P1 Member sales </td>
+                        <td>{{getValue(reportData.loyalData.utdList, "UTD_P1Member_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.loyalData.utdList, "UTD_P1Member_Sales%")  | myCurrency }}</td>>
+                    </tr>
+                    <tr >
+                        <td>Senheng Mobile</td>
+                        <td>{{getValue(reportData.loyalData.utdList, "UTD_SHMobile_Sales")  | myCurrency }}</td>
+                        <td>{{getValue(reportData.loyalData.utdList, "UTD_SHMobile_Sales%")  | myCurrency }}</td>>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--<div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">E)	Repairing Service</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th> </th>
+                    <th>Default</th>
+                    <th>Default</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="utdData in reportData.repairData.utdList">
+                    <td>{{utdData.fieldName}}</td>
+                    <td>{{utdData.fieldValue  | myCurrency }}</td>
+                    &lt;!&ndash;<td>{{reportData.inventoryManagementData.inventory_achievement | myCurrency }}</td>&ndash;&gt;
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>-->
+
+    <!--<div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">F)	Unsettle, Bad Debts and Lost Stock Management</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Total Cases</th>
+                    <th>Total Value</th>
+                    <th>Average Value / case</th>
+                    <th>Remark</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>UTD Unsettle </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>UTD bad debts</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Pending sales order</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Pending sales order deposit</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>-->
+
+    <!--<div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">G) IA Management</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th> </th>
+                    <th>Benchmark (default)</th>
+                    <th>Default</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Environment Audit </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Document Audit</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Last Stock Audit 1st Lost %</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Last Stock Audit Final Lost %</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Accumulated Last 12 Month stock lost %</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>-->
+
+    <!--<div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">H) Superstore Achieve Tracking</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Current Ranking</th>
+                    <th>Current Score</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>-->
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">I)	Cleanliness & Tidiness Management NPS Tracking</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Area</th>
+                    <th>NPS 1~10 </th>
+                    <th>Remark</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Display Rack</td>
+                    <td>{{reportData.reportCleanliness.display_nps}}</td>
+                    <td>{{reportData.reportCleanliness.display_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Toilet</td>
+                    <td>{{reportData.reportCleanliness.toilet_mps}}</td>
+                    <td>{{reportData.reportCleanliness.toilet_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Walkway</td>
+                    <td>{{reportData.reportCleanliness.walkway_nps}}</td>
+                    <td>{{reportData.reportCleanliness.walkway_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Glass wall & window</td>
+                    <td>{{reportData.reportCleanliness.glass_nps}}</td>
+                    <td>{{reportData.reportCleanliness.glass_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Floor</td>
+                    <td>{{reportData.reportCleanliness.floor_nps}}</td>
+                    <td>{{reportData.reportCleanliness.floor_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Cashier counter</td>
+                    <td>{{reportData.reportCleanliness.cashier_nps}}</td>
+                    <td>{{reportData.reportCleanliness.cashier_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Store room</td>
+                    <td>{{reportData.reportCleanliness.store_nps}}</td>
+                    <td>{{reportData.reportCleanliness.store_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Service set</td>
+                    <td>{{reportData.reportCleanliness.service_nps}}</td>
+                    <td>{{reportData.reportCleanliness.service_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Cabinet</td>
+                    <td>{{reportData.reportCleanliness.cabinet_nps}}</td>
+                    <td>{{reportData.reportCleanliness.cabinet_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Box Room</td>
+                    <td>{{reportData.reportCleanliness.boxroom_input}}</td>
+                    <td>{{reportData.reportCleanliness.boxroom_remark}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">J)	Product Display Management NPS Tracking</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th> </th>
+                    <th>NPS 1~10 </th>
+                    <th>Remark</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Product Presentation</td>
+                    <td>{{reportData.reportProduct.product_nps}}</td>
+                    <td>{{reportData.reportProduct.product_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Ready to demo</td>
+                    <td>{{reportData.reportProduct.demo_nps}}</td>
+                    <td>{{reportData.reportProduct.demo_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Hole Management</td>
+                    <td>{{reportData.reportProduct.hole_nps}}</td>
+                    <td>{{reportData.reportProduct.hole_remark}}</td>
+                </tr>
+                <tr>
+                    <td>POP display</td>
+                    <td>{{reportData.reportProduct.pop_nps}}</td>
+                    <td>{{reportData.reportProduct.pop_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Price Tag display</td>
+                    <td>{{reportData.reportProduct.tagdisplay_nps}}</td>
+                    <td>{{reportData.reportProduct.tagdisplay_remark}}</td>
+                </tr>
+                <tr>
+                    <td>PDGC compliance</td>
+                    <td>{{reportData.reportProduct.compliance_nps}}</td>
+                    <td>{{reportData.reportProduct.compliance_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Art Set Review & Update</td>
+                    <td>{{reportData.reportProduct.reviews_nps}}</td>
+                    <td>{{reportData.reportProduct.review_remark}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">K)	Customer Service NPS Tracking</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th> </th>
+                    <th>NPS 1~10 </th>
+                    <th>Remark</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Standby Mode</td>
+                    <td>{{reportData.reportCustomer.standby_nps}}</td>
+                    <td>{{reportData.reportCustomer.standby_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Grooming</td>
+                    <td>{{reportData.reportCustomer.groomin_nps}}</td>
+                    <td>{{reportData.reportCustomer.grooming_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Passionate</td>
+                    <td>{{reportData.reportCustomer.passionate_nps}}</td>
+                    <td>{{reportData.reportCustomer.passionate_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Product Knowledge</td>
+                    <td>{{reportData.reportCustomer.knowledge_nps}}</td>
+                    <td>{{reportData.reportCustomer.knowledge_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Closing Skill</td>
+                    <td>{{reportData.reportCustomer.closing_nps}}</td>
+                    <td>{{reportData.reportCustomer.closing_remark}}</td>
+                </tr>
+                <tr>
+                    <td>UP sales Skill</td>
+                    <td>{{reportData.reportCustomer.saleskill_nps}}</td>
+                    <td>{{reportData.reportCustomer.saleskill_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Cross Sales Skill</td>
+                    <td>{{reportData.reportCustomer.crosssales_nps}}</td>
+                    <td>{{reportData.reportCustomer.crosssales_remark}}</td>
+                </tr>
+                <tr>
+                    <td>English speaking</td>
+                    <td>{{reportData.reportCustomer.espeak_nps}}</td>
+                    <td>{{reportData.reportCustomer.espeak_remark}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">L)	Promotion Management NPS Tracking</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th> </th>
+                    <th>NPS 1~10 </th>
+                    <th>Remark</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Memo briefing Effectiveness</td>
+                    <td>{{reportData.reportPromotion.memobe_nps}}</td>
+                    <td>{{reportData.reportPromotion.memobe_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Promo product display</td>
+                    <td>{{reportData.reportPromotion.promo_nps}}</td>
+                    <td>{{reportData.reportPromotion.promo_remark}}</td>
+                </tr>
+                <tr>
+                    <td>BTL POP display</td>
+                    <td>{{reportData.reportPromotion.popd_nps}}</td>
+                    <td>{{reportData.reportPromotion.popd_remark}}</td>
+                </tr>
+                <tr>
+                    <td>Promo stock preparation</td>
+                    <td>{{reportData.reportPromotion.promos_nps}}</td>
+                    <td>{{reportData.reportPromotion.promos_remark}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">M)	Security Management NPS Tracking</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th> </th>
+                    <th>NPS 1~10 </th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>CCTV working condition</td>
+                    <td>{{reportData.reportSecurity.cctvwork_nps}}</td>
+                    <td>{{reportData.reportSecurity.cctvwork_remark}}</td>
+                </tr>
+                <tr>
+                    <td>CCTV angel coverage</td>
+                    <td>{{reportData.reportSecurity.cctvangel_nps}}</td>
+                    <td>{{reportData.reportSecurity.cctvangel_remark}}</td>
+                </tr>
+                <tr>
+                    <td>BT in/out under CCTV surveillance </td>
+                    <td>{{reportData.reportSecurity.cctvsurvel_nps}}</td>
+                    <td>{{reportData.reportSecurity.cctvsurvel_remark}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">Most Critical Weakness, Action Plan</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Management </th>
+                    <th>KPI </th>
+                    <th>Weaknesses  </th>
+                    <th>Action Plan</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="weakness in reportData.reportWeaknessList">
+                    <td>{{weakness.criticalArea}}</td>
+                    <td>{{weakness.description}}</td>
+                    <td>{{weakness.weakness}}</td>
+                    <td>{{weakness.actionPlan}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">Data Input Completeness</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Column with input</th>
+                    <th>Total Column</th>
+                    <th>Completeness (%)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr >
+                    <td>{{reportData.inputCompletenessData.columnWithInput}}</td>
+                    <td>{{reportData.inputCompletenessData.totalColumn}}</td>
+                    <td>{{reportData.inputCompletenessData.completenessPercentage}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">AM Evolution & Advice</span></div>
+        <div class="tablecontainer">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Management </th>
+                    <th>Weakness comment</th>
+                    <th>Action Plan comment</th>
+                    <th>NPS 1~10 </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="evaluation in reportData.reportEvolutionList">
+                        <td>{{evaluation.management}}</td>
+                        <td>{{evaluation.weakness}}</td>
+                        <td>{{evaluation.actionPlan}}</td>
+                        <td>{{evaluation.npsScore}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>

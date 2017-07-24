@@ -1,0 +1,19 @@
+<div class='modal-header modalHead'>
+    <h4 class='modal-title'>{{modalData.modalTitle || 'Information'}}</h4>
+</div>
+
+<div class='modal-body modalBody'>
+    {{modalData.modalBody}}
+
+</div>
+
+<div class="modal-footer modalFoot">
+    <button data-ng-if="modalData.button1" class="btn btn-success" ng-click="save()">
+        <span class="fa fa-floppy-o" aria-hidden="true"></span> {{modalData.button1Text}}
+    </button>
+    <button data-ng-if="modalData.button2" class="btn btn-danger btnLanier" ng-click="cancel()">
+        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> {{modalData.button2Text}}
+    </button>
+</div>
+
+

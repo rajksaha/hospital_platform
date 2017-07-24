@@ -1,0 +1,11 @@
+<div class="dropdown">
+    <button class="btn" ng-click="toggleSelect()" ng-disabled="disabled" ng-class="{'error': !valid(), 'regular' : valid()}">
+        <span class="pull-left">{{header}}</span>
+        <span class="caret pull-right" style="margin-top: 10px;"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li ng-repeat="i in items">
+            <a ng-click="select(i)"><i ng-class="{'fa fa-check': i.checked}"></i>{{i.label}}</a>
+        </li>
+    </ul>
+</div>

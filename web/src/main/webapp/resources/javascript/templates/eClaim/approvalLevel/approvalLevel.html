@@ -1,0 +1,160 @@
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+
+<div id="validationRequired" ng-show="showForm">
+    <div class="panel panel-default mt-15">
+        <div class="panel-body p15">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Claim Type<span class="text-red">*</span></label>
+                        <select class="form-control required input-sm" data-ng-model="approvalLevel.claimType">
+                            <option value="">--Select--</option>
+                            <option value="1">HR Claim</option>
+                            <option value="2">Admin Claim</option>
+                            <option value="3">Operational Claim</option>
+                        </select>
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>State Name<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="approvalLevel.approvalState" class="form-control input-sm required" maxlength="100">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>State Code<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="approvalLevel.approvalStateCode" class="form-control input-sm required" maxlength="100" data-ng-if="approvalLevel.companyApprovalID > 0" disabled>
+                        <input type="text" data-ng-model="approvalLevel.approvalStateCode" class="form-control input-sm required" maxlength="100" data-ng-if="!approvalLevel.companyApprovalID">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Action State Code<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="approvalLevel.actionStateCode" class="form-control input-sm required" maxlength="100" data-ng-if="approvalLevel.companyApprovalID > 0" disabled>
+                        <input type="text" data-ng-model="approvalLevel.actionStateCode" class="form-control input-sm required" maxlength="100" data-ng-if="!approvalLevel.companyApprovalID">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Forward Status<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="approvalLevel.approvalStatus" class="form-control input-sm required" maxlength="100" data-ng-if="approvalLevel.companyApprovalID > 0" disabled>
+                        <input type="text" data-ng-model="approvalLevel.approvalStatus" class="form-control input-sm required" maxlength="100" data-ng-if="!approvalLevel.companyApprovalID" >
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Reject Status<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="approvalLevel.rejectStatus" class="form-control input-sm required" maxlength="100" data-ng-if="approvalLevel.companyApprovalID > 0" disabled>
+                        <input type="text" data-ng-model="approvalLevel.rejectStatus" class="form-control input-sm required" maxlength="100" data-ng-if="!approvalLevel.companyApprovalID">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Default View<span class="text-red">*</span></label>
+                        <select class="form-control required input-sm" data-ng-model="approvalLevel.defaultView">
+                            <option value="">&#45;&#45;Select&#45;&#45;</option>
+                            <option value="USERBULK">User List</option>
+                            <option value="CATEGORYBULK">Category</option>
+                        </select>
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Approval User Type<span class="text-red">*</span></label>
+                        <select class="form-control required input-sm" data-ng-model="approvalLevel.approvalUserType">
+                            <option value="">&#45;&#45;Select&#45;&#45;</option>
+                            <option value="1">Specific Approver</option>
+                            <option value="2">Authorized Group of Approver</option>
+                        </select>
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <!--<div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Approval Order<span class="text-red">*</span></label>
+                        <select class="form-control input-sm" data-ng-model="approvalLevel.sortOrder" data-ng-options="order.value as order.name for order in orderList">
+                            <option value="">&#45;&#45;Select&#45;&#45;</option>
+                        </select>
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>-->
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Approver Role<span class="text-red">*</span></label>
+                        <select class="form-control input-sm required"  data-ng-model="approvalLevel.permissionCode" data-ng-options="permission.functionCode as permission.shortName for permission in permissionList">
+                            <option value="">--Select--</option>
+                        </select>
+                        <!--<input type="text" data-ng-model="approvalLevel.permissionCode" class="form-control input-sm required" maxlength="100">-->
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="text-right">
+                <button class="btn btn-sm btn-warning" data-ng-click="reset()"><span class="fa fa-undo"></span> Reset</button>
+                <button class="btn btn-sm btn-success" data-ng-click="save(approvalLevel)" data-ng-hide="approvalLevel.companyApprovalID > 0"><span class="fa fa-floppy-o"></span> Save</button>
+                <button class="btn btn-sm btn-success" data-ng-click="update(approvalLevel)" data-ng-show="approvalLevel.companyApprovalID > 0"><span class="fa fa-floppy-o"></span> Update</button>
+                <button class="btn btn-sm btn-danger" data-ng-click="cancel()"><span class="fa fa-times"></span> Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default mt-15" ng-show="!showForm">
+    <div class="panel-heading clearfix">
+        <strong>Approval State List</strong>
+        <button class="btn btn-sm btn-success pull-right" data-ng-click="add()"><span class="fa fa-plus"></span> Add Approval State</button>
+    </div>
+    <div class="alert alert-info" data-ng-show="categoryFieldList.length == 0">No Approval State Found</div>
+
+    <table class="table table-bordered table-condensed table-striped table-hover fams-table" data-ng-show="approvalLevelList.length > 0">
+        <thead>
+        <tr class="bg-primary">
+            <th width="8%">Sl</th>
+            <th>Claim Type</th>
+            <th>State Name</th>
+            <th>State Code</th>
+            <th>Action State Code</th>
+            <th>Forward Status</th>
+            <th>Reject Status</th>
+            <th>Default View</th>
+            <th width="5%">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="approvalLevel in approvalLevelList">
+            <td>{{$index + 1}}</td>
+            <td>{{getText(approvalLevel.claimType)}}</td>
+            <td>{{approvalLevel.approvalState}}</td>
+            <td>{{approvalLevel.approvalStateCode}}</td>
+            <td>{{approvalLevel.actionStateCode}}</td>
+            <td>{{approvalLevel.approvalStatus}}</td>
+            <td>{{approvalLevel.rejectStatus}}</td>
+            <td>{{approvalLevel.defaultView}}</td>
+            <td>
+                <a href="" class="" data-ng-click="edit(approvalLevel)"><span class="fa fa-pencil-square-o"></span> </a>
+                <a href="" class=""
+                   echo-confirmation="delete(approvalLevel, $index)"
+                   confirmation-message="Are you sure to remove?"
+                   confirmation-title="Confirmation"
+                   item="item">
+                    <span class="fa fa-trash"></span> </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

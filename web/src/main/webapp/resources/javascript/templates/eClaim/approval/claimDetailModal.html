@@ -1,0 +1,46 @@
+<div class="large big" id="testModal">
+
+    <div class='modal-header modalHead'>
+        <h4 class='modal-title'>Claim Detail</h4>
+        <h6 data-ng-if="claim.claimantName" >Staff Name : {{claim.claimantName}}</h6>
+        <h6 data-ng-if="claim.claimantStaffCode" >Staff Code : {{claim.claimantStaffCode}}</h6>
+    </div>
+
+    <div class='modal-body'>
+        <div class="row">
+
+
+            <div  data-ng-repeat="fieldData in resultList" class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group mb-0">
+                    <label>{{fieldData.shortName}}</label>
+                    <input type="text" data-ng-if="fieldData.fieldType == 0" data-ng-model="fieldData.fieldValue" class="form-control input-sm" disabled>
+
+                    <input type="text" data-ng-if="fieldData.fieldType == 1" data-ng-model="fieldData.fieldValue" class="form-control input-sm required decimal" disabled>
+
+                    <input type="text" data-ng-if="fieldData.fieldType == 2" data-ng-model="fieldData.fieldValue" class="form-control form-control-date input-sm" disabled datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true" >
+
+                    <select data-ng-if="fieldData.fieldType == 3" ng-model="fieldData.fieldValue" class="form-control input-sm" disabled >
+                        <option value="" ng-selected="{{fieldData.fieldValue == null}}"  >--Select--</option>
+                        <option ng-repeat="subCategory in fieldData.subCategoryTypeList" ng-selected="{{subCategory.subCategoryTypeID == fieldData.fieldValue}}" value="{{subCategory.subCategoryID}}">{{subCategory.shortName}}</option>
+                    </select>
+                    <select data-ng-if="fieldData.fieldType == 5" ng-model="fieldData.fieldValue" class="form-control input-sm" disabled >
+                        <option value="" ng-selected="{{fieldData.fieldValue == null}}"  >--Select--</option>
+                        <option ng-repeat="subCategory in fieldData.subCategoryList" ng-selected="{{subCategory.subCategoryID == fieldData.fieldValue}}" value="{{subCategory.subCategoryID}}">{{subCategory.shortName}}</option>
+                    </select>
+                    <select data-ng-if="fieldData.fieldType == 6" ng-model="fieldData.fieldValue" class="form-control input-sm" disabled >
+                        <option value="" ng-selected="{{fieldData.fieldValue == null}}"  >--Select--</option>
+                        <option ng-repeat="subCategory in fieldData.subCategoryList" ng-selected="{{subCategory.subCategoryID == fieldData.fieldValue}}" value="{{subCategory.subCategoryID}}">{{subCategory.shortName}}</option>
+                    </select>
+                    <div data-ng-if="fieldData.fieldType == 4" class="form-group mb-0" data-ng-repeat="imageData in fieldData.imageContentList">
+                        <img alt="claimImg" data-ng-if="imageData.imgUrl != null" src="{{imageData.imgUrl}}" height="50px", width="25px">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal-footer modalFoot">
+        <button class="btn btn-danger btnLanier" ng-click="close()"><i class="fa fa-close"></i> Cancel</button>
+    </div>
+</div>

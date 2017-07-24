@@ -1,0 +1,144 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div id="breadCum" class="col-md-8 col-lg-8 col-sm-8">
+                <strong> Report</strong>
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-4">
+                <button title="search" class="btn btn-primary pull-right" data-ng-click="search()"><span class="fa fa-search"></span></button>
+                <button title="download"class="btn btn-primary pull-right" data-ng-show="searchData.claimFormDataList.length > 0" data-ng-click="download()"><i class="fa fa-download"></i></button>
+                <button title="download"class="btn btn-primary pull-right"  data-ng-show="searchData.claimFormDataList.length > 0"  data-ng-click="downloadPayRoll()" ><i class="fa fa-download"> Payroll</i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+
+<div class="row">
+    <div class="form-group col-md-3 col-lg-3">
+        <span class="">Search By</span>
+        <select class="form-control" data-ng-model="searchData.entityType">
+            <option value="1">Submission Date</option>
+            <option value="2">Approved Date</option>
+        </select>
+    </div>
+    <div class="form-group col-md-3 col-lg-3">
+        <span class="">Start Date</span>
+        <input type="text" data-ng-model="searchData.startDate" class="form-control form-control-date input-sm" datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true"  data-ng-change="dt2 = true">
+    </div>
+    <div class="form-group col-md-3 col-lg-3">
+        <span class="">End Date</span>
+        <input type="text" data-ng-model="searchData.endDate" class="form-control form-control-date input-sm" datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt2" ng-focus="dt2 = true" ng-click="dt2 = true" >
+    </div>
+    <div class="form-group col-md-3 col-lg-3">
+        <label >Category</label>
+        <div class="form-group mb-0">
+            <select data-ng-model="searchData.categoryID" class="form-control" data-ng-options="category.categoryID as category.shortName for category in categoryList | orderBy:shortName:DESC" data-ng-change="displayDownload = false">
+                <option value="">--ALL--</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group col-md-3 col-lg-3" data-ng-if="userData.companyID == 1">
+        <label class="">Company Code</label>
+        <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="bringInfo('COMPANY_CODE', searchData.companyCode)">
+            <option value="">--ALL--</option>
+        </select>
+    </div>
+    <div class="form-group col-md-3 col-lg-3" data-ng-if="userData.companyID == 1">
+        <label class="">Cost Center</label>
+        <select data-ng-model="searchData.costCenterCode" class="form-control" data-ng-options="costCenter.content as costCenter.content for costCenter in costCenterList" data-ng-change="bringInfo('COST_CENTRE', searchData.costCenterCode)">
+            <option value="">--ALL--</option>
+        </select>
+    </div>
+    <div class="form-group col-md-3 col-lg-3" data-ng-if="userData.companyID == 1">
+        <label class="">Location</label>
+        <select data-ng-model="searchData.locationCode" class="form-control" data-ng-options="location.content as location.content for location in locationList"data-ng-change="bringInfo('LOCATION', searchData.locationCode)">
+            <option value="">--ALL--</option>
+        </select>
+    </div>
+    <div class="form-group col-md-3 col-lg-3" data-ng-if="userData.companyID == 1">
+        <label class="">Department</label>
+        <select data-ng-model="searchData.departmentCode" class="form-control" data-ng-options="department.content as department.content for department in departmentList" >
+            <option value="">--ALL--</option>
+        </select>
+    </div>
+    <!--<div class="form-group col-md-3 col-lg-3">
+        <label class="">Action</label>
+        <div class="form-group mb-0">
+            <button title="search" class="btn btn-primary" data-ng-click="search()"><span class="fa fa-search"></span></button>
+            <button title="download"class="btn btn-primary" data-ng-show="displayDownload" data-ng-click="download()"><i class="fa fa-download"></i></button>
+            <button title="download"class="btn btn-primary"  ><i class="fa fa-download"> HR Payroll</i></button>
+        </div>
+    </div>-->
+</div>
+
+
+<table class="table table-bordered table-condensed table-striped table-hover" id="validationRequiredCat" data-ng-show="searchData.claimFormDataList.length > 0" >
+    <thead>
+    <tr class="bg-primary">
+        <th width="10%" class="text-center">Approved Date</th>
+        <th width="10%" class="text-center">Submission Date</th>
+        <th width="10%" class="text-center">Ref No</th>
+        <th width="10%" class="text-center">Company Code</th>
+        <th width="15%" class="text-center">Staff Name</th>
+        <th width="10%" class="text-center">Staff Code</th>
+        <th width="10%" class="text-center">Dept</th>
+        <th width="10%" class="text-center">Location</th>
+        <th width="10%" class="text-center">Cost Center</th>
+        <th width="10%" class="text-center" data-ng-if="searchData.categoryID == null && displayDownload">Category</th>
+        <th width="10%" class="text-center">Amount</th>
+        <th width="10%" class="text-center" >GST</th>
+        <th width="10%" class="text-center">Detail</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-ng-repeat="claim in searchData.claimFormDataList">
+        <td class="col-md-1 text-center">{{claim.approvedOn | date:'dd/MM/yy'}}</td>
+        <td class="col-md-1 text-center">{{claim.updatedOn | date:'dd/MM/yy'}}</td>
+        <td class="col-md-1 text-center" >{{formatClaimRunningNumber(claim)}}</td>
+        <td class="col-md-1 text-center">{{claim.companyCode}}</td>
+        <td class="col-md-1 text-center">{{claim.claimantName}}</td>
+        <td class="col-md-1 text-center">{{claim.claimantStaffCode}}</td>
+        <td class="col-md-1 text-center">{{claim.department}}</td>
+        <td class="col-md-1 text-center">{{claim.location}}</td>
+        <td class="col-md-1 text-center">{{claim.costCenter}}</td>
+        <td class="col-md-1 text-center" data-ng-if="searchData.categoryID == null && displayDownload" >{{claim.categoryName}}</td>
+        <td class="col-md-1 text-center">{{getAmount(claim.resultList)}}</td>
+        <th width="10%" class="text-center" >{{calculateGstAmount(claim.resultList, .06)}}</th>
+        <td class="col-md-1 text-center">
+            <a href=""  title="View Details" class="inline" data-ng-click="showDetailPopUp(claim)"><span class="fa fa-info-circle "></span></a>
+            <span data-ng-if="getAttachColumn(claim.resultList,4) == true" >
+                <i class="fa fa-folder-open " data-ng-click="showImageInPopUP(claim.resultList,4)" ></i>
+            </span>
+            <span data-ng-if="claim.isException" >
+                    <i class="fa fa-exclamation-triangle" title="{{claim.exceptionReason}}" ></i>
+                </span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="panel panel-default mt-15" data-ng-show="searchData.claimFormDataList.length > 0">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div  class="col-md-12 col-lg-12 col-sm-12 text-right">
+                <strong>Sub Total : {{searchData.subTotal}}</strong>
+                <!--<strong>GST : {{searchData.maxAmount}}</strong>-->
+                <strong>Total : {{searchData.amount}}</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="alert alert-info alert-dismissable" data-ng-show="searchData.claimFormDataList.length == 0">
+    <strong>No items found</strong>
+</div>
+<br><br><br><br><br>
+<br><br><br><br><br>

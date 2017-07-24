@@ -1,0 +1,67 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div id="breadCum" class="col-md-8 col-lg-8 col-sm-8">
+                <strong> Global Settings </strong>
+            </div>
+            <div class="pull-right" class="col-md-4 col-lg-4 col-sm-4"> </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+
+<div id="validationRequired">
+    <div class="panel panel-default mt-15">
+        <div class="panel-body p15">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Last date of claim processing<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="globalSetup.claimCutOffDay" class="form-control input-sm required" maxlength="100">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Claim Validation<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="globalSetup.claimApprovalLimit" class="form-control input-sm required" maxlength="100">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Default password<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="globalSetup.defaultPassword" class="form-control input-sm required" maxlength="100">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Tax Rate<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="globalSetup.taxRate" class="form-control input-sm required" maxlength="100">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Tax Currency<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="globalSetup.currency" class="form-control input-sm required" maxlength="100">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="text-right">
+                <button class="btn btn-sm btn-success" data-ng-click="save(globalSetup)" data-ng-hide="globalSetup.companyGlobalRuleID > 0"><span class="fa fa-floppy-o"></span> Save</button>
+                <button class="btn btn-sm btn-success" data-ng-click="update(globalSetup)" data-ng-show="globalSetup.companyGlobalRuleID > 0"><span class="fa fa-floppy-o"></span> Update</button>
+            </div>
+        </div>
+    </div>
+</div>

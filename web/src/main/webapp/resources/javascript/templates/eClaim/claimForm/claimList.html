@@ -1,0 +1,160 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div id="breadCum" class="col-md-8 col-lg-8 col-sm-8">
+                <strong> Claim > Claim List</strong>
+            </div>
+            <div class="pull-right" class="col-md-4 col-lg-4 col-sm-4" data-ng-show="viewOnly || showForm"> <button class="btn btn-sm btn-warning" data-ng-click="goToList()"><span class="fa fa-undo"></span> Claim List</button></div>
+        </div>
+    </div>
+</div>
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+<div class="alert alert-warning alert-dismissable" data-ng-show="hasWarning">
+    {{message}}
+</div>
+
+<div  ng-show="showForm">
+    <div class="panel panel-default mt-15" >
+        <div class="panel-body gradient-default" id="validationRequired">
+            <div class="form-group mb-0">
+                <label>Claim Description  <span class="text-red">*</span></label>
+                <input type="text"  class="form-control required" data-ng-model="finalClaimBulkData.shortName"/>
+            </div>
+            <br>
+            <tabset class="claimForm-tabset form-group" >
+                <tab data-ng-repeat="category in categoryList"  heading="{{category.shortName}}"  class="{{category.hasError ? 'redTab':''}} {{category.hasWarning ? 'warningTab':''}} {{category.claimBulkData.claimFormList.length > 0 ? 'hasClaim' : ''}}">
+
+                    <div class="alert alert-danger alert-dismissable" data-ng-show="category.headError" style="margin-top: 5px;">
+                        {{category.errorMessage}}
+                    </div>
+
+                    <button class="btn btn-sm btn-success pull-right" data-ng-click="add(category)"><span class="fa fa-plus"></span> Add Claim</button>
+                    <table class="table table-bordered table-condensed table-striped table-hover fams-table" >
+                        <thead>
+                        <tr class="bg-primary">
+                            <th data-ng-repeat="fieldData in category.fieldDATAs">
+                                {{fieldData.shortName}} <span class="text-red" data-ng-if="fieldData.isRequire == 1">*</span>
+                            </th>
+                            <th width="5px">
+                                Action
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody >
+                        <tr data-ng-repeat="claimForm in category.claimBulkData.claimFormList">
+                            <td  data-ng-if="!claimForm.isDeleted" data-ng-repeat="fieldData in claimForm.resultList">
+                                <div class="form-group mb-0" ng-class="{'has-error':fieldData.hasError == true,'has-warning':fieldData.hasWarning == true}">
+                                    <div ng-include="'resources/javascript/templates/eClaim/claimForm/claimField.html'"></div>
+                                </div>
+                            </td>
+                            <td data-ng-if="!claimForm.isDeleted">
+                                <!--<span class="fa fa-trash" data-ng-click="deleteFromClaimForm(category,claimForm)"></span>-->
+                                <a href="" class="inline"
+                                   echo-confirmation="deleteFromClaimForm(category,claimForm, $index)"
+                                   confirmation-message="Are you sure to remove?"
+                                   confirmation-title="Confirmation"
+                                   item="claimBulk">
+                                    <span class="fa fa-trash"></span> </a>
+                                <span class="fa fa-info-circle " data-ng-if="ifRejected(claimForm.status)" data-ng-click="displayNonApprovalReason(claimForm)"></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="panel panel-default mt-15">
+                        <div class="panel-heading clearfix">
+                            <div class="row" >
+                                <div class="col-md-4 col-lg-4 col-sm-4 text-right">
+                                    <label data-ng-if="category.requireOriginal == 1">Need to submit original document for payment</label>
+                                    <div class="validationErrMsg hidden"></div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-4 text-right">
+                                    Sub Total : {{calculateSubTotal(category.claimBulkData.claimFormList)}} RM
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+        <div class="panel-footer">
+            <div class="text-right">
+                <button class="btn btn-sm btn-success" data-ng-model="globalUpdate" data-ng-click="update('DRAFT')" ><span class="fa fa-floppy-o"></span> Update</button>
+                <button class="btn btn-sm btn-success"  data-ng-click="update('SUBMITTED')" ><span class="fa fa-floppy-o"></span> Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-15" ng-show="!showForm">
+
+    <div class="row">
+
+        <div data-ng-class="{'col-md-6 col-lg-6 col-sm-6'  : viewOnly, 'col-md-12 col-lg-12 col-sm-12' : viewOnly != true }">
+
+            <table class="table table-bordered table-condensed table-striped table-hover fams-table">
+                <thead>
+                <tr class="bg-primary">
+                    <th>Claim Description</th>
+                    <th>Status</th>
+                    <th>Updated On</th>
+                    <th width="10%">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="claimBulk in claimBulkList" >
+                    <td data-ng-class="{'itemSelected' : claimBulk.active}" ><a href=""  title="View Details" class="inline" data-ng-click="view(claimBulk)">{{claimBulk.shortName}}</a></td>
+                    <td data-ng-class="{'itemSelected' : claimBulk.active}" >{{getCompanyStatus(claimBulk.status)}}</td>
+                    <td data-ng-class="{'itemSelected' : claimBulk.active}" >{{claimBulk.updatedOn | date:'dd/MM/yy'}}</td>
+                    <td data-ng-class="{'itemSelected' : claimBulk.active}" >
+                        <a href=""   data-ng-if="claimBulk.status == 'DRAFT'" class="inline" data-ng-click="edit(claimBulk)"><span class="fa fa-pencil-square-o"></span></a>
+                        <a href=""  data-ng-if="ifRejected(claimBulk.status)" class="inline" data-ng-click="editRejected(claimBulk)"><span class="fa fa-pencil-square-o"></span></a>
+                        <a href="" class="inline" data-ng-if="claimBulk.status == 'DRAFT'"
+                           echo-confirmation="deleteClaimBulk(item)"
+                           confirmation-message="Are you sure to remove?"
+                           confirmation-title="Confirmation"
+                           item="claimBulk">
+                            <span class="fa fa-trash"></span> </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-md-6 col-lg-6 col-sm-6" data-ng-show="viewOnly">
+
+            <table class="table table-bordered table-condensed table-striped table-hover" id="validationRequiredCat">
+                <thead>
+                <tr class="bg-primary">
+                    <th width="20%" class="text-center">Status</th>
+                    <th width="20%" class="text-center">Category</th>
+                    <!--<th width="10%" class="text-center">Date</th>-->
+                    <th width="10%" class="text-center">Amount</th>
+                    <th width="10%" class="text-center">Info</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="claim in viewClaimFormList">
+                    <td class="col-md-1 text-center">{{getCompanyStatus(claim.status)}}</td>
+                    <td class="col-md-1 text-center">{{claim.categoryName}}</td>
+                    <!--<td class="col-md-1 text-center">{{getText(claim.resultList, 2) | date:'dd/MM/yy'}}</td>-->
+                    <td class="col-md-1 text-center">RM {{getAmount(claim.resultList)}} </td>
+                    <td class="col-md-1 text-center">
+                        <a href="" title="Attachment" data-ng-if="getAttachColumn(claim.resultList,4) == true" > <i class="fa fa-folder-open-o" data-ng-click="showViewImageInPopUP(claim.resultList,4)" ></i></a>
+                        <a href="" title="Detail" ><i class="fa fa-television link" data-ng-click="showDetailPopUp(claim)" ></i></a>
+                        <a href="" title="Reject Reason" data-ng-if="ifRejected(claim.status)"> <i class="fa fa-info-circle link"  data-ng-click="displayNonApprovalReason(claim)" ></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>

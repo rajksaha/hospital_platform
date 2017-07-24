@@ -1,0 +1,48 @@
+html, body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.margin {
+    margin: 0 !important;
+}
+
+.login-form {
+    width: 320px
+}
+
+.error {
+    color: red;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+body {
+    background: url('../img/background.png');
+    _background: #eee;
+}
+.checkbox-blue[type="checkbox"].filled-in:checked + label:after{
+    border: 2px solid #039be5;
+    background-color: #039be5;
+}
+.active {
+    color: #039be5 !important;
+}
+.valid {
+    border-bottom: 1px solid #039be5 !important;
+    box-shadow: 0 1px 0 0 #039be5 !important;
+}
+input:focus {
+    border-bottom: 1px solid #039be5 !important;
+    box-shadow: 0 1px 0 0 #039be5 !important;
+}

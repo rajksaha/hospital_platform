@@ -1,0 +1,86 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div id="breadCum" class="col-md-8 col-lg-8 col-sm-8">
+                <strong> Company Formation
+                    <span data-ng-show="step >= 1">  >
+                        <a href="" class="disabled" data-ng-show="step == 1"> Level Selection</a>
+                        <a href="" data-ng-show="step == 2" data-ng-click="step = 1; searchData.entityName = ''"> Level Selection</a>
+                    </span>
+                    <span data-ng-show="step == 2"> >
+                        {{getLevelName(searchData.entityName)}}
+                    </span>
+                </strong>
+            </div>
+            <div class="pull-right" class="col-md-4 col-lg-4 col-sm-4"> </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+
+<div>
+    <div class="panel panel-default mt-15">
+        <div class="panel-body p15">
+            <div data-ng-show="step == 1" class="row">
+                <div class="col-md-2 col-lg-2 col-sm-2">
+                    &nbsp;
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <strong class="pull-left"> Select the level you want to see details: </strong>
+                </div>
+                <div class="col-md-3 col-lg-3 col-sm-3">
+                    <select class="form-control required pull-right" data-ng-model="searchData.entityName" data-ng-change="bringInfo()">
+                        <option value="">--Select--</option>
+                        <option value="COST_CENTRE">Cost center</option>
+                        <option value="LOCATION">Location</option>
+                        <option value="DEPARTMENT">Department</option>
+                    </select>
+                </div>
+                <div class="col-md-3 col-lg-3 col-sm-3">
+                    &nbsp;
+                </div>
+            </div>
+            <div data-ng-show="step == 2" id="validationRequired">
+                <div class="col-lg-2 text-center" >
+                    <label  >{{getLevelName(searchData.entityName)}} Name</label>
+                </div>
+                <div class="col-lg-2 text-center" >
+                    <label >Is Under </label>
+                </div>
+                <div class="col-lg-2 text-center" >
+                    <label >{{getLevelName(searchData.entityName)}} Name</label>
+                </div>
+                <div class="col-lg-2 text-center" >
+                    <label >Is Under </label>
+                </div>
+                <div class="col-lg-2 text-center" >
+                    <label >{{getLevelName(searchData.entityName)}} Name</label>
+                </div>
+                <div class="col-lg-2 text-center" >
+                    <label >Is Under </label>
+                </div>
+                <div data-ng-repeat="content in contentList">
+                    <div class="col-lg-2 text-center" style="padding: 5px">
+                        <p > {{content.content}} </p>
+                    </div>
+                    <div class="col-lg-2 form-group text-center" style="padding: 5px">
+                        <multiselect class="input-xlarge required" multiple="true" ng-model="content.formationList" options="parent.contentDetailID as parent.content for parent in parentList"  change="selected()" required></multiselect>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer" data-ng-show="step == 2">
+            <div class="text-right">
+                <button class="btn btn-sm btn-success"  data-ng-click="save()" ><span class="fa fa-floppy-o" ></span> Save</button>
+                <button class="btn btn-sm btn-danger"  data-ng-click="step = 1;searchData.entityName = ''" ><span class="fa fa-times" ></span> Cancel</button>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br>
+</div>

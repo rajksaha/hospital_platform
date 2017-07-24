@@ -1,0 +1,81 @@
+<!--Text input field == 0(Text)-->
+<input type="text" data-ng-if="fieldData.fieldType == 0" data-ng-model="fieldData.fieldValue" class="form-control input-sm" ng-class="{'required':fieldData.isRequire == 1}" maxlength="100">
+
+
+<!--Number input field == 1(Number)-->
+<div class="input-group" data-ng-if="fieldData.fieldType == 1 && !claimForm.showWarningReason">
+
+    <input type="text"  data-ng-disabled="fieldData.key == 'totalMillage'" data-ng-model="fieldData.fieldValue" data-ng-change="setDecimalPoint(fieldData, claimForm.resultList,category)" class="form-control input-sm" ng-class="{'decimal':fieldData.isRequire == 1}" maxlength="100">
+
+    <span class="input-group-addon" data-ng-if="fieldData.hasWarning == true">
+        <i class="fa fa-exclamation-triangle" style="cursor: pointer;" title="Exceeded the amount, Please re-check." data-ng-click="claimForm.isException = 1;claimForm.showWarningReason = true"></i>
+    </span>
+    <span class="input-group-addon" data-ng-if="category.isTaxRequire" data-ng-click="fieldData.isTaxRequire = !fieldData.isTaxRequire">
+        <i class="fa" ng-class="{'fa-square-o':fieldData.isTaxRequire != true, 'fa-check-square-o':fieldData.isTaxRequire == true}" ></i>
+    </span>
+    <span class="input-group-addon" data-ng-if="fieldData.key == 'millageKm'" data-ng-click="checkForMillage(fieldData, claimForm, category)">
+        <i class="fa fa-calculator" title="click this icon to calculate amount" style="cursor: pointer"></i>
+    </span>
+    <span class="input-group-addon" data-ng-if="fieldData.key != 'millageKm' && !category.isTaxRequire && !fieldData.hasWarning">
+        <!--<i class="fa fa-calculator" title="click this icon to calculate amount" style="cursor: pointer"></i>-->
+    </span>
+</div>
+
+<div class="input-group" data-ng-if="fieldData.fieldType == 1 && claimForm.showWarningReason">
+    <span class="input-group-addon">
+        <i class="fa fa-chevron-circle-left" title="Back" data-ng-click="claimForm.showWarningReason = false"></i>
+    </span>
+        <input type="text"  data-ng-model="claimForm.exceptionReason" class="form-control input-sm" maxlength="250" placeholder="Exception Reason">
+    <span class="input-group-addon">
+        <i class="fa fa-check" title="Back" data-ng-click="claimForm.showWarningReason = false"></i>
+    </span>
+</div>
+<!--Number input field == 1(Number)-->
+
+<!--Number input field == 2(Date)-->
+<input type="text" data-ng-if="fieldData.fieldType == 2"  data-ng-model="fieldData.fieldValue" class="form-control form-control-date input-sm" ng-class="{'required':fieldData.isRequire == 1}" maxlength="100"
+       datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true" date-disabled="disabled(date, mode,fieldData)"  data-ng-change="validateDate(fieldData, claimForm)">
+
+<!--Number input field == 3(Type Select)-->
+<select data-ng-if="fieldData.fieldType == 3" ng-model="fieldData.fieldValue" class="form-control input-sm" ng-class="{'required':fieldData.isRequire == 1}" data-ng-change="bringOptionForSubType(fieldData, claimForm.resultList)">
+    <option value="" ng-selected="{{fieldData.fieldValue == null}}"  >--Select--</option>
+    <option ng-repeat="subType in fieldData.subCategoryTypeList | filter : {status : 1}" ng-selected="{{subType.subCategoryTypeID == fieldData.fieldValue}}" value="{{subType.subCategoryTypeID}}">{{subType.shortName}}</option>
+</select>
+
+<!--Number input field == 5 (Fixed Option Selector)-->
+<select  ng-model="fieldData.fieldValue" class="form-control input-sm"  data-ng-if="fieldData.fieldType == 5" ng-class="{'required':fieldData.isRequire == 1}">
+    <option value="" ng-selected="{{fieldData.fieldValue == null}}"  >--Select--</option>
+    <option ng-repeat="subCategory in fieldData.subCategoryList" ng-selected="{{subCategory.subCategoryID == fieldData.fieldValue}}" value="{{subCategory.subCategoryID}}">{{subCategory.shortName}}</option>
+</select>
+
+<!--Number input field == 6 (Dependent Option Selector)-->
+<select  ng-model="fieldData.fieldValue" class="form-control input-sm"  data-ng-if="fieldData.fieldType == 6" ng-class="{'required':fieldData.isRequire == 1}">
+    <option value="" ng-selected="{{fieldData.fieldValue == null}}"  >--Select--</option>
+    <option ng-repeat="subCategory in fieldData.subCategoryList | filter : {subCategoryTypeID : findSelectedSubType(fieldData, claimForm.resultList)}" ng-selected="{{subCategory.subCategoryID == fieldData.fieldValue}}" value="{{subCategory.subCategoryID}}">{{subCategory.shortName}}</option>
+</select>
+
+
+<div data-ng-if="fieldData.fieldType == 4" class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <span  class="btn btn-sm btn-warning fileinput-button form-control">
+            <input data-ng-file-select="onFileSelect($files, fieldData)" class="form-control input-sm" type="file"
+                   name="csvFile" data-ng-click="resetInputFile()" ng-class="{'required': fieldData.isRequire == 1 && (fieldData.imageContentList.length == undefined || fieldData.imageContentList.length == 0)}" />
+            <i class="fa fa-cog fa-spin imgloadingbtn" data-ng-show="uploading"></i>
+            <i class="fa fa-plus-square" data-ng-hide="uploading"></i>
+        </span>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <span class="btn btn-sm btn-warning form-control" data-ng-if="fieldData.imageContentList.length > 0">
+            <i class="fa fa-folder-open" data-ng-click="showImageInPopUP(fieldData.imageContentList)" ></i>
+        </span>
+    </div>
+</div >
+
+<!--<span data-ng-if="fieldData.fieldType == 5">Required</span>-->
+<div class="validationErrMsg hidden">
+    {{fieldData.key}}
+</div>
+
+<div data-ng-show="fieldData.hasError">
+    {{fieldData.errorMessage}}
+</div>

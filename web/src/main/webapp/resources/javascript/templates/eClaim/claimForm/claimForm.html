@@ -1,0 +1,96 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div id="breadCum" class="col-md-8 col-lg-8 col-sm-8">
+                <strong> Claim  > Claim Form</strong>
+            </div>
+            <div  class="col-md-4 col-lg-4 col-sm-4">
+                 <button class="btn btn-sm btn-warning pull-right" data-ng-if="false" data-ng-click="claimOnBehalf = true"><span class="fa fa-undo"></span> Claim on behalf</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+<div class="alert alert-warning alert-dismissable" data-ng-show="hasWarning">
+    {{message}}
+</div>
+
+<div class="panel panel-default mt-15" >
+    <div class="panel-body gradient-default" id="validationRequired">
+
+        <tabset class="claimForm-tabset form-group" >
+            <tab data-ng-repeat="category in categoryList"  heading="{{category.shortName}}"  class="{{category.hasError ? 'redTab':''}} {{category.hasWarning ? 'warningTab':''}} {{category.claimBulkData.claimFormList.length > 0 ? 'hasClaim' : ''}}" >
+
+                <div class="alert alert-danger alert-dismissable" data-ng-show="category.headError" style="margin-top: 5px;">
+                    {{category.errorMessage}}
+                </div>
+
+                <button class="btn btn-sm btn-success pull-right" data-ng-click="add(category)"><span class="fa fa-plus"></span> Add Claim</button>
+                <table class="table table-bordered table-condensed table-striped table-hover fams-table" >
+                    <thead>
+                    <tr class="bg-primary">
+                        <th data-ng-repeat="fieldData in category.fieldDATAs">
+                            {{fieldData.shortName}} <span class="text-red" data-ng-if="fieldData.isRequire == 1">*</span>
+                        </th>
+                        <th width="5px">
+                            Action
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody >
+                    <tr data-ng-repeat="claimForm in category.claimBulkData.claimFormList">
+                        <td  data-ng-repeat="fieldData in claimForm.resultList">
+                            <div class="form-group mb-0" ng-class="{'has-error':fieldData.hasError == true, 'has-warning':fieldData.hasWarning == true}">
+                                <div ng-include="'resources/javascript/templates/eClaim/claimForm/claimField.html'"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" data-ng-click="deleteFromClaimForm(category, category.claimBulkData.claimFormList, $index)"><span class="fa fa-trash"></span></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="panel panel-default mt-15">
+                    <div class="panel-heading clearfix">
+
+                        <div class="row" >
+                            <div class="col-md-4 col-lg-4 col-sm-4 text-right">
+                                <label data-ng-if="category.requireOriginal == 1">Need to submit original document for payment</label>
+                                <div class="validationErrMsg hidden"></div>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-sm-4 text-right">
+                                Sub Total : {{calculateSubTotal(category.claimBulkData.claimFormList)}} RM
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+</div>
+
+
+
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row" id="description">
+            <div class="form-group mb-0 col-md-6 col-lg-6 col-sm-6 text-left">
+                <input type="text"  class="form-control required inline"  data-ng-model="finalBulkData.shortName" placeholder="Claim Description"/>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6 text-right">
+                <button class="btn btn-sm btn-success" data-ng-click="save('DRAFT')" ><span class="fa fa-floppy-o"></span> Save</button>
+                <button class="btn btn-sm btn-success" data-ng-click="save('SUBMITTED')" data-ng-show="true"><span class="fa fa-floppy-o"></span> Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br><br><br><br><br>

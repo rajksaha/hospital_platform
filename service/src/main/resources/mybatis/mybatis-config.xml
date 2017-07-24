@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="logImpl" value="SLF4J"/>
+		<setting name="lazyLoadingEnabled" value="true"/>
+		<!--<setting name="mapUnderscoreToCamelCase" value="true"/>-->
+	</settings>
+
+	<typeAliases>
+
+		<!--echo-->
+		<typeAlias alias="Company" type="com.raydar.mybatis.domain.echo.CompanyData"/>
+		<typeAlias alias="Module" type="com.raydar.mybatis.domain.echo.ModuleData"/>
+		<typeAlias alias="CompanyModule" type="com.raydar.mybatis.domain.echo.CompanyModuleData"/>
+        <typeAlias alias="User" type="com.raydar.mybatis.domain.user.UserData"/>
+		<typeAlias alias="UserProfile" type="com.raydar.mybatis.domain.user.UserProfileData"/>
+		<typeAlias alias="UserGroup" type="com.raydar.mybatis.domain.user.UserGroupData"/>
+		<typeAlias alias="UserGroupAssignment" type="com.raydar.mybatis.domain.user.UserGroupAssignmentData"/>
+		<typeAlias alias="UserGroupPermission" type="com.raydar.mybatis.domain.user.GroupPermissionData"/>
+		<typeAlias alias="Permission" type="com.raydar.mybatis.domain.user.PermissionData"/>
+		<typeAlias alias="ContentDetail" type="com.raydar.mybatis.domain.user.ContentDetailData"/>
+		<typeAlias alias="CompanyTax" type="com.raydar.mybatis.domain.echo.CompanyTaxInfoData"/>
+
+
+	</typeAliases>
+
+    <plugins>
+        <plugin interceptor="com.raydar.mybatis.interceptor.MapperInterceptor"/>
+    </plugins>
+</configuration>

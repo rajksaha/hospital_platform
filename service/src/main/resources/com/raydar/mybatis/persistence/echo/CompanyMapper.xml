@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.echo.CompanyMapper">
+
+	<insert id="create" parameterType="Company" useGeneratedKeys="true" keyProperty="companyID" >
+
+		INSERT INTO `echo_company`
+		(
+			`companyCode`,
+			`companyName`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		)
+		VALUES
+		(
+			#{companyCode},
+			#{companyName},
+			#{updatedOn},
+			#{updatedBy},
+			#{createdOn},
+			#{createdBy}
+		)
+
+	</insert>
+	
+	<update id="update" parameterType="Company">
+		UPDATE echo_company SET
+			companyCode = #{companyCode},
+			companyName = #{companyName} ,
+			`updatedOn` = #{updatedOn},
+			`updatedBy` = #{updatedBy}
+		WHERE companyID = #{companyID}
+	</update>
+
+	<select id="getByID" parameterType="int" resultType="Company">
+		SELECT companyID, companyCode, companyName, updatedOn, updatedBy, `createdOn`, `createdBy`
+		FROM echo_company
+		WHERE companyID = #{companyID}
+	</select>
+
+	<select id="getByParam" parameterType="map" resultType="Company">
+		SELECT companyID, companyCode, companyName, updatedOn, updatedBy, `createdOn`, `createdBy`
+		FROM echo_company
+		WHERE 1 = 1
+		<if test="companyID != null">
+			AND companyID = #{companyID}
+		</if>
+		<if test="offset != null and limit != null and sortColumn != null and sortOrder != null">
+			ORDER BY ${sortColumn} ${sortOrder}
+			LIMIT #{limit} OFFSET #{offset}
+		</if>
+	</select>
+
+    <delete id="delete" parameterType="map">
+		DELETE  FROM echo_company WHERE companyID = #{companyID}
+	</delete>
+
+
+</mapper>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.echo.ContentDetailMapper">
+
+
+	<insert id="create" parameterType="ContentDetail" useGeneratedKeys="true" keyProperty="contentDetailID">
+
+		INSERT INTO `echo_content_detail`
+		(
+			`entityType`,
+			`entityID`,
+			`shortName`,
+			`longDesc`,
+			`content`,
+			`url`,
+			`format`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		)
+		VALUES
+		(
+			#{entityType},
+			#{entityID},
+			#{shortName},
+			#{longDesc},
+			#{content},
+			#{url},
+			#{format},
+			#{updatedOn},
+			#{updatedBy},
+			#{createdOn},
+			#{createdBy}
+		)
+
+	</insert>
+
+	<update id="update" parameterType="ContentDetail">
+
+		UPDATE `echo_content_detail`
+		SET
+		`entityType` = #{entityType},
+		`entityID` = #{entityID},
+		`shortName` = #{shortName},
+		`longDesc` = #{longDesc},
+		`content` = #{content},
+		`url` = #{url},
+		`format` = #{format},
+		`updatedOn` = #{updatedOn},
+		`updatedBy` = #{updatedBy}
+		WHERE `contentDetailID` = #{contentDetailID};
+
+
+
+	</update>
+
+
+	<select id="getID" parameterType="int" resultType="ContentDetail">
+		SELECT
+			`contentDetailID`,
+			`entityType`,
+			`entityID`,
+			`shortName`,
+			`longDesc`,
+			`content`,
+			`url`,
+			`format`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		FROM `echo_content_detail`
+
+		WHERE contentDetailID = #{contentDetailID};
+
+	</select>
+
+	<select id="getByParam" parameterType="map" resultType="ContentDetail">
+		SELECT
+		`contentDetailID`,
+		`entityType`,
+		`entityID`,
+		`shortName`,
+		`longDesc`,
+		`content`,
+		`url`,
+		`format`,
+		`updatedOn`,
+		`updatedBy`,
+		`createdOn`,
+		`createdBy`
+		FROM `echo_content_detail`
+		WHERE 1 = 1
+
+		<if test="entityType != null">
+			AND entityType = #{entityType}
+		</if>
+		<if test="entityID != null">
+			AND entityID = #{entityID}
+		</if>
+		<if test="content != null">
+			AND content = #{content}
+		</if>
+		<if test="shortName != null">
+			AND shortName = #{shortName}
+		</if>
+		<if test="likeContent != null">
+			AND LOWER(content) LIKE LOWER(CONCAT('%',#{likeContent},'%')) LIMIT 20
+		</if>
+		<if test="orderByContent != null" >
+			ORDER BY content ASC
+		</if>
+		<if test="orderByShortName != null">
+			ORDER BY shortName, content ASC
+		</if>
+		<if test="orderByCreatedOn != null">
+			ORDER BY createdOn DESC
+		</if>
+
+
+
+	</select>
+
+	<delete id="deleteByParam" parameterType="map">
+
+		DELETE FROM echo_content_detail
+		WHERE 1 = 1
+		<if test="contentDetailID != null">
+			AND contentDetailID = #{contentDetailID}
+		</if>
+		<if test="entityType != null">
+			AND entityType = #{entityType}
+		</if>
+		<if test="entityID != null">
+			AND entityID = #{entityID}
+		</if>
+		<if test="content != null">
+			AND content = #{content}
+		</if>
+		<if test="shortName != null">
+			AND shortName = #{shortName}
+		</if>
+
+	</delete>
+
+	<select id="getDuplicateApprover" resultType="UserData" parameterType="map">
+		SELECT  COUNT(ecd.shortName) status, ecd.shortName AS userName
+		FROM echo_content_detail ecd
+		WHERE ecd.entityID = 1
+		AND ecd.entityType = #{entityType}
+		GROUP BY ecd.shortName HAVING status > 1;
+	</select>
+
+	<select id="getChildContentInfo" parameterType="map" resultType="ContentDetail">
+
+		SELECT
+			ccd2.`contentDetailID`,
+			ccd2.`entityType`,
+			ccd2.`entityID`,
+			ccd2.`shortName`,
+			ccd2.`longDesc`,
+			ccd2.`content`,
+			ccd2.`url`,
+			ccd2.`format`,
+			ccd2.`updatedOn`,
+			ccd2.`updatedBy`,
+			ccd2.`createdOn`,
+			ccd2.`createdBy`
+		FROM echo_content_detail ccd
+		JOIN  company_formation_mapping cfm ON ccd.contentDetailID = cfm.itemParentID
+		JOIN echo_content_detail ccd2 ON cfm.itemID = ccd2.contentDetailID
+		WHERE 1 =1
+
+		<if test="entityType != null">
+			AND ccd.entityType = #{entityType}
+		</if>
+		<if test="entityID != null">
+			AND ccd.entityID = #{entityID}
+		</if>
+		<if test="content != null">
+			AND ccd.content = #{content}
+		</if>
+		<if test="shortName != null">
+			AND ccd.shortName = #{shortName}
+		</if>
+
+	</select>
+
+
+</mapper>

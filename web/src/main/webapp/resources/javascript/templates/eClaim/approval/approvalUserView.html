@@ -1,0 +1,76 @@
+<div class="generic-container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div  class="col-md-6 col-lg-6 col-sm-6">
+                    <div class="col-md-12 col-lg-12" data-ng-show="!claimDetail" >
+                        <ad-table-ajax table-classes="table table-hover"
+                                       page-loader="methods.pageLoader"
+                                       pagination-btn-group-classes="pagination pagination-sm"
+                                       items-not-found-message="No Item found"
+                                       state="{sortKey: 'cb.claimBulkID', sortDirection: 'ASC'}"
+                                       column-definition="columnDefinition"
+                                       ajax-config="dataSourceViewConfig"
+                                       on-data-loaded ="setDataToMyViewList($success, $response)">
+                        </ad-table-ajax>
+                    </div>
+
+                    <div data-ng-show="claimDetail" class="item2Selected divScroll" style="padding: 5px">
+                        <div ng-include="'resources/javascript/templates/eClaim/approval/claimDetail.html'"></div>
+                    </div>
+                </div>
+                <div  class="col-md-6 col-lg-6 col-sm-6 divScroll">
+                    <!--<a href="" title="Header" data-toggle="popover" data-trigger="hover" data-content="Some content">Action</a>-->
+                    <table class="table table-hover" id="validationRequiredSingle" data-ng-show="claimUserViewDetail">
+                        <thead>
+                        <tr class="bg-info">
+                            <th class="text-left">Processed Date</th>
+                            <th class="text-left">Action Taken</th>
+                            <th class="text-left" width="30%">Current Status</th>
+                            <th  class="text-left" data-ng-if="searchData.claimType == 2">Team Code</th>
+                            <th  class="text-left" data-ng-if="searchData.claimType == 2">Des</th>
+                            <th class="text-left" width="20%">Category</th>
+                            <th class="text-right"width="15%" >Amount (RM)</th>
+                            <!--<th width="40%" class="text-left">Reason</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="claim in singleViewUserClaim.claimFormList" class="bg-info">
+                            <td class="col-md-1" data-ng-class="{'item2Selected' : claim.active}">
+                                {{claim.actionTakenOn | date:"dd/MM/yy"}}
+                            </td>
+                            <td class="col-md-1" data-ng-class="{'item2Selected' : claim.active}">
+                                <label> {{claim.actionStatus == approvalData.rejectStatus ? "Rejected" : "Approved"}} </label>
+                            </td>
+                            <td class="col-md-1" data-ng-class="{'item2Selected' : claim.active}">
+                                {{getCompanyStatus(claim.status)}}
+                            </td>
+                            <td class="col-md-1 text-left" data-ng-class="{'item2Selected' : claim.active}">
+                                <label data-ng-click="showDetailPopUp(claim)"  style="cursor: pointer;color: #0e90d2" > {{claim.categoryName}}</label>
+                                    <span data-ng-if="claim.isException" >
+                                        <i class="fa fa-exclamation-triangle" title="{{claim.exceptionReason}}" ></i>
+                                    </span>
+                                <div class="form-group" data-ng-if="claim.actionStatus == approvalData.rejectStatus">
+                                    <input type="text"  data-ng-model="claim.nonApprovalReason" class="form-control required input-sm" placeholder="Provide Reason of rejection(*)" disabled>
+                                </div>
+                            </td>
+                            <td class="col-md-1 text-left"  data-ng-if="searchData.claimType == 2" data-ng-class="{'item2Selected' : claim.active}">{{claim.department}} </td>
+                            <td class="col-md-1 text-left" data-ng-if="searchData.claimType == 2" data-ng-class="{'item2Selected' : claim.active}">{{claim.occupationDes}} </td>
+                            <td class="col-md-1 text-right"  data-ng-class="{'item2Selected' : claim.active}">{{getAmount(claim.resultList)}} </td>
+                        </tr>
+                        <tr class="bg-info">
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td data-ng-if="searchData.claimType == 2">&nbsp;</td>
+                            <td data-ng-if="searchData.claimType == 2">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td class="text-right">&nbsp;</td>
+                            <td class="text-right">Total : {{calculateSub(singleViewUserClaim.claimFormList)}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div id="breadCum" class="col-md-8 col-lg-8 col-sm-8">
+                <strong> Claim  > Claim Form</strong>
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-4">
+                <button class="btn btn-sm btn-success pull-right" data-ng-click="addMaster()"><span class="fa fa-plus"></span> Add Claim</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+<div class="panel panel-default mt-15" >
+    <div class="panel-body gradient-default">
+        <tabset class="claimForm-tabset form-group" >
+            <tab data-ng-repeat="category in categoryList"  heading="{{category.shortName}}"  class="{{category.hasError ? 'redTab':''}}">
+                <button class="btn btn-sm btn-success pull-right" data-ng-click="add(category)"><span class="fa fa-plus"></span> Add Claim</button>
+                <table class="table table-bordered table-condensed table-striped table-hover fams-table" >
+                    <thead>
+                    <tr class="bg-primary">
+                        <th data-ng-repeat="fieldData in category.fieldDATAs">
+                            {{fieldData.shortName}} <span class="text-red" data-ng-if="fieldData.isRequire == 1">*</span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody id="validationRequired">
+                    <tr data-ng-repeat="claimForm in category.claimBulkData.claimFormList">
+                        <td  data-ng-repeat="fieldData in claimForm.resultList">
+                            <div class="form-group mb-0" ng-class="{'has-error':fieldData.hasError == true}">
+                                <input type="text" data-ng-if="fieldData.fieldType == 0" data-ng-model="fieldData.fieldValue" class="form-control input-sm" ng-class="{'required':fieldData.isRequire == 1}" maxlength="100">
+                                <input type="text" data-ng-if="fieldData.fieldType == 1" data-ng-model="fieldData.fieldValue" class="form-control input-sm required decimal" ng-class="{'required':fieldData.isRequire == 1}" maxlength="100">
+                                <input type="text" data-ng-if="fieldData.fieldType == 2" data-ng-model="fieldData.fieldValue" class="form-control form-control-date input-sm" ng-class="{'required':fieldData.isRequire == 1}" maxlength="100"
+                                       datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true" >
+                                <select data-ng-if="fieldData.fieldType == 3" data-ng-model="fieldData.fieldValue" class="form-control input-sm" ng-class="{'required':fieldData.isRequire == 1}"
+                                        data-ng-options="subCategory.subCategoryID as subCategory.shortName for subCategory in fieldData.subCategoryList">
+                                    <option value="">--ALL--</option>
+                                </select>
+                                <button class="btn btn-sm btn-primary"  data-ng-if="fieldData.fieldType == 4" data-ng-click="addImageContent(fieldData)" data-ng-show="true"><span class="fa fa-floppy-plus"></span> Add</button>
+                                <div data-ng-if="fieldData.fieldType == 4" class="form-group mb-0" data-ng-repeat="imageData in fieldData.imageContentList">
+                                    <span class="btn btn-sm btn-warning fileinput-button">
+                                        <input data-ng-file-select="onFileSelect($files, imageData, $index)" class="form-control input-sm" type="file" name="csvFile" data-ng-click="resetInputFile()" ng-class="{'required': $index == 0}"/>
+                                        <i class="fa fa-cog fa-spin imgloadingbtn" data-ng-show="uploading"></i>
+                                        <i class="fa fa-paperclip" data-ng-hide="uploading"></i>
+                                        <span data-ng-if="imageData.imgUrl == null">Upload</span>
+                                        <span data-ng-if="imageData.imgUrl != null">Change Image</span>
+                                    </span>
+                                    <img alt="claimImg" data-ng-if="imageData.imgUrl != null" id="photo_pop_{{$index}}" height="200px", width="150px">
+                                    <!--<ng-gallery images="fieldData.imageContentList">
+                                    </ng-gallery>-->
+                                </div>
+
+                                <div class="validationErrMsg hidden"></div>
+                                <div data-ng-show="fieldData.hasError">
+                                    {{fieldData.errMsg}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </tab>
+        </tabset>
+    </div>
+</div>
+
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+            <div class="text-right">
+                <button class="btn btn-sm btn-success" data-ng-click="save('DRAFT')" data-ng-show="true"><span class="fa fa-floppy-o"></span> Save</button>
+                <button class="btn btn-sm btn-success" data-ng-click="submit('APPROVAL')" data-ng-show="true"><span class="fa fa-floppy-o"></span> submit</button>
+            </div>
+    </div>
+</div>

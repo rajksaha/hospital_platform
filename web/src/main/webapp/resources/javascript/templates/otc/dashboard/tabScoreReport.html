@@ -1,0 +1,24 @@
+<div class="generic-container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr >
+                    <td class="text-center"><label >Outlet Code</label></td>
+                    <td class="text-center"><label >L2M A/OTC Score</label></td>
+                    <td class="text-center"><label>LM A/OTC Score</label></td>
+                    <td class="text-center"><label>CM A/OTC Score</label></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="outlet in outletScore">
+                    <td class="text-center">{{outlet.outletCode}}</td>
+                    <td class="text-center">{{outlet.previous2MonthScore | myCurrency }}</td>
+                    <td class="text-center">{{outlet.previousMonthScore | myCurrency }}</td>
+                    <td class="text-center">{{outlet.currentMonthScore | myCurrency }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

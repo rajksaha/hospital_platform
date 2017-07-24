@@ -1,0 +1,142 @@
+<div class="generic-container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div  data-ng-class="{'col-md-4 col-lg-4 col-sm-4' : claimDetail == false, 'col-md-6 col-lg-6 col-sm-6' : claimDetail == true}">
+                    <div data-ng-show="!claimDetail">
+                        <table class="table table-condensed" style="border-collapse:collapse;" data-ng-if="processedCategoryList.length > 0">
+                            <thead>
+                            <tr>
+                                <th class="text-left">Category</th>
+                                <th></th>
+                                <th></th>
+                                <th class="text-right">Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="category in processedCategoryList" >
+                                    <td colspan="4" data-ng-class="{'bg-info' : category.isActive == true}">
+                                        <div data-toggle="collapse" class="accordion-toggle">
+                                            <table width="100%">
+                                                <tr >
+                                                    <td class="text-left">
+                                                        <a href="" data-ng-click="getCategoryDetail(category); category.displayDept = true" style="cursor: pointer;color: #0e90d2">{{category.shortName}}</a>
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="text-right">{{calculateAmountForCategory(category)}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div data-ng-show="category.displayDept">
+                                            <div data-toggle="collapse" class="accordion-toggle">
+                                                <table class="table table-condensed" style="border-collapse:collapse;">
+                                                    <tr ng-repeat="claim in category.categoryClaimFormList | unique: 'department'">
+                                                        <td colspan="4">
+                                                            <table width="100%">
+                                                                <tr>
+                                                                    <td class="text-left">{{claim.department}}</td>
+                                                                    <td ></td>
+                                                                    <td ></td>
+                                                                    <td class="text-right">{{getAmountForUserCategory(category, claim.department)}}</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div data-ng-if="!processedCategoryList || processedCategoryList.length == 0" class="bg-info">
+                            <div class="alert alert-info" role="alert">No Item found</div>
+                        </div>
+                    </div>
+                    <div data-ng-show="claimDetail" class="item2Selected divScroll" style="padding: 5px">
+                        <div ng-include="'resources/javascript/templates/eClaim/approval/claimDetail.html'"></div>
+                    </div>
+                </div>
+                <div  class="divScroll" data-ng-class="{'col-md-8 col-lg-8 col-sm-8' : claimDetail == false, 'col-md-6 col-lg-6 col-sm-6' : claimDetail == true}">
+                    <!--<a href="" title="Header" data-toggle="popover" data-trigger="hover" data-content="Some content">Action</a>-->
+                    <table class="table  table-hover" id="validationRequiredSingleCategory" data-ng-show="claimCategoryViewDetail">
+                        <thead>
+                        <tr class="bg-info">
+
+                            <th  class="text-left" width="10%">
+                                <label ng-click="orderByField='department'; reverseSort = !reverseSort">
+                                    <label>
+                                        <span data-ng-if="searchData.claimType == 1">Dept</span>
+                                        <span data-ng-if="searchData.claimType == 2">Team Code</span>
+                                        <i ng-class="iconClasses.sortable" class="glyphicon glyphicon-resize-vertical" ng-show="orderByField != 'department'"></i>
+                                        <i ng-class="iconClasses.sortable" class="fa fa-angle-up  form-inline" ng-show="orderByField == 'department' && !reverseSort"></i>
+                                        <i ng-class="iconClasses.sortable" class="fa fa-angle-down form-inline" ng-show="orderByField == 'department' && reverseSort"></i>
+                                    </label>
+                                </label>
+                            </th>
+                            <th  class="text-left" data-ng-if="searchData.claimType == 2">Des</th>
+                            <th  class="text-left" width="15%" data-ng-if="!claimDetail">Staff Code</th>
+                            <th  class="text-left col-md-3" >Staff Name</th>
+                            <th  class="text-left" width="15%">
+                                <a href="" ng-click="orderByField='updateOn'; reverseSort = !reverseSort">
+                                    <label>
+                                        Submission
+                                        <i ng-class="iconClasses.sortable" class="fa fa-angle-up  form-inline" ng-show="orderByField == 'updateOn' && !reverseSort"></i>
+                                        <i ng-class="iconClasses.sortable" class="fa fa-angle-down form-inline" ng-show="orderByField == 'updateOn' && reverseSort"></i>
+                                    </label>
+                                </a>
+                            </th>
+                            <th>Processed Date</th>
+                            <th >Action Taken</th>
+                            <th width="40%" >Current Status</th>
+                            <th  class="text-right" width="15%" data-ng-if="!claimDetail">Amount</th>
+                            <!--<th width="40%" class="text-left">Reason</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="claim in singleViewCategoryClaim.categoryClaimFormList | orderBy:orderByField:reverseSort" class="bg-info">
+                            <td class="col-md-1 text-left"  data-ng-class="{'item2Selected' : claim.active}">{{claim.department}} </td>
+                            <td data-ng-if="searchData.claimType == 2" class="col-md-1 text-left"  data-ng-class="{'item2Selected' : claim.active}">{{claim.occupationDes}} </td>
+                            <td class="col-md-1 text-left" data-ng-if="!claimDetail" >
+                                {{claim.claimantStaffCode}}
+                                    <span data-ng-if="claim.isException" >
+                                        <i class="fa fa-exclamation-triangle" title="{{claim.exceptionReason}}" ></i>
+                                    </span>
+                            </td>
+                            <td class="col-md-1 text-left" data-ng-click="showDetailPopUp(claim)" style="cursor: pointer;color: #0e90d2" data-ng-class="{'item2Selected' : claim.active}">
+                                {{claim.claimantName}}
+                                <div class="form-group" data-ng-if="claim.status == approvalData.rejectStatus">
+                                    <input type="text"  data-ng-model="claim.nonApprovalReason" class="form-control required input-sm" placeholder="Provide Reason of rejection(*)" disabled>
+                                </div>
+                            </td>
+                            <td class="col-md-1 text-left"  data-ng-class="{'item2Selected' : claim.active}">{{claim.updatedOn | date:"dd/MM/yy"}}</td>
+                            <td class="text-left" data-ng-class="{'item2Selected' : claim.active}">
+                                {{claim.actionTakenOn | date:"dd/MM/yy"}}
+                            </td>
+                            <td class="col-md-1 text-left" data-ng-class="{'item2Selected' : claim.active}">
+                                <label> {{claim.actionStatus == approvalData.rejectStatus ? "Rejected" : "Approved"}} </label>
+                            </td>
+                            <td class="text-left" data-ng-class="{'item2Selected' : claim.active}">
+                                {{getCompanyStatus(claim.status)}}
+                            </td>
+                            <td class="col-md-1 text-right"  data-ng-if="!claimDetail" >{{getAmount(claim.resultList)}} </td>
+                        </tr>
+                        <tr class="bg-info">
+                            <td>&nbsp;</td>
+                            <td data-ng-if="!claimDetail">&nbsp;</td>
+                            <td data-ng-if="!claimDetail">&nbsp;</td>
+                            <td data-ng-if="searchData.claimType == 2">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td class="text-right">Total : </td>
+                            <td class="text-right"  >{{calculateSub(singleViewCategoryClaim.categoryClaimFormList)}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

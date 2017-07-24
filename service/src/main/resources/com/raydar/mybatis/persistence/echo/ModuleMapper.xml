@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.echo.ModuleMapper">
+
+	<insert id="create" parameterType="Module" useGeneratedKeys="true" keyProperty="moduleID" >
+
+		INSERT INTO `echo_module`
+		(
+		`moduleCode`,
+		`moduleName`,
+		`updatedOn`,
+		`updatedBy`,
+		`createdOn`,
+		`createdBy`
+		)
+		VALUES
+		(
+		#{moduleCode},
+		#{moduleName},
+		#{updatedOn},
+		#{updatedBy},
+		#{createdOn},
+		#{createdBy}
+		)
+
+	</insert>
+	
+	<update id="update" parameterType="Module">
+		UPDATE echo_module SET
+			moduleCode = #{moduleCode},
+			moduleName = #{moduleName} ,
+			`updatedOn` = #{updatedOn},
+			`updatedBy` = #{updatedBy}
+		WHERE moduleID = #{moduleID}
+	</update>
+
+	<select id="getByID" parameterType="int" resultType="Module">
+		SELECT moduleID, moduleCode, moduleName, updatedOn, updatedBy, `createdOn`, `createdBy`
+		FROM echo_module
+		WHERE moduleID = #{moduleID}
+	</select>
+
+	<select id="getByParam" parameterType="map" resultType="Module">
+		SELECT moduleID, moduleCode, moduleName, updatedOn, updatedBy, `createdOn`, `createdBy`
+		FROM echo_module
+		WHERE 1 = 1
+		<if test="moduleID != null">
+			AND moduleID = #{moduleID}
+		</if>
+		<if test="offset != null and limit != null and sortColumn != null and sortOrder != null">
+			ORDER BY ${sortColumn} ${sortOrder}
+			LIMIT #{limit} OFFSET #{offset}
+		</if>
+	</select>
+
+    <delete id="delete" parameterType="map">
+		DELETE  FROM echo_module WHERE moduleID = #{moduleID}
+	</delete>
+
+
+</mapper>

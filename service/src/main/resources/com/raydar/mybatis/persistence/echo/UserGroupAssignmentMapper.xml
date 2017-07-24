@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.echo.UserGroupAssignmentMapper">
+
+
+
+	<insert id="create" parameterType="UserGroupAssignment"  useGeneratedKeys="true" keyProperty="userGroupAssignmentID">
+
+		INSERT INTO `echo_user_group_assignment`
+		(
+			`userID`,
+			`userGroupID`,
+			`status`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		)
+		VALUES
+		(
+			#{userID},
+			#{userGroupID},
+			#{status},
+			#{updatedOn},
+			#{updatedBy},
+			#{createdOn},
+			#{createdBy}
+		)
+
+
+	</insert>
+	
+	<update id="update" parameterType="UserGroupAssignment">
+
+		UPDATE `echo_user_group_assignment`
+		SET
+		`userID` = #{userID},
+		`userGroupID` = #{userGroupID},
+		`status` =  #{status},
+		`updatedOn` = #{updatedOn},
+		`updatedBy` = #{updatedBy}
+		WHERE `userGroupAssignmentID` = #{userGroupAssignmentID};
+
+	</update>
+
+	<select id="getByID" parameterType="int" resultType="UserGroupAssignment">
+
+		SELECT
+			`userGroupAssignmentID`,
+			`userID`,
+			`userGroupID`,
+			`status`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		FROM `echo_user_group_assignment`
+		WHERE userGroupAssignmentID = #{userGroupAssignmentID}
+
+	</select>
+
+	<select id="getByParam" parameterType="map" resultType="UserGroupAssignment">
+
+		SELECT
+			euga.`userGroupAssignmentID`,
+			euga.`userID`,
+			euga.`userGroupID`,
+			euga.`status`,
+			euga.`updatedOn`,
+			euga.`updatedBy`,
+			euga.`createdOn`,
+			euga.`createdBy`
+		FROM `echo_user_group_assignment` euga
+		JOIN `echo_user` eu ON euga.userID = eu.userID
+		WHERE 1 = 1
+		<if test="userGroupAssignmentID != null">
+			AND euga.userGroupAssignmentID = #{userGroupAssignmentID}
+		</if>
+		<if test="userID != null">
+			AND euga.userID = #{userID}
+		</if>
+		<if test="userName != null">
+			AND eu.userName = #{userName}
+		</if>
+		<if test="userGroupID != null">
+			AND euga.`userGroupID` = #{userGroupID}
+		</if>
+
+	</select>
+
+	<delete id="deleteByUserID" parameterType="int">
+		DELETE FROM echo_user_group_assignment WHERE userID = #{userID}
+	</delete>
+
+
+</mapper>

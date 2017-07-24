@@ -1,0 +1,81 @@
+<script type="text/ng-template" id="firstName_template">
+    <a href="" data-ng-class="{'bg-info':item.isActive == true }" data-ng-click="getClaimBulkDetail(item)" style="cursor: pointer;color: #0e90d2">{{item.firstName}}</a>
+</script>
+<div class="mt-15">
+    <div class="">
+        <div class="row">
+            <div class="col-md-1 col-lg-1 col-sm-1 form-group">
+                <h4>Approval </h4>
+            </div>
+            <div class="col-md-1 col-lg-1 col-sm-1 form-group">
+                <h5 class="pull-right text-muted">Filter : </h5>
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2 form-group">
+                <div class="input-group">
+                    <input type="text" data-ng-model="startDate" class="form-control form-control-date input-sm" datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true" placeholder="Submission - Start" data-ng-change="dt2 = true">
+                    <span class="input-group-addon" >
+                        <i class="fa fa-times" title="clear" data-ng-if="startDate" data-ng-click="clearFilter(1)" style="cursor: pointer"></i>
+                    </span>
+                </div>
+
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2" >
+                <div class="input-group">
+                    <input type="text" data-ng-model="endDate" class="form-control form-control-date input-sm" datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt2" ng-focus="dt2 = true" ng-click="dt2 = true" placeholder="Submission - End" data-ng-change="changeApprovalView(defaultView)">
+                    <span class="input-group-addon" >
+                        <i class="fa fa-times" title="clear"  data-ng-if="endDate" data-ng-click="clearFilter(1)" style="cursor: pointer"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2 form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control input-sm" ng-model="queryData.staffCode" placeholder="Staff code" data-ng-change="changeApprovalView(defaultView)" />
+                    <span class="input-group-addon" >
+                        <i class="fa fa-times" title="clear" data-ng-if="queryData.staffCode" data-ng-click="clearFilter(2)" style="cursor: pointer"></i>
+                    </span>
+                </div>
+
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <div class="form-group mb-0">
+                    <select class="form-control input-sm" data-ng-model="queryData.categoryID" data-ng-options="category.categoryID as category.shortName for category in searchCategoryList" data-ng-change="changeApprovalView(defaultView)">
+                        <option value="">All Category</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <div class="form-group mb-0">
+                    <select class="input-sm form-control" data-ng-model="defaultView" data-ng-change="changeApprovalView(defaultView)">
+                        <option value="USERBULK">User View</option>
+                        <option value="CATEGORYBULK">Category View</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+
+<tabset class="claimForm-tabset form-group"  >
+    <tab heading="Pending Approval"  select="tabSelected(1)" >
+        <div data-ng-if="defaultView == 'USERBULK'" ng-include="'resources/javascript/templates/eClaim/approval/approvalUser.html'"></div>
+        <div data-ng-if="defaultView == 'CATEGORYBULK'" ng-include="'resources/javascript/templates/eClaim/approval/approvalCategory.html'"></div>
+    </tab>
+    <tab heading="Claims History" select="tabSelected(2)">
+        <div data-ng-if="defaultView == 'USERBULK'" ng-include="'resources/javascript/templates/eClaim/approval/approvalUserView.html'"></div>
+        <div data-ng-if="defaultView == 'CATEGORYBULK'" ng-include="'resources/javascript/templates/eClaim/approval/approvalCategoryView.html'"></div>
+    </tab>
+</tabset>
+
+
+
+
+
+<br><br><br><br><br>

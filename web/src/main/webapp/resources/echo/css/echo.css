@@ -1,0 +1,43 @@
+body, html {
+    height: inherit;
+}
+
+body {
+    height: 100%;
+}
+
+.fa-asterisk.required {
+    color: #9F3A38 !important;
+    font-size: .5em;
+    vertical-align: top;
+}
+
+.echo-form .field {
+    position: relative;
+}
+
+.echo-form .prompt.label {
+    position: absolute;
+    right: 7px;
+    top: 55px;
+    z-index: 1;
+}
+
+@media only screen and (max-width: 700px) {
+    .k-grid-toolbar .toolbar-label {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1920px) {
+    .ui.small.modal {
+        width: 560px;
+        margin: 0 0 0 -270px;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    .ui.small.modal {
+        width: 560px;
+        margin: 0 0 0 -270px;
+    }
+}

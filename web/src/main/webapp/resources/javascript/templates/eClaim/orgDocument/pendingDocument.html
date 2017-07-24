@@ -1,0 +1,47 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div id="breadCum" class="col-md-8 col-lg-8 col-sm-8">
+                <strong> Approval > Original Documents</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+
+<table class="table table-bordered table-condensed table-striped table-hover" id="validationRequiredCat">
+    <thead>
+    <tr class="bg-primary">
+        <th width="10%" class="text-center">Status</th>
+        <th width="20%" class="text-center">Reference number</th>
+        <th width="20%" class="text-center">Category</th>
+        <th width="10%" class="text-center">Date</th>
+        <th width="10%" class="text-center">Amount (RM)</th>
+        <th width="15%" class="text-center">Attachment</th>
+        <th width="10%" class="text-center">Detail</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-ng-repeat="claim in claimFormList">
+        <td class="col-md-1 text-center" >{{claim.originalReceived == 1 ? 'Collected' : 'Pending'}}</td>
+        <td class="col-md-1 text-center">{{formatClaimRunningNumber(claim)}}</td>
+        <td class="col-md-1 text-center">{{claim.categoryName}}</td>
+        <td class="col-md-1 text-center">{{getText(claim.resultList, 2) | date:'dd/MM/yy'}}</td>
+        <td class="col-md-1 text-center">{{getAmount(claim.resultList)}}</td>
+        <td class="col-md-1 text-center" >
+            <span data-ng-if="getAttachColumn(claim.resultList,4) == true" >
+                <i class="fa fa-folder-open " data-ng-click="showImageInPopUP(claim.resultList,4)" ></i>
+            </span>
+        </td>
+        <td class="col-md-1 text-center">
+            <button class="btn btn-sm btn-warning" data-ng-click="showDetailPopUp(claim)">Detail</button>
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,23 @@
+.echo-menu {
+
+}
+.echo-menu .list-group-item{
+    cursor: pointer;
+}
+.echo-menu > div > a{
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.03)) !important;
+}
+
+.echo-sub-menu {
+
+}
+
+.echo-sub-menu > a {
+    padding: 5px 5px 5px 25px;
+    border-radius: 0 !important;
+}
+
+.echo-sub-menu > .echo-active {
+    color : #337ab7 !important;
+    background-color: red !important;
+}

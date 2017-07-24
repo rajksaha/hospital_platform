@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xmlns:context="http://www.springframework.org/schema/context"
+			 xmlns:beans="http://www.springframework.org/schema/beans"
+			 xmlns:security="http://www.springframework.org/schema/security"
+			 xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
+
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+
+	<context:component-scan base-package="com.raydar.web.security" />
+	<security:global-method-security pre-post-annotations="enabled"/>
+	<beans:bean id="echoUserDetailService" class="com.raydar.web.security.EchoUserDetailsService" />
+	<beans:bean id="encoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
+
+	<security:authentication-manager alias="authenticationManager" erase-credentials="true">
+		<security:authentication-provider user-service-ref="echoUserDetailService">
+			<security:password-encoder ref="encoder"></security:password-encoder>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<security:http pattern="/resources/**" security="none" />
+
+	<!--<beans:bean id="tokenRepository" class="org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl" />-->
+	<beans:bean id="unauthorisedEntryPoint" class="com.raydar.web.security.UnauthorisedEntryPoint" />
+	<beans:bean id="forBiddenEntryPoint" class="com.raydar.web.security.ForbiddenEntryPoint" />
+
+	<security:http use-expressions="true">
+		<security:access-denied-handler ref="forBiddenEntryPoint"/>
+		<security:csrf disabled="true"/>
+		<security:http-basic entry-point-ref="unauthorisedEntryPoint"/>
+		<security:intercept-url pattern="/rest/login/**" access="permitAll" />
+		<security:intercept-url pattern="/rest/logout" access="permitAll" />
+		<security:intercept-url pattern="/rest/**" access="isAuthenticated()" />
+		<!--<security:logout invalidate-session="true" delete-cookies="JSESSIONID" logout-url="/rest/logout" />-->
+		<security:session-management session-fixation-protection="newSession"/>
+		<!--<security:remember-me remember-me-parameter="remember-me" remember-me-cookie="echo_remember_me_cookie" token-validity-seconds="604800" key="KVJGH$$^#C326" />-->
+	</security:http>
+
+
+</beans:beans>

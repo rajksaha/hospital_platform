@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.echo.PermissionMapper">
+
+
+
+	<insert id="create" parameterType="Permission"  useGeneratedKeys="true" keyProperty="permissionID">
+
+		INSERT INTO `echo_permission`
+		(
+			`companyModuleID`,
+			`functionCode`,
+			`shortName`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		)
+		VALUES
+		(
+			#{companyModuleID},
+			#{functionCode},
+			#{shortName},
+			#{updatedOn},
+			#{updatedBy},
+			#{createdOn},
+			#{createdBy}
+		)
+
+	</insert>
+	
+	<update id="update" parameterType="Permission">
+
+		UPDATE `echo_permission`
+		SET
+		`companyModuleID` = #{companyModuleID},
+		`functionCode` = #{functionCode},
+		`shortName` = #{shortName},
+		`updatedOn` = #{updatedOn},
+		`updatedBy` = #{updatedBy}
+		WHERE `permissionID` = #{permissionID};
+	</update>
+
+	<select id="getByID" parameterType="int" resultType="Permission">
+
+		SELECT
+			`permissionID`,
+			`companyModuleID`,
+			`functionCode`,
+			`shortName`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		FROM `echo_permission`
+
+		WHERE permissionID = #{permissionID}
+
+	</select>
+
+	<select id="getByParam" parameterType="map" resultType="Permission">
+
+		SELECT
+		ep.`permissionID`,
+		ep.`companyModuleID`,
+		ep.`functionCode`,
+		ep.`shortName`,
+		ep.`updatedOn`,
+		ep.`updatedBy`,
+		ep.`createdOn`,
+		ep.`createdBy`
+		FROM `echo_permission` ep
+		JOIN echo_company_module ecm ON ecm.companyModuleID = ep.companyModuleID
+		JOIN echo_company ec ON ecm.companyID = ec.companyID
+		WHERE 1 = 1
+		<if test="permissionID != null">
+			AND ep.permissionID = #{permissionID}
+		</if>
+		<if test="companyID != null">
+			AND ec.companyID = #{companyID}
+		</if>
+
+	</select>
+
+	<select id="getCompanyModulePermission" parameterType="map" resultType="Permission">
+
+
+		SELECT
+			ep.`permissionID`,
+			ep.`companyModuleID`,
+			ep.`functionCode`,
+			ep.`shortName`,
+			ep.`updatedOn`,
+			ep.`updatedBy`,
+			ep.`createdOn`,
+			ep.`createdBy`,
+			CASE WHEN egp.groupPermissionID IS NOT NULL
+			THEN true
+			ELSE false
+		END AS isAssigned
+		FROM `echo_permission` ep
+		JOIN echo_company_module ecm ON ecm.companyModuleID = ep.companyModuleID
+        LEFT JOIN echo_group_permission egp ON ep.permissionID = egp.permissionID AND egp.userGroupID = #{userGroupID}
+		WHERE 1 = 1
+		<if test="companyID != null">
+			AND ecm.companyID = #{companyID}
+		</if>
+
+	</select>
+
+
+</mapper>

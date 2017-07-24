@@ -1,0 +1,35 @@
+<div class='modal-header modalHead'>
+    <h4 class='modal-title'>e-Attachment</h4>
+</div>
+
+<div class='modal-body modalBody'>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="albumImage">
+                <img data-ng-if="currentImage.imgFormat == 'png' || currentImage.imgFormat == 'jpg' || currentImage.imgFormat == 'jpeg'" ng-src="{{currentImage.imgUrl}}" height="400px"  width="400px"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+                <ul class="list">
+                    <li  ng-repeat="image in images" ng-click="setCurrentImage(image)">
+                        <img data-ng-if="image.imgFormat == 'png' || image.imgFormat == 'jpg' || image.imgFormat == 'jpeg'" ng-src="{{image.imgUrl}}" height="50px"  width="25px"/>
+                        <label data-ng-if="image.imgFormat == 'pdf'" >View PDF</label>
+                        <label data-ng-if="image.imgFormat == 'csv' || image.imgFormat == 'xlsx'" >View Excel</label>
+                    </li>
+                </ul><!-- End of List -->
+
+
+        </div><!-- End of Column -->
+    </div><!-- End of Row -->
+</div>
+
+<div class="modal-footer modalFoot">
+    <button data-ng-disabled="disable" class="btn btn-danger pull-left" ng-click="delete(currentImage)">
+        <span class="fa fa-times " aria-hidden="true"></span> Delete
+    </button>
+    <button class="btn btn-danger btnLanier" ng-click="cancel()">
+        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Back
+    </button>
+</div>
+
+

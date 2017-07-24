@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.echo.UserProfileMapper">
+
+
+
+	<insert id="create" parameterType="UserProfile"  useGeneratedKeys="true" keyProperty="userProfileID">
+
+		INSERT INTO `echo_user_profile`
+		(
+			`userID`,
+			`firstName`,
+			`lastName`,
+			`employeeCode`,
+			`emailAddress`,
+			`jsonString`,
+			`lastWorkingDay`,
+			`otcUserDesignation`,
+			`updatedBy`,
+			`updatedOn`,
+			`createdBy`,
+			`createdOn`
+		)
+		VALUES
+		(
+			#{userID},
+			#{firstName},
+			#{lastName},
+			#{employeeCode},
+			#{emailAddress},
+			#{jsonString},
+			#{lastWorkingDay},
+			#{otcUserDesignation},
+			#{updatedBy},
+			#{updatedOn},
+			#{createdBy},
+			#{createdOn}
+		)
+
+
+	</insert>
+	
+	<update id="update" parameterType="UserProfile">
+
+		UPDATE `echo_user_profile`
+		SET
+			`firstName` = #{firstName},
+			`lastName` = #{lastName},
+			`otcUserDesignation` = #{otcUserDesignation},
+			`emailAddress` = #{emailAddress},
+			`jsonString` = #{jsonString},
+			`lastWorkingDay` = #{lastWorkingDay},
+			`updatedBy` = #{updatedBy},
+			`updatedOn` = #{updatedOn}
+		WHERE `userID` = #{userID}
+
+	</update>
+
+	<select id="getUserProfileByID" parameterType="int" resultType="UserProfile">
+
+		SELECT
+			eup.`userProfileID`,
+			eup.`userID`,
+			eup.`firstName`,
+			eup.`lastName`,
+			eup.`employeeCode`,
+			eup.`emailAddress`,
+			eup.`jsonString`,
+			eup.lastWorkingDay,
+			eup.`updatedBy`,
+			eup.`updatedOn`,
+			eup.`createdBy`,
+			eup.`createdOn`,
+			eup.otcUserDesignation,
+			eu.status AS status,
+			eu.userName AS userName,
+			eu.companyID AS companyID
+		FROM `echo_user_profile` eup
+		JOIN `echo_user` eu ON eup.userID = eu.userID
+		WHERE eup.userID = #{userID}
+
+	</select>
+
+	<select id="getUserProfileByParam" parameterType="map" resultType="UserProfile">
+
+		SELECT
+			eup.`userProfileID`,
+			eup.`userID`,
+			eup.`firstName`,
+			eup.`lastName`,
+			eup.`employeeCode`,
+			eup.`emailAddress`,
+			eup.`jsonString`,
+			eup.`lastWorkingDay`,
+			eup.`updatedBy`,
+			eup.`updatedOn`,
+			eup.`createdBy`,
+			eup.`createdOn`,
+			eup.otcUserDesignation,
+			eu.status AS status,
+			eu.userName AS userName
+		FROM `echo_user_profile` eup
+		JOIN `echo_user` eu ON eup.userID = eu.userID
+		WHERE 1 = 1
+		<if test="userProfileID != null">
+			AND eup.userProfileID = #{userProfileID}
+		</if>
+		<if test="userID != null">
+			AND eup.userID = #{userID}
+		</if>
+		<if test="companyID != null">
+			AND eu.companyID = #{companyID}
+		</if>
+		<if test="employeeCode != null">
+			AND eup.employeeCode = #{employeeCode}
+		</if>
+		<if test="likeStaffCode != null">
+			AND LOWER(eup.employeeCode) LIKE LOWER(CONCAT('%',#{likeStaffCode},'%')) LIMIT 20
+		</if>
+		<if test="offset != null and limit != null and sortColumn != null and sortOrder != null">
+			ORDER BY ${sortColumn} ${sortOrder}
+			LIMIT #{limit} OFFSET #{offset}
+		</if>
+
+	</select>
+
+	<select id="getUserCountByParam" parameterType="map" resultType="int">
+
+		SELECT COUNT(eup.userID)
+		FROM `echo_user_profile` eup
+		JOIN `echo_user` eu ON eup.userID = eu.userID
+		WHERE 1 = 1
+		<if test="userProfileID != null">
+			AND eup.userProfileID = #{userProfileID}
+		</if>
+		<if test="userID != null">
+			AND eup.userID = #{userID}
+		</if>
+		<if test="companyID != null">
+			AND eu.companyID = #{companyID}
+		</if>
+		<if test="employeeCode != null">
+			AND eup.employeeCode = #{employeeCode}
+		</if>
+	</select>
+
+
+
+
+
+</mapper>

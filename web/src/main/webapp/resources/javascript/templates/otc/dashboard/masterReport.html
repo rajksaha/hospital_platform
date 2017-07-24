@@ -1,0 +1,65 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div class="col-md-8 col-lg-8 col-sm-8">
+                <strong>Outlet Tracking & Coaching Report</strong>
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                &nbsp;
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <div class="pull-right">
+                    <button class="btn btn-sm btn-primary" ng-show="reportView" title="Back To Dashboard" data-ng-click="reportView = false" ><span class="glyphicon glyphicon-arrow-left"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel-heading clearfix" ng-show="!reportView">
+    <div class="row">
+        <div class="col-md-3 col-lg-3 col-sm-3">
+            <select  class="form-control pull-right input-sm" data-ng-model="year" data-ng-options="year.value as year.data for year in yearList" data-ng-change="tabSelected(tabNum)">
+                <option value="">--Year--</option>
+            </select>
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3">
+            <select class="form-control pull-right input-sm" data-ng-model="month" data-ng-options="month.value as month.data for month in monthList" data-ng-change="tabSelected(tabNum)">
+                <option value="">--Month--</option>
+            </select>
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3">
+            <select class="form-control pull-right input-sm" data-ng-model="outletWing" data-ng-options="wing.wingID as wing.wingName for wing in wingList" data-ng-change="bringRegion(outletWing)">
+                <option value="">--Select Wing--</option>
+            </select>
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3 ">
+            <select class="form-control pull-right input-sm" data-ng-disabled="outletWing == null" data-ng-model="regionID" data-ng-options="region.regionID as region.shortName for region in regionList" data-ng-change="tabSelected(tabNum)">
+                <option value="">--Select Region--</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<tabset class="master-tabset form-group"  data-ng-show="!reportView">
+    <tab heading="Master Report"  select="tabSelected(1)" >
+        <div ng-include="'resources/javascript/templates/otc/dashboard/tabMaster.html'"></div>
+    </tab>
+    <tab heading="Outlet Submission" select="tabSelected(2)">
+        <div ng-include="'resources/javascript/templates/otc/dashboard/tabOutletSubmission.html'"></div>
+    </tab>
+    <tab heading="OTC Score Report (AM)" select="tabSelected(3)">
+        <div ng-include="'resources/javascript/templates/otc/dashboard/tabScoreReport.html'"></div>
+    </tab>
+    <tab heading="3 Most Critical Area Analysis Report" select="tabSelected(4)">
+        <div ng-include="'resources/javascript/templates/otc/dashboard/tabMcaReport.html'"></div>
+    </tab>
+    <tab heading="3 Most Critical Area Analysis Report Summary" select="tabSelected(5)">
+        <div ng-include="'resources/javascript/templates/otc/dashboard/tabMcaSummary.html'"></div>
+    </tab>
+</tabset>
+
+
+<div data-ng-show="reportView" >
+    <div class="grid-view"ng-include="'resources/javascript/templates/otc/dashboard/reportDetail.html'" ></div>
+</div>

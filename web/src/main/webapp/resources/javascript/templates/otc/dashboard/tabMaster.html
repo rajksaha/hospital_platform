@@ -1,0 +1,48 @@
+<div class="generic-container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr >
+                    <td class="text-left"><label >Outlet Code</label></td>
+                    <td class="text-left"><label >Report Details</label></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="outlet in outletMasterList">
+                    <td class="text-left"  ><label >{{outlet.outletCode}}</label></td>
+                    <td>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr >
+                                <td class="text-center"><label >RPT No</label></td>
+                                <td class="text-center"><label>RPT Date</label></td>
+                                <td class="text-center"><label>Staff code</label></td>
+                                <td class="text-center"><label>Completeness (%)</label></td>
+                                <td class="text-center"><label>Score</label></td>
+                                <td class="text-center"><label>MCA1</label></td>
+                                <td class="text-center"><label>MCA2</label></td>
+                                <td class="text-center"><label>MCA3</label></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="report in outlet.otcReportList">
+                                <td class="text-center"><a href="" data-ng-click="bringReportDetail(report)">{{report.reportName}}</a></td>
+                                <td class="text-center">{{report.createdOn  | date:'dd/MM/yy'}}</td>
+                                <td class="text-center">{{report.employeeCode}} ({{report.userType}})</td>
+                                <td class="text-center">{{report.completenessAvg | myCurrency }}</td>
+                                <td class="text-center">{{report.npsScore | myCurrency }}</td>
+                                <td class="text-center">{{report.mostCriticalArea1}}</td>
+                                <td class="text-center">{{report.mostCriticalArea2}}</td>
+                                <td class="text-center">{{report.mostCriticalArea3}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

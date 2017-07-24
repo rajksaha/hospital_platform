@@ -1,0 +1,198 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div class="col-md-8 col-lg-8 col-sm-8">
+                <strong>Outlet Tracking & Coaching Report</strong>
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <select ng-show="!reportView" class="form-control pull-right" data-ng-model="year" data-ng-options="year.value as year.data for year in yearList" data-ng-change="bringData()">
+                    <option value="">--Year--</option>
+                </select>
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <select ng-show="!reportView"  class="form-control pull-right" data-ng-model="month" data-ng-options="month.value as month.data for month in monthList" data-ng-change="bringData()">
+                    <option value="">--Month--</option>
+                </select>
+                <div class="pull-right">
+                    <button class="btn btn-sm btn-primary" ng-show="reportView" title="Back To Dashboard" data-ng-click="reportView = false" ><span class="glyphicon glyphicon-arrow-left"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="generic-container" data-ng-hide="reportView">
+    <div class="panel panel-default">
+        <div class="panel panel-default">
+            <div class="panel-heading"  >
+                <span class="lead" >NPS Score</span>
+            </div>
+            <div class="tablecontainer" >
+
+                <table class="table table-condensed" style="border-collapse:collapse;">
+                    <thead>
+                    <tr>
+                        <th>Region</th>
+                        <th></th>
+                        <th></th>
+                        <th width="20%" class="text-center">AM</th>
+                        <th width="20%" class="text-center">RME</th>
+                        <th width="20%" class="text-center">Variance</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="region in regionNpsList">
+                        <td colspan="6">
+                            <div data-toggle="collapse" class="accordion-toggle">
+                                <table width="100%">
+                                    <tr >
+                                        <td data-ng-click="region.displayOutlet = !region.displayOutlet"><label style="cursor: pointer; cursor: hand;" >{{region.shortName}}</label></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td width="20%" class="text-center">{{region.amNpsScoreAvg | myCurrency }}</td>
+                                        <td width="20%" class="text-center">{{region.rmeNpsScoreAvg | myCurrency }}</td>
+                                        <td width="20%" class="text-center">{{(region.amNpsScoreAvg - region.rmeNpsScoreAvg) | myCurrency }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div data-ng-show="region.displayOutlet">
+                                <table class="table table-condensed" style="border-collapse:collapse;">
+                                    <tr ng-repeat="outlet in region.outletList">
+                                        <td colspan="5">
+                                            <div data-toggle="collapse" class="accordion-toggle">
+                                                <table width="100%">
+                                                    <tr >
+                                                        <td><a href="" data-ng-click="outlet.showReportList = !outlet.showReportList" class="text-left">{{outlet.outletCode}} {{outlet.outletName}}</a></td>
+                                                        <td>
+                                                            &nbsp;&nbsp;
+                                                        </td>
+                                                        <td width="20%" class="text-center">{{outlet.amNpsScoreAvg | myCurrency }}</td>
+                                                        <td width="20%" class="text-center">{{outlet.rmeNpsScoreAvg| myCurrency  }}</td>
+                                                        <td width="20%" class="text-center">{{(outlet.amNpsScoreAvg - outlet.rmeNpsScoreAvg) | myCurrency }}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div data-ng-show="outlet.showReportList">
+                                                <table class="table table-condensed" style="border-collapse:collapse;">
+                                                    <tr ng-repeat="report in outlet.otcReportList">
+                                                        <td><a href="" data-ng-click="bringReportDetail(report)">{{report.reportName}}</a></td>
+                                                        <td width="20%" align="center"><span ng-if="report.otcUserDesignation == 'AM'">{{report.npsScore | myCurrency }}</span></td>
+                                                        <td width="20%" align="center"><span ng-if="report.otcUserDesignation == 'RME'">{{report.npsScore | myCurrency }}</span></td>
+                                                        <td width="20%" align="center"></td>
+                                                    </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="generic-container" data-ng-hide="reportView">
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <div class="row mb-5">
+                <div class="col-md-12 col-lg-12">
+                    <span class="lead" >NPS Score Tracking (RME)</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                    <label >Region : </label>
+                    <select class="form-control pull-right" data-ng-model="outletRegion" data-ng-options="region.regionID as region.shortName for region in regionList" data-ng-change="bringOutlet(outletRegion, 0)">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                    <label >Outlet : </label>
+                    <select class="form-control pull-right" data-ng-model="outletID" data-ng-options="outlet.outletID as outlet.outletName for outlet in outletList" data-ng-change="outletOnChange(outletID)">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <table class="table table-striped table-bordered" data-ng-if="npsScoreList">
+                <thead>
+                <tr >
+                    <td class="text-center" ><label >RME Staff code</label></td>
+                    <td class="text-center"><label >Last report</label></td>
+                    <td class="text-center"><label >2nd last report</label></td>
+                    <td class="text-center"><label >3rd last report</label></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="profile in npsScoreList">
+                    <td class="text-center">{{profile.firstName}} - {{profile.employeeCode}}</td>
+                    <td class="text-center">{{profile.otcNpsScore | myCurrency}}</td>
+                    <td class="text-center">{{profile.otcNpsScore1 | myCurrency}}</td>
+                    <td class="text-center">{{profile.otcNpsScore2 | myCurrency}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="generic-container" data-ng-hide="reportView">
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <div class="row mb-5">
+                <div class="col-md-12 col-lg-12">
+                    <span class="lead" >AM/RME NPS Score Variance Tracking</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                    <label >Region : </label>
+                    <select class="form-control pull-right" data-ng-model="amRmeRegionID" data-ng-options="region.regionID as region.shortName for region in regionList" data-ng-change="bringOutlet(amRmeRegionID, 1)">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                    <label >Outlet : </label>
+                    <select class="form-control pull-right" data-ng-model="amRmeOutletID" data-ng-options="outlet.outletID as outlet.outletName for outlet in amRmeOutletList" data-ng-change="bringVariance(amRmeOutletID)">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <table class="table table-striped table-bordered" data-ng-if="npsVarianceData">
+                <thead>
+                <tr >
+                    <td class="text-center"><label >AM Last Report</label></td>
+                    <td class="text-center"><label>RME Last Report</label></td>
+                    <td class="text-center"><label>Variance</label> </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr >
+                    <td class="text-center" >{{npsVarianceData.npsScoreByAM | myCurrency}}</td>
+                    <td class="text-center">{{npsVarianceData.npsScoreByRme | myCurrency}}</td>
+                    <td class="text-center">{{(npsVarianceData.npsScoreByAM - npsVarianceData.npsScoreByRme) | myCurrency}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+    <div data-ng-if="reportView" >
+        <div class="grid-view"ng-include="'resources/javascript/templates/otc/dashboard/reportDetail.html'" ></div>
+    </div>
+</div>

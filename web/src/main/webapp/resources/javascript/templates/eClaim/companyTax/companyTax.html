@@ -1,0 +1,126 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div id="breadCum" class="col-md-8 col-lg-8 col-sm-8">
+                <strong> TAX</strong>
+            </div>
+            <div  class="col-md-4 col-lg-4 text-right">
+                <button title="search" class="btn btn-primary" data-ng-click="search()"><span class="fa fa-search"></span></button>
+                <button title="save" class="btn btn-success" data-ng-click="save()"><span class="fa fa-floppy-o"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+<div class="alert alert-warning alert-dismissable" data-ng-show="hasWarning">
+    {{message}}
+</div>
+
+<div class="row">
+    <div class="form-group col-md-3 col-lg-3">
+        <span class="">Date</span>
+        <div class="form-group mb-0">
+            <datepicker  min-mode="month" datepicker-mode="'month'" data-ng-model="searchData.endDate" data-ng-change="displayDownload = false"></datepicker>
+        </div>
+    </div>
+    <div class="form-group col-md-3 col-lg-3">
+        <span class="">Claim Ref Key</span>
+        <div class="form-group mb-0">
+            <input type="text" class="form-control" data-ng-model="searchData.entityName">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<table class="table table-bordered table-condensed table-striped table-hover" id="validationRequired" data-ng-show="displayReport" >
+    <thead>
+    <tr class="bg-primary">
+        <th width="10%" class="text-center">Ref No</th>
+        <th width="10%" class="text-center">Amount</th>
+        <th width="10%" class="text-center" >TAX</th>
+        <th width="10%" class="text-center">Reg Number</th>
+        <th width="10%" class="text-center">Company Name</th>
+        <th width="10%" class="text-center">Company Code</th>
+        <th width="10%" class="text-center">Trading Name</th>
+        <th width="10%" class="text-center">Inv Num</th>
+        <th width="10%" class="text-center">Inv Date</th>
+        <th width="5%" class="text-center">Detail</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr  data-ng-repeat="claim in searchData.claimFormDataList">
+        <td class="col-md-1 text-center" ><input type="checkbox" data-ng-click="claim.isApproved = !claim.isApproved"> {{formatClaimRunningNumber(claim.claimBulkID)}}</td>
+        <td class="col-md-1 text-center">{{getAmount(claim.resultList)}}</td>
+        <th class="col-md-1 text-center" >{{calculateGstAmount(claim.resultList, .06)}}</th>
+        <td class="col-md-1 text-center">
+            <div class="form-group">
+                <input type="text" data-ng-show="claim.isApproved" data-ng-class="{required : claim.isApproved == true}" data-ng-model="claim.companyTaxInfoData.regNumber" typeahead="itemList.regNumber for itemList in getTypeHeadItem($viewValue, 'regNumber')"  class="form-control"  typeahead-on-select='onSelectItem($item, $model, $label, claim.companyTaxInfoData)'/>
+                <label data-ng-show="!claim.isApproved" >{{claim.companyTaxInfoData.regNumber}}</label>
+                <div class="validationErrMsg hidden"></div>
+            </div>
+        </td>
+        <td class="col-md-1 text-center">
+            <div class="form-group">
+                <input type="text" data-ng-show="claim.isApproved" data-ng-class="{required : claim.isApproved == true}" data-ng-model="claim.companyTaxInfoData.companyName" typeahead="itemList.companyName for itemList in getTypeHeadItem($viewValue, 'companyName')"  class="form-control"  typeahead-on-select='onSelectItem($item, $model, $label, orderByProduct, claim.companyTaxInfoData)'/>
+                <label data-ng-show="!claim.isApproved" >{{claim.companyTaxInfoData.companyName}}</label>
+                <div class="validationErrMsg hidden"></div>
+            </div>
+
+        </td>
+        <td class="col-md-1 text-center">
+            <div class="form-group">
+                <input type="text" data-ng-show="claim.isApproved" data-ng-class="{required : claim.isApproved == true}" data-ng-model="claim.companyTaxInfoData.companyCode" typeahead="itemList.companyCode for itemList in getTypeHeadItem($viewValue, 'companyCode')"  class="form-control"  typeahead-on-select='onSelectItem($item, $model, $label, orderByProduct, claim.companyTaxInfoData)'/>
+                <label data-ng-show="!claim.isApproved"  > {{claim.companyTaxInfoData.companyCode}}</label>
+                <div class="validationErrMsg hidden"></div>
+            </div>
+
+        </td>
+        <td class="col-md-1 text-center">
+            <div class="form-group">
+                <input type="text" data-ng-show="claim.isApproved" ng-class="{'required':claim.isApproved == true}" data-ng-model="claim.companyTaxInfoData.tradingName" typeahead="itemList.tradingName for itemList in getTypeHeadItem($viewValue, 'tradingName')"  class="form-control"  typeahead-on-select='onSelectItem($item, $model, $label, orderByProduct, claim.companyTaxInfoData)'/>
+                <label data-ng-show="!claim.isApproved"  >{{claim.companyTaxInfoData.tradingName}}</label>
+                <div class="validationErrMsg hidden"></div>
+            </div>
+
+        </td>
+        <td class="col-md-1 text-center">
+            <div class="form-group">
+                <input type="text" class="form-control" data-ng-show="claim.isApproved" data-ng-class="{required : claim.isApproved == true}"  data-ng-model="claim.invNumber">
+                <label data-ng-show="!claim.isApproved"  >{{claim.invNumber}}</label>
+                <div class="validationErrMsg hidden"></div>
+            </div>
+        </td>
+        <td class="col-md-1 text-center">
+            <div class="form-group">
+                <input type="text"  data-ng-show="claim.isApproved" class="form-control form-control-date input-sm" data-ng-class="{required : claim.isApproved == true}"  data-ng-model="claim.invDate" datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true">
+                <label data-ng-show="!claim.isApproved" >{{claim.invDate | date:'dd/MM/yy'}}</label>
+            <div class="validationErrMsg hidden"></div>
+            </div>
+        </td>
+        <td class="col-md-1 text-center">
+            <a href=""  title="View Details" class="inline" data-ng-click="showDetailPopUp(claim)"><span class="fa fa-info-circle "></span></a>
+            <span data-ng-if="getAttachColumn(claim.resultList,4) == true" >
+                <i class="fa fa-folder-open " data-ng-click="showImageInPopUP(claim.resultList,4)" ></i>
+            </span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!--<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div  class="col-md-12 col-lg-12 col-sm-12 text-right">
+            </div>
+        </div>
+    </div>
+</div>-->

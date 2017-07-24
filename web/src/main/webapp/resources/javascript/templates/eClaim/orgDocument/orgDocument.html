@@ -1,0 +1,91 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div id="breadCum" class="col-md-8 col-lg-8 col-sm-8">
+                <strong> Approval > Original Documents</strong>
+            </div>
+            <div  class="col-md-4 col-lg-4 col-sm-4">
+                <button class="btn btn-primary pull-right" ng-click="search()"><i class="fa fa-search"></i></button>
+                <button class="btn btn-primary pull-right" ng-click="print()"><i class="fa fa-download"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="approved_template">
+    <!--<input type="checkbox" data-ng-model="item.isApproved" data-ng-click="item.isApproved = !item.isApproved"/>-->
+
+    <select class="form-inline input-sm" data-ng-model="item.isApproved">
+        <option value="1">Approve</option>
+        <option value="-1">Reject</option>
+        <option value="0">Hold</option>
+    </select>
+
+</script>
+<script type="text/ng-template" id="detail_template">
+    <a href=""  title="View Details" class="inline" data-ng-click="showDetailPopUp(item)"><span class="fa fa-info-circle "></span></a>
+    <span data-ng-if="getAttachColumn(item.resultList,4) == true" >
+        <i class="fa fa-folder-open " data-ng-click="showImageInPopUP(item.resultList,4)" ></i>
+    </span>
+    <span data-ng-if="item.isException" >
+        <i class="fa fa-exclamation-triangle" title="{{item.exceptionReason}}" ></i>
+    </span>
+
+</script>
+<script type="text/ng-template" id="reason_template">
+
+    <textarea data-ng-if="item.isApproved == -1" data-ng-model="item.nonApprovalReason" class="form-control required"></textarea>
+    <div class="validationErrMsg hidden"></div>
+
+</script>
+<div class="row" ng-show="!showForm">
+    <div class="form-group col-md-3 col-lg-3">
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="searchParam.claimantStaffCode" />
+            <span class="input-group-addon">Staff Code</span>
+        </div>
+    </div>
+    <div class="form-group col-md-3 col-lg-3">
+        <div class="input-group">
+            <span class="input-group-addon">Sort By</span>
+            <select data-ng-model="searchParam.orderBy" class="form-control">
+                <option value="">--Select--</option>
+                <option value="claimBulkID">Reference Number</option>
+                <option value="approvedOn">Last Approved Date</option>
+                <option value="updatedOn">Submission Date</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group col-md-3 col-lg-3">
+        <div class="input-group">
+            <span class="input-group-addon">Start Date</span>
+            <input type="text"  data-ng-model="startDate" class="form-control form-control-date input-sm"  maxlength="100"
+                   datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true">
+        </div>
+    </div>
+    <div class="form-group col-md-3 col-lg-3">
+        <div class="input-group">
+            <span class="input-group-addon">End Date</span>
+            <input type="text"  data-ng-disabled="startDate == null" data-ng-model="endDate" class="form-control form-control-date input-sm"  maxlength="100"
+                   datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt2" ng-focus="dt2 = true" ng-click="dt2 = true">
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12">
+        <ad-table-ajax table-classes="table table-bordered table-hover bfpb-table"
+                       page-sizes="[10, 20, 30]"
+                       page-loader="methods.pageLoader"
+                       pagination-btn-group-classes="pagination pagination-sm"
+                       items-not-found-message="No Item found"
+                       state="{sortKey: 'claimBulkID', sortDirection: 'ASC'}"
+                       column-definition="columnDefinition"
+                       ajax-config="dataSourceConfig"
+                       on-data-loaded ="setDataToMyList($success, $response)">
+        </ad-table-ajax>
+    </div>
+</div>
+
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <button class="btn btn-sm btn-success pull-right"   data-ng-click="documentCollected()" data-ng-show="true"><span class="fa fa-floppy-o"></span> Save</button>
+    </div>
+</div>

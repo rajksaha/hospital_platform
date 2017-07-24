@@ -1,0 +1,59 @@
+<div class="row bluePanel" >
+    <div class="col-md-10 col-lg-10 col-sm-10">
+        <div class="">
+            <b><h4 data-ng-if="claim.claimantName" >{{claim.claimantName}} - {{claim.claimantStaffCode}}</h4></b>
+        </div>
+    </div>
+    <div class="col-md-2 col-lg-2 col-sm-2">
+        <a href="" class="pull-right" data-ng-click="hideClaimDetail()"><span class="fa fa-times"></span></a>
+    </div>
+</div>
+<div class="row">
+
+
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <label> Claim Description</label>
+        <input type="text" data-ng-model="claim.claimDescription" class="form-control input-sm" disabled>
+    </div>
+
+    <div  data-ng-repeat="fieldData in claim.resultList" data-ng-class="{'col-md-4 col-lg-4 col-sm-4' : fieldData.fieldType !=4, 'col-md-12 col-lg-12 col-sm-12' : fieldData.fieldType == 4}">
+        <label>{{fieldData.shortName}}</label>
+        <input type="text" data-ng-if="fieldData.fieldType == 0" data-ng-model="fieldData.fieldValue" class="form-control input-sm" disabled>
+
+        <input type="text" data-ng-if="fieldData.fieldType == 1" data-ng-model="fieldData.fieldValue" class="form-control input-sm required decimal" disabled>
+
+        <input type="text" data-ng-if="fieldData.fieldType == 2" data-ng-model="fieldData.fieldValue" class="form-control form-control-date input-sm" disabled datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true" >
+
+        <select data-ng-if="fieldData.fieldType == 3" ng-model="fieldData.fieldValue" class="form-control input-sm" disabled >
+            <option value="" ng-selected="{{fieldData.fieldValue == null}}"  >--Select--</option>
+            <option ng-repeat="subCategory in fieldData.subCategoryTypeList" ng-selected="{{subCategory.subCategoryTypeID == fieldData.fieldValue}}" value="{{subCategory.subCategoryID}}">{{subCategory.shortName}}</option>
+        </select>
+        <select data-ng-if="fieldData.fieldType == 5" ng-model="fieldData.fieldValue" class="form-control input-sm" disabled >
+            <option value="" ng-selected="{{fieldData.fieldValue == null}}"  >--Select--</option>
+            <option ng-repeat="subCategory in fieldData.subCategoryList" ng-selected="{{subCategory.subCategoryID == fieldData.fieldValue}}" value="{{subCategory.subCategoryID}}">{{subCategory.shortName}}</option>
+        </select>
+        <select data-ng-if="fieldData.fieldType == 6" ng-model="fieldData.fieldValue" class="form-control input-sm" disabled >
+            <option value="" ng-selected="{{fieldData.fieldValue == null}}"  >--Select--</option>
+            <option ng-repeat="subCategory in fieldData.subCategoryTypeList" ng-selected="{{subCategory.subCategoryID == fieldData.fieldValue}}" value="{{subCategory.subCategoryID}}">{{subCategory.shortName}}</option>
+        </select>
+        <ul class="list-inline" data-ng-if="fieldData.fieldType == 4" >
+            <li data-ng-repeat="imageData in fieldData.imageContentList" >
+                <img class="mb-0 form-inline" alt="claimImg"  data-ng-if="imageData.imgFormat == 'png' || imageData.imgFormat == 'jpg' || imageData.imgFormat == 'jpeg'" src="{{imageData.imgUrl}}" height="25px", width="25px" data-ng-click="haveImage(imageData)" style="cursor: pointer">
+                <a data-ng-if="imageData.imgFormat == 'pdf'" class="mb-0 form-inline" href="" style="cursor: pointer"  data-ng-if="imageData.imgFormat == 'pdf'" data-ng-click="displayFile(imageData)"><span class="fa fa-file-pdf-o">PDF</span></a>
+                <a data-ng-if="imageData.imgFormat == 'xlsx'" class="mb-0 form-inline"href="" style="cursor: pointer" data-ng-click="displayFile(imageData)"><span class="fa fa-file-excel-o">EXCEL</span></a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div data-ng-if="checkForDefault(claim.resultList)" class="row">
+        <div data-ng-if="currentImage" class="col-md-12 col-lg-12 col-sm-12" >
+            <embed data-ng-if="currentImage.imgFormat == 'pdf'" ng-src="{{currentImage.linkUrl}}" width="500px" height="500px" />
+            <div class="clearfix" data-ng-if="currentImage.imgFormat != 'xlsx' || currentImage.imgFormat != 'pdf'">
+                <div class="albumImage" style="height: 500px; width: auto">
+                    <canvas-viewer src='currentImage.imgUrl' overlays="overlays" options="options"></canvas-viewer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

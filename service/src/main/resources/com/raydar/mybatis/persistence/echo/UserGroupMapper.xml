@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.echo.UserGroupMapper">
+
+
+
+	<insert id="create" parameterType="UserGroup"  useGeneratedKeys="true" keyProperty="userGroupID">
+
+		INSERT INTO `echo_user_group`
+		(
+			`shortName`,
+			`longDesc`,
+			`companyModuleID`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		)
+		VALUES
+		(
+			#{shortName},
+			#{longDesc},
+			#{companyModuleID},
+			#{updatedOn},
+			#{updatedBy},
+			#{createdOn},
+			#{createdBy}
+		)
+
+
+
+	</insert>
+	
+	<update id="update" parameterType="UserGroup">
+
+		UPDATE `echo_user_group`
+		SET
+		`shortName` = #{shortName},
+		`longDesc` = #{longDesc},
+		`companyModuleID` = #{companyModuleID},
+		`updatedOn` = #{updatedOn},
+		`updatedBy` = #{updatedBy}
+		WHERE `userGroupID` = #{userGroupID};
+	</update>
+
+	<select id="getByID" parameterType="int" resultType="UserGroup">
+
+		SELECT
+			eug.`userGroupID`,
+			eug.`shortName`,
+			eug.`longDesc`,
+			eug.`companyModuleID`,
+			ecm.shortName AS companyModuleName,
+            ec.companyName AS companyName,
+            em.moduleName AS moduleName,
+			eug.`updatedOn`,
+			eug.`updatedBy`,
+			eug.`createdOn`,
+			eug.`createdBy`
+		FROM `echo_user_group` eug
+		JOIN echo_company_module ecm ON eug.companyModuleID = ecm.companyModuleID
+        JOIN echo_company ec ON ecm.companyID = ec.companyID
+        JOIN echo_module em ON ecm.moduleID = em.moduleID
+
+		WHERE eug.userGroupID = #{userGroupID}
+
+	</select>
+
+	<select id="getByParam" parameterType="map" resultType="UserGroup">
+
+		SELECT
+			eug.`userGroupID`,
+			eug.`shortName`,
+			eug.`longDesc`,
+			eug.`companyModuleID`,
+			ecm.shortName AS companyModuleName,
+			ec.companyName AS companyName,
+			em.moduleName AS moduleName,
+			eug.`updatedOn`,
+			eug.`updatedBy`,
+			eug.`createdOn`,
+			eug.`createdBy`
+		FROM `echo_user_group` eug
+		JOIN echo_company_module ecm ON eug.companyModuleID = ecm.companyModuleID
+		JOIN echo_company ec ON ecm.companyID = ec.companyID
+		JOIN echo_module em ON ecm.moduleID = em.moduleID
+		WHERE 1 = 1
+		<if test="userGroupID != null">
+			AND eug.userGroupID = #{userGroupID}
+		</if>
+		<if test="companyID != null">
+			AND ecm.companyID = #{companyID}
+		</if>
+		<if test="userGroupCode != null">
+			AND eug.longDesc = #{userGroupCode}
+		</if>
+		<if test="companyModuleID != null">
+			AND eug.companyModuleID = #{companyModuleID}
+		</if>
+		<if test="offset != null and limit != null and sortColumn != null and sortOrder != null">
+			ORDER BY ${sortColumn} ${sortOrder}
+			LIMIT #{limit} OFFSET #{offset}
+		</if>
+
+	</select>
+
+	<select id="getCountByParam" parameterType="map" resultType="int">
+
+		SELECT COUNT(eug.userGroupID)
+		FROM `echo_user_group` eug
+		JOIN echo_company_module ecm ON eug.companyModuleID = ecm.companyModuleID
+		JOIN echo_company ec ON ecm.companyID = ec.companyID
+		JOIN echo_module em ON ecm.moduleID = em.moduleID
+		WHERE 1 = 1
+		<if test="userGroupID != null">
+			AND eug.userGroupID = #{userGroupID}
+		</if>
+		<if test="companyID != null">
+			AND ecm.companyID = #{companyID}
+		</if>
+		<if test="userGroupCode != null">
+			AND eug.longDesc = #{userGroupCode}
+		</if>
+		<if test="companyModuleID != null">
+			AND eug.companyModuleID = #{companyModuleID}
+		</if>
+
+	</select>
+
+	<select id="getUserGroupForUser" parameterType="map" resultType="UserGroup">
+
+		SELECT
+			eug.`userGroupID`,
+			eug.`shortName`,
+			eug.`longDesc`,
+			eug.`companyModuleID`,
+			eug.`updatedOn`,
+			eug.`updatedBy`,
+			eug.`createdOn`,
+			eug.`createdBy`,
+		CASE WHEN euga.userGroupAssignmentID IS NOT NULL
+			THEN true
+			ELSE false
+		END AS isAssigned
+		FROM `echo_user_group` eug
+		JOIN echo_company_module ecm ON eug.companyModuleID = ecm.companyModuleID
+		LEFT JOIN echo_user_group_assignment euga ON eug.userGroupID = euga.userGroupID AND euga.userID = #{userID}
+
+		WHERE 1 = 1
+		<if test="companyID != null">
+			AND ecm.companyID = #{companyID}
+		</if>
+	</select>
+
+	<select id="getUserGroupCountByParam" parameterType="map" resultType="int">
+		SELECT COUNT(userGroupID)
+		FROM echo_user_group
+		WHERE 1 = 1
+		<if test="offset != null and limit != null and sortColumn != null and sortOrder != null">
+			ORDER BY ${sortColumn} ${sortOrder}
+			LIMIT #{limit} OFFSET #{offset}
+		</if>
+	</select>
+
+
+</mapper>

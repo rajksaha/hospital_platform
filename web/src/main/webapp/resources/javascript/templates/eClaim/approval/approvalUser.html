@@ -1,0 +1,75 @@
+<div class="generic-container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div  class="col-md-6 col-lg-6 col-sm-6">
+                    <div class="col-md-12 col-lg-12" data-ng-show="!claimDetail" >
+                        <a  class="pull-right" data-ng-if="userData.permissions['EXP_ADMIN_APP_3_VIEW'] || userData.permissions['ECLAIM_DOC_APPROVER_VIEW']" href="javascript:void(0)" ng-click="download()" title="Download">(<i class="fa fa-download"></i>)</a>
+                        <ad-table-ajax table-classes="table table-hover"
+                                       page-loader="methods.pageLoader"
+                                       page-sizes="[10]"
+                                       pagination-btn-group-classes="pagination pagination-sm"
+                                       items-not-found-message="No Item found"
+                                       state="{sortKey: 'cb.claimBulkID', sortDirection: 'ASC'}"
+                                       column-definition="columnDefinition"
+                                       ajax-config="dataSourceConfig"
+                                       on-data-loaded ="setDataToMyList($success, $response)">
+                        </ad-table-ajax>
+                    </div>
+
+                    <div data-ng-show="claimDetail" class="item2Selected divScroll" style="padding: 5px">
+                        <div ng-include="'resources/javascript/templates/eClaim/approval/claimDetail.html'"></div>
+                    </div>
+                </div>
+                <div  class="col-md-6 col-lg-6 col-sm-6 divScroll">
+                    <table class="table table-hover" id="validationRequiredSingle" data-ng-show="claimUserDetail">
+                        <thead>
+                        <tr class="bg-info">
+                            <th width="25%">Action</th>
+                            <th  class="text-left" >Ref-key</th>
+                            <th  class="text-left" >Category</th>
+                            <th  class="text-left" data-ng-if="searchData.claimType == 2">Team Code</th>
+                            <th  class="text-left" data-ng-if="searchData.claimType == 2">Des</th>
+                            <th  class="text-right"width="20%" >Amount (RM)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="claim in singleUserClaim.claimFormList" class="bg-info">
+                            <td class="col-md-1 text-left" data-ng-class="{'item2Selected' : claim.active}">
+                                <select class="form-control" data-ng-model="claim.isApproved">
+                                    <option value="1">Approve</option>
+                                    <option value="-1">Reject</option>
+                                    <option value="0">Hold</option>
+                                </select>
+                            </td>
+                            <td class="col-md-1 text-left"  data-ng-class="{'item2Selected' : claim.active}">{{formatClaimRunningNumber(claim)}}</td>
+                            <td class="col-md-1 text-left" data-ng-class="{'item2Selected' : claim.active}">
+                                <label data-ng-click="showDetailPopUp(claim)"  style="cursor: pointer;color: #0e90d2" > {{claim.categoryName}}</label>
+                                    <span data-ng-if="claim.isException" >
+                                        <i class="fa fa-exclamation-triangle" title="{{claim.exceptionReason}}" ></i>
+                                    </span>
+                                <div class="form-group" data-ng-if="claim.isApproved == -1">
+                                    <input type="text"  data-ng-model="claim.nonApprovalReason" class="form-control required input-sm" placeholder="Provide Reason of rejection(*)">
+                                    <div class="validationErrMsg hidden"></div>
+                                </div>
+                            </td>
+                            <td class="col-md-1 text-left"  data-ng-if="searchData.claimType == 2" data-ng-class="{'item2Selected' : claim.active}">{{claim.department}} </td>
+                            <td class="col-md-1 text-left" data-ng-if="searchData.claimType == 2" data-ng-class="{'item2Selected' : claim.active}">{{claim.occupationDes}} </td>
+                            <td class="col-md-1 text-right"  data-ng-class="{'item2Selected' : claim.active}">{{getAmount(claim.resultList)}} </td>
+                        </tr>
+                        <tr class="bg-info">
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td data-ng-if="searchData.claimType == 2">&nbsp;</td>
+                            <td data-ng-if="searchData.claimType == 2">&nbsp;</td>
+                            <td class="text-right">&nbsp;</td>
+                            <td class="text-right">Total : {{calculateSub(singleUserClaim.claimFormList)}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-sm btn-success pull-right"  data-ng-if="singleUserClaim.claimFormList && claimUserDetail" data-ng-click="saveSingle(approvalData.approvalStatus, approvalData.rejectStatus)" data-ng-show="true"><span class="fa fa-gavel"></span> Process</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div id="breadCum" class="col-md-8 col-lg-8 col-sm-8">
+                    <strong> Category : {{categoryData.shortName}}</strong>
+            </div>
+            <div class="pull-right" class="col-md-4 col-lg-4 col-sm-4"> <button class="btn btn-sm btn-warning" data-ng-click="goToSubCategoryType()"><span class="fa fa-undo"></span> Sub Category Type</button></div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+
+<div id="validationRequired" ng-show="showForm">
+    <div class="panel panel-default mt-15">
+        <div class="panel-body p15">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Sub Category Option<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="subCategory.shortName" class="form-control input-sm required" maxlength="100">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="text-right">
+                <button class="btn btn-sm btn-warning" data-ng-click="reset()"><span class="fa fa-undo"></span> Reset</button>
+                <button class="btn btn-sm btn-success" data-ng-click="save(subCategory)" data-ng-hide="subCategory.subCategoryID > 0"><span class="fa fa-floppy-o"></span> Save</button>
+                <button class="btn btn-sm btn-success" data-ng-click="update(subCategory)" data-ng-show="subCategory.subCategoryID > 0"><span class="fa fa-floppy-o"></span> Update</button>
+                <button class="btn btn-sm btn-danger" data-ng-click="cancel()"><span class="fa fa-times"></span> Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default mt-15" ng-show="!showForm">
+    <div class="panel-heading clearfix">
+        <strong>Sub Category Options</strong>
+        <button class="btn btn-sm btn-success pull-right" data-ng-click="add()"><span class="fa fa-plus"></span> Add Sub Category Type Options</button>
+    </div>
+    <div class="alert alert-info" data-ng-show="subCategoryList.length == 0">No Sub Category Option Found</div>
+
+    <table class="table table-bordered table-condensed table-striped table-hover fams-table" data-ng-show="subCategoryList.length > 0">
+        <thead>
+        <tr class="bg-primary">
+            <th width="8%">Sl</th>
+            <th>Name</th>
+            <th width="10%">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="subCategory in subCategoryList">
+            <td>{{$index + 1}}</td>
+            <td>{{subCategory.shortName}}</td>
+            <td>
+                <a href="" class="" data-ng-click="edit(subCategory)"><span class="fa fa-pencil-square-o"></span></a>
+                <a href="" class=""
+                   echo-confirmation="delete(subCategory, $index)"
+                   confirmation-message="Are you sure to remove?"
+                   confirmation-title="Confirmation"
+                   item="item">
+                    <span class="fa fa-trash"></span> </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="panel panel-default mt-15" data-ng-show="subCategoryMissingList.length > 0" >
+    <div class="panel-heading clearfix">
+        <strong>Sub Category Missing Options</strong>
+    </div>
+    <div class="alert alert-info" data-ng-show="subCategoryMissingList.length == 0">No Sub Category Missing Option Found</div>
+
+    <table class="table table-bordered table-condensed table-striped table-hover fams-table">
+        <thead>
+        <tr class="bg-primary">
+            <th width="8%">Sl</th>
+            <th>Name</th>
+            <th width="10%">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="subCategory in subCategoryMissingList">
+            <td>{{$index + 1}}</td>
+            <td>{{subCategory.shortName}}</td>
+            <td>
+                <a href="" class="" data-ng-click="edit(subCategory)"><span class="fa fa-pencil-square-o"></span></a>
+                <a href="" class=""
+                   echo-confirmation="delete(subCategory, $index)"
+                   confirmation-message="Are you sure to remove?"
+                   confirmation-title="Confirmation"
+                   item="item">
+                    <span class="fa fa-trash"></span> </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

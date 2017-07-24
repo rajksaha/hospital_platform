@@ -1,0 +1,109 @@
+<div class="large" id="testModal">
+
+    <div class='modal-header modalHead'>
+        <h4 class='modal-title'>Rule Setup</h4>
+    </div>
+
+    <div class='modal-body'>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group mb-0">
+                    <label>Rule Name<span class="text-red">*</span></label>
+                    <input type="text" data-ng-model="categoryRule.shortName" class="form-control input-sm required" maxlength="100">
+                    <div class="validationErrMsg hidden"></div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group mb-0">
+                    <label>Sub Category<span class="text-red">*</span></label>
+                    <select class="form-control" data-ng-model="categoryRule.subCategoryID" data-ng-options="subCategory.subCategoryID as subCategory.shortName for subCategory in subCategoryList" disabled="disabled">
+                        <option value="">--No Sub Category--</option>
+                        <option value="null">--All--</option>
+                    </select>
+                    <div class="validationErrMsg hidden"></div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group mb-0">
+                    <label>Applied Field<span class="text-red">*</span></label>
+                    <select class="form-control" data-ng-model="categoryRule.categoryFieldID" data-ng-options="categoryField.categoryFieldID as categoryField.shortName for categoryField in categoryFieldList" disabled="disabled">
+                        <option value="">--Select--</option>
+                    </select>
+                    <div class="validationErrMsg hidden"></div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group mb-0">
+                    <label>Validation Type<span class="text-red">*</span></label>
+                    <select class="form-control" data-ng-model="categoryRule.ruleType" disabled="disabled">
+                        <option value="">--Select--</option>
+                        <option value="0">Range</option>
+                        <option value="1">Millage</option>
+                    </select>
+                    <div class="validationErrMsg hidden"></div>
+                </div>
+            </div>
+            <!--<div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group mb-0">
+                    <label>Apply To<span class="text-red">*</span></label>
+                    <select class="form-control" data-ng-model="categoryRule.applyTo" disabled="disabled">
+                        <option value="">&#45;&#45;Select&#45;&#45;</option>
+                        <option value="0">All USER</option>
+                        <option value="1">Contracted User</option>
+                        <option value="2">Non-contracted User</option>
+                    </select>
+                    <div class="validationErrMsg hidden"></div>
+                </div>
+            </div>-->
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group mb-0">
+                    <label>Limit<span class="text-red">*</span></label>
+                    <select class="form-control" data-ng-model="categoryRule.limit" disabled="disabled">
+                        <option value="">--Select--</option>
+                        <option value="1">Per Receipt</option>
+                        <option value="2">Per Month</option>
+                        <option value="3">Per Year</option>
+                    </select>
+                    <div class="validationErrMsg hidden"></div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group mb-0">
+                    <label>Error message<span class="text-red">*</span></label>
+                    <input type="text" data-ng-model="categoryRule.errorMsg" class="form-control input-sm" maxlength="200">
+                    <div class="validationErrMsg hidden"></div>
+                </div>
+            </div>
+            <button class="btn btn-info btnLanier pull-right" data-ng-if="categoryRule.ruleType == 1" ng-click="addMillage()"><i class="fa fa-add"></i> Add</button>
+            <div class="col-md-12 col-lg-12 col-sm-12" data-ng-repeat="ruleValue in categoryRule.ruleValueList">
+                <div class="row">
+                    <div class="form-group mb-0 col-md-4 col-lg-4 col-sm-4">
+                        <label data-ng-if="categoryRule.ruleType != 1" >Min<span class="text-red">*</span></label>
+                        <label data-ng-if="categoryRule.ruleType == 1" >Start from<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="ruleValue.limit1" class="form-control input-sm required" maxlength="100">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                    <div class="form-group mb-0 col-md-4 col-lg-4 col-sm-4">
+                        <label data-ng-if="categoryRule.ruleType != 1" >Max<span class="text-red">*</span></label>
+                        <label data-ng-if="categoryRule.ruleType == 1" >End Rate<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="ruleValue.limit2" class="form-control input-sm" maxlength="100">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                    <div class="form-group mb-0 col-md-4 col-lg-4 col-sm-4" data-ng-if="categoryRule.ruleType == 1">
+                        <label>Amount<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="ruleValue.limit3" class="form-control input-sm required" maxlength="100">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal-footer modalFoot">
+        <button title="Save Changes" id="btn_save_photo_changes" ng-disabled="mod.onGoingCropping" class="btn btnLanier btn-success" ng-click="save(categoryRule)" ><i class="fa fa-save"></i> Save</button>
+        <button class="btn btn-danger btnLanier" ng-click="close()"><i class="fa fa-close"></i> Cancel</button>
+    </div>
+</div>

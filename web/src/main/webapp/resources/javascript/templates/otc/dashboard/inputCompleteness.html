@@ -1,0 +1,103 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div class="col-md-8 col-lg-8 col-sm-8">
+                <strong>Outlet Tracking & Coaching Report</strong>
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <select ng-show="!reportView" class="form-control pull-right" data-ng-model="year" data-ng-options="year.value as year.data for year in yearList" data-ng-change="bringData()">
+                    <option value="">--Year--</option>
+                </select>
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <select ng-show="!reportView"  class="form-control pull-right" data-ng-model="month" data-ng-options="month.value as month.data for month in monthList" data-ng-change="bringData()">
+                    <option value="">--Month--</option>
+                </select>
+                <div class="pull-right">
+                    <button class="btn btn-sm btn-primary" ng-show="reportView" title="Back To Dashboard" data-ng-click="reportView = false" ><span class="glyphicon glyphicon-arrow-left"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div >
+    <div data-ng-if="!reportView" class="generic-container">
+        <div class="panel panel-default">
+            <div class="panel panel-default" >
+                <div class="panel-heading" ><span class="lead" > Data Input Completeness</span></div>
+                <div class="tablecontainer">
+                    <table class="table table-condensed" style="border-collapse:collapse;">
+                        <thead>
+                        <tr>
+                            <th>Region</th>
+                            <th></th>
+                            <th></th>
+                            <th width="20%" class="text-center">AM (%)</th>
+                            <th width="20%" class="text-center">RME(%)</th>
+                            <th width="20%" class="text-center">Variance (%)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr ng-repeat="region in regionInputList">
+                            <td colspan="6">
+                                <div data-toggle="collapse" class="accordion-toggle">
+                                    <table width="100%">
+                                        <tr >
+                                            <td data-ng-click="region.displayOutlet = !region.displayOutlet" ><label style="cursor: pointer; cursor: hand;" >{{region.shortName}}</label></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td width="20%" class="text-center">{{region.aminputAvg | myCurrency }}</td>
+                                            <td width="20%" class="text-center">{{region.rmeinputAvg | myCurrency }}</td>
+                                            <td width="20%" class="text-center">{{(region.aminputAvg - region.rmeinputAvg) | myCurrency }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div data-ng-show="region.displayOutlet">
+                                    <table class="table table-condensed" style="border-collapse:collapse;">
+                                        <tr ng-repeat="outlet in region.outletList">
+                                            <td colspan="5">
+                                                <div data-toggle="collapse" class="accordion-toggle">
+                                                    <table width="100%">
+                                                        <tr >
+                                                            <td><a href="" data-ng-click="outlet.showReportList = !outlet.showReportList" class="text-left">{{outlet.outletCode}} {{outlet.outletName}}</a></td>
+                                                            <td>
+                                                                &nbsp;&nbsp;
+                                                            </td>
+                                                            <td width="20%" class="text-center">{{outlet.amInputAvg | myCurrency }}</td>
+                                                            <td width="20%" class="text-center">{{outlet.rmeInputAvg | myCurrency }}</td>
+                                                            <td width="20%" class="text-center">{{(outlet.amInputAvg - outlet.rmeInputAvg) | myCurrency }}</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div data-ng-show="outlet.showReportList">
+                                                    <table class="table table-condensed" style="border-collapse:collapse;">
+                                                        <tr ng-repeat="report in outlet.otcReportList">
+                                                            <td><a href="" data-ng-click="bringReportDetail(report)">{{report.reportName}}</a></td>
+                                                            <td width="20%" class="text-center"><span ng-if="report.userType == 'AM'">{{report.completenessAvg | myCurrency }}</span></td>
+                                                            <td width="20%" class="text-center"><span ng-if="report.userType == 'RME'">{{report.completenessAvg | myCurrency }}</span></td>
+                                                            <td width="20%" class="text-center"></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-ng-if="reportView" >
+        <div class="grid-view"ng-include="'resources/javascript/templates/otc/dashboard/reportDetail.html'" ></div>
+    </div>
+
+</div>
+
+

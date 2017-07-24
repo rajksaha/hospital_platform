@@ -1,0 +1,69 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <strong>Outlet Tracking & Coaching Report</strong>
+        <div class="pull-right">
+            <button class="btn btn-sm btn-primary" ng-show="reportView" title="Back To Dashboard" data-ng-click="reportView = false" ><span class="glyphicon glyphicon-arrow-left"></span></button>
+        </div>
+    </div>
+</div>
+
+<div >
+
+    <div class="generic-container" data-ng-if="!reportView">
+        <div class="panel panel-default">
+            <div class="panel panel-default">
+                <div class="panel-heading"  ><span class="lead" >eReport Submission Tracking</span></div>
+                <div class="tablecontainer">
+                    <table class="table table-condensed" style="border-collapse:collapse;">
+                        <thead>
+                        <tr>
+                            <th>Region</th>
+                            <th></th>
+                            <th></th>
+                            <th width="20%">Average Visit / Day (AM)</th>
+                            <th width="20%">Average Visit / Day (RME)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="region in regionList">
+                            <td colspan="6">
+                                <div data-toggle="collapse" class="accordion-toggle">
+                                    <table width="100%">
+                                        <tr >
+                                            <td data-ng-click="bringOutletWithAvg(region)"><label style="cursor: pointer; cursor: hand;">{{region.shortName}}</label></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td width="20%" align="center">{{region.avgVisitByAM}}</td>
+                                            <td width="20%" align="center">{{region.avgVisitByRME}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div data-ng-show="region.displayOutlet">
+                                    <table class="table table-condensed" style="border-collapse:collapse;">
+                                        <tr ng-repeat="outlet in region.outletList">
+                                            <td><label>{{outlet.outletCode}} {{outlet.outletName}}</label></td>
+                                            <td colspan="2" >
+                                                <strong><a href="" data-ng-click="outlet.showReportList = !outlet.showReportList"> Reports</a></strong>
+                                                <ul data-ng-show="outlet.showReportList">
+                                                    <li ng-repeat="report in outlet.otcReportList"><a href="" data-ng-click="bringReportDetail(report)">{{report.reportName}}</a> ({{report.otcUserDesignation}})</li>
+                                                </ul>
+                                            </td>
+                                            <td width="20%" align="center">{{outlet.avgVisitByAM | myCurrency }}</td>
+                                            <td width="20%" align="center">{{outlet.avgVisitByRME | myCurrency }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-ng-if="reportView" >
+        <div class="grid-view"ng-include="'resources/javascript/templates/otc/dashboard/reportDetail.html'" ></div>
+    </div>
+
+</div>

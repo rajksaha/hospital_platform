@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n
+            </Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+    </appender>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>/raydar/logs/echo/echo.log</file>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n
+            </Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+    </appender>
+
+    <logger name="com.raydar" additivity="false">
+        <level value="${log.level.com.raydar}" />
+        <appender-ref ref="consoleAppender" />
+    </logger>
+
+    <logger name="com.raydar.mybatis.persistence" additivity="false">
+        <level value="${log.level.com.raydar.mybatis.persistence}" />
+        <appender-ref ref="consoleAppender" />
+    </logger>
+
+    <logger name="java.sql" additivity="false">
+        <level value="${log.level.java.sql}" />
+        <appender-ref ref="consoleAppender" />
+    </logger>
+
+    <logger name="org.mybatis" additivity="false">
+        <level value="${log.level.org.mybatis}" />
+        <appender-ref ref="consoleAppender" />
+    </logger>
+
+    <logger name="org.springframework" additivity="false">
+        <level value="${log.level.org.springframework}" />
+        <appender-ref ref="consoleAppender" />
+    </logger>
+
+    <logger name="org.quartz" additivity="false">
+        <level value="${log.level.org.quartz}" />
+        <appender-ref ref="consoleAppender" />
+    </logger>
+
+    <logger name="org.freemarker" additivity="false">
+        <level value="${log.level.org.freemarker}" />
+        <appender-ref ref="consoleAppender" />
+    </logger>
+
+    <root>
+        <level value="${log.level.root}" />
+        <appender-ref ref="consoleAppender" />
+    </root>
+</configuration>

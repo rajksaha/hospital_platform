@@ -1,0 +1,204 @@
+<script type="text/ng-template" id="action_template">
+    <a href="" data-ng-click="edit(item)"><i class="fa fa-edit"></i> </a>
+    <a href="" data-ng-click="userGroup(item)"><i class="fa fa-users"></i> </a>
+    <!--<a href="" data-ng-click="manageField(item)"><i class="fa fa-desktop"></i>Field Detail</a>
+    <a href="" data-ng-click="manageSub(item)"><i class="fa fa-desktop"></i> Sub Category</a>
+    <a href="" data-ng-click="applyRule(item)"><i class="fa fa-desktop"></i> Apply Rule</a>-->
+</script>
+
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div class="col-md-6 col-lg-6" data-ng-if="userData.userID == 1" >
+                <select class="form-control required" data-ng-model="searchParam.companyID" data-ng-options="company.companyID as company.companyName for company in companyList" data-ng-change="search()">
+                    <option value="">--Company--</option>
+                </select>
+            </div>
+            <div class="pull-right col-md-6 col-lg-6">
+                <button class="btn btn-sm btn-success" data-ng-if="userData.companyID != 1 && companySelected" ng-show="!showForm" title="Add User" data-ng-click="add()"><span class="glyphicon glyphicon-plus"></span></button>
+                <button class="btn btn-sm btn-warning" ng-show="showForm" title="Back To List" data-ng-click="backToList()"><span class="glyphicon glyphicon-arrow-left"></span></button>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+            {{message}}
+        </div>
+        <div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+            {{message}}
+        </div>
+
+
+
+        <div class="row" id="validationRequired" ng-show="showForm">
+            <div class="col-md-4 col-lg-4" >
+                <div class="form-group">
+                    <label>First Name<span class="text-red">*</span></label>
+                    <input type="text" data-ng-model="userProfile.firstName" class="form-control input-sm required" maxlength="90">
+                    <div class="validationErrMsg small text-danger mt-5 hidden"></div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4" >
+                <div class="form-group">
+                    <label>Last Name<span class="text-red">*</span></label>
+                    <input type="text" data-ng-model="userProfile.lastName" class="form-control input-sm" maxlength="90">
+                    <div class="validationErrMsg small text-danger mt-5 hidden"></div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4" >
+                <div class="form-group">
+                    <label>Username<span class="text-red">*</span></label>
+                    <input type="text" data-ng-model="userProfile.userName" class="form-control input-sm required" maxlength="90" data-ng-disabled="userProfile.userID > 0">
+                    <div class="validationErrMsg small text-danger mt-5 hidden"></div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4" >
+                <div class="form-group">
+                    <label>Email Address<span class="text-red">*</span></label>
+                    <input type="text" data-ng-model="userProfile.emailAddress" class="form-control input-sm emailnr" maxlength="90">
+                    <div class="validationErrMsg small text-danger mt-5 hidden"></div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4" >
+                <div class="form-group">
+                    <label>Status<span class="text-red">*</span></label>
+                    <select data-ng-model="userProfile.status" class="form-control input-sm required">
+                        <option value="">--Select--</option>
+                        <option value="1">--Active--</option>
+                        <option value="0">--Inactive--</option>
+                        <option value="2">--New User--</option>
+                    </select>
+                    <div class="validationErrMsg small text-danger mt-5 hidden"></div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4" data-ng-if="userProfile.status == 0">
+                <div class="form-group">
+                    <label>Last Working Day<span class="text-red">*</span></label>
+                    <input type="text"  data-ng-model="userProfile.lastWorkingDay" class="form-control form-control-date input-sm" ng-class="{'required': userProfile.status == 0}" maxlength="100"
+                           datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true"  >
+                    <div class="validationErrMsg small text-danger mt-5 hidden"></div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-12">
+                <div class="form-group">
+                    <h4 style="background-color: #CCCCCC;border: 5px solid silver;padding: 10px 10px 10px 10px">Company Designation</h4>
+                </div>
+            </div>
+
+            <div class="form-group col-md-3 col-lg-3" data-ng-repeat="company in userProfile.companyLevelList">
+                <label class="">{{company.levelName}}</label>
+                <div class="form-group mb-0">
+                    <select data-ng-model="company.levelValue" class="form-control" data-ng-options="contentData.content as contentData.content for contentData in contentDetailList | filter: {shortName: company.levelName}" >
+                        <option value="">--ALL--</option>
+                    </select>
+                </div>
+            </div>
+            <!--<div class="form-group col-md-3 col-lg-3">
+                <label class="">Location</label>
+                <div class="form-group mb-0">
+                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
+                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3 col-lg-3">
+                <label class="">Cost Center</label>
+                <div class="form-group mb-0">
+                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
+                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3 col-lg-3">
+                <label class="">Occupation Description</label>
+                <div class="form-group mb-0">
+                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
+                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3 col-lg-3">
+                <label class="">Category</label>
+                <div class="form-group mb-0">
+                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
+                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3 col-lg-3">
+                <label class="">Section</label>
+                <div class="form-group mb-0">
+                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
+                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3 col-lg-3">
+                <label class="">Division</label>
+                <div class="form-group mb-0">
+                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
+                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3 col-lg-3">
+                <label class="">Company Code</label>
+                <div class="form-group mb-0">
+                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
+                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3 col-lg-3">
+                <label class="">Branch</label>
+                <div class="form-group mb-0">
+                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
+                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-3 col-lg-3">
+                <label class="">Job Grade</label>
+                <div class="form-group mb-0">
+                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
+                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
+                    </select>
+                </div>
+            </div>-->
+        </div>
+
+        <div class="row" ng-show="!showForm && companySelected">
+            <div class="form-group col-md-5 col-lg-5">
+                <div class="input-group">
+                    <input type="text" class="form-control" enter-event="search()" ng-model="searchParam.employeeCode" />
+                    <span class="input-group-addon">Employee Code</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-lg-3">
+                <button class="btn btn-primary" ng-click="search()"><i class="fa fa-search"></i></button>
+            </div>
+
+            <div class="col-md-12 col-lg-12">
+                <ad-table-ajax table-classes="table table-bordered table-hover bfpb-table"
+                               page-sizes="[10, 15, 20]"
+                               page-loader="methods.pageLoader"
+                               pagination-btn-group-classes="pagination pagination-sm"
+                               items-not-found-message="No User found"
+                               state="{sortKey: 'eup.userProfileID', sortDirection: 'ASC'}"
+                               column-definition="columnDefinition"
+                               ajax-config="dataSourceConfig">
+                </ad-table-ajax>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="panel-footer" ng-show="showForm">
+        <div class="text-right">
+            <button class="btn btn-sm btn-warning" data-ng-click="reset()"><span class="glyphicon glyphicon-remove"></span> Reset</button>
+            <button class="btn btn-sm btn-success" data-ng-click="save(userProfile)" data-ng-hide="userProfile.userProfileID > 0"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+            <button class="btn btn-sm btn-success" data-ng-click="update(userProfile)" data-ng-show="userProfile.userProfileID > 0"><span class="glyphicon glyphicon-floppy-disk"></span> Update</button>
+            <button class="btn btn-sm btn-danger" data-ng-click="cancel()"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+
+<div class="echo_left_header">
+	<a href=""><span> HOSPITAL</span></a>
+</div>
+
+<div class="echo_menu_collaspe pointer">
+	<i class="fa fa-lg fa-bars"></i>
+</div>
+
+<div class="echo_right_header">
+	<ul>
+		<li>
+			<i class="fa fa-lg fa-user-circle-o pointer"></i>
+
+			<div class="echo_box_show">
+				<div class="profile_set_up_echo">
+					<div class="echo_user_info">
+						<i class="fa fa-2x fa-user-circle-o"></i>
+						<p class="echo_names">{{userData.profileData.firstName}} - {{userData.profileData.employeeCode}}</p>
+						<p class="mail_echo">{{userData.profileData.emailAddress}}</p>
+					</div>
+
+					<div class="clr"></div>
+				</div>
+
+				<div class="sb_mni echo_sub_menu_link">
+					<ul>
+						<!--<li><a href="#"><i class="fa fa-edit"></i> <span>Edit Profile</span></a></li>
+						<li><a href="#"><i class="fa fa-user-o"></i> <span>View Profile</span></a></li>-->
+						<li><a href="" data-ng-click="changePassword(userData)"><i class="fa fa-edit"></i> <span>Change Password</span></a></li>
+						<li><a class="fa fa-sign-out" data-ng-click="logout()">Logout</a></li>
+					</ul>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+
+<div class="clr"></div>

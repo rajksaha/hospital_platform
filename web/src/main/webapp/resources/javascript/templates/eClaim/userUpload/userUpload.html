@@ -1,0 +1,87 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div id="breadCum" class="col-md-8 col-lg-8 col-sm-8">
+                <strong> Upload User List </strong>
+            </div>
+            <div class="pull-right" class="col-md-4 col-lg-4 col-sm-4"> </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+
+
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+
+            <div id="" class="col-md-4 col-lg-4 col-sm-4" data-ng-if="userData.permissions['SUPER_ADMIN']">
+                <label>Company:</label>
+                    <select class="form-inline input-sm" data-ng-model="selectedCompanyID" data-ng-options="company.companyID as company.companyName for company in companyList" data-ng-change="setCompany(selectedCompanyID)">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+            <div class="pull-right" class="col-md-4 col-lg-4 col-sm-4"> </div>
+        </div>
+    </div>
+
+    <div id="validationRequired" >
+        <div class="panel panel-default mt-15">
+            <div class="panel-body p15">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-sm-4">
+                        <button class="btn btn-primary" data-ng-click="fixProduction()" data-ng-if="userData.permissions['SUPER_ADMIN']" >Production Fix</button>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-sm-4" data-ng-if="selectedCompanyID > 0 || userData.permissions['ECLAIM_ADMIN_VIEW']">
+                        <div class="form-group mb-0">
+                            <label>Upload Excel File<span class="text-red">*</span></label>
+                        <span class="btn btn-sm btn-warning fileinput-button form-control">
+                            <input data-ng-file-select="onFileSelect($files,selectedCompanyID)" class="form-control input-sm required" type="file"  data-ng-click="resetInputFile()" />
+                            <i class="fa fa-cog fa-spin imgloadingbtn" data-ng-show="uploading"></i>
+                            <i class="fa fa-paperclip" data-ng-hide="uploading"></i>
+                            <span >Upload Staff List</span>
+                        </span>
+
+                        <span class="btn btn-sm btn-warning fileinput-button form-control">
+                            <input data-ng-file-select="onOutletSelect($files, selectedCompanyID)" class="form-control input-sm required" type="file"  data-ng-click="resetInputFile()" />
+                            <i class="fa fa-cog fa-spin imgloadingbtn" data-ng-show="uploading"></i>
+                            <i class="fa fa-paperclip" data-ng-hide="uploading"></i>
+                            <span >Upload Outlet</span>
+                        </span>
+
+                        <!--<span class="btn btn-sm btn-warning fileinput-button form-control">
+                            <input data-ng-file-select="onRegionSelect($files, selectedCompanyID)" class="form-control input-sm required" type="file"  data-ng-click="resetInputFile()" />
+                            <i class="fa fa-cog fa-spin imgloadingbtn" data-ng-show="uploading"></i>
+                            <i class="fa fa-paperclip" data-ng-hide="uploading"></i>
+                            <span >Upload Region</span>
+                        </span>
+
+                        <span class="btn btn-sm btn-warning fileinput-button form-control">
+                            <input data-ng-file-select="onOutletSelect($files, selectedCompanyID)" class="form-control input-sm required" type="file"  data-ng-click="resetInputFile()" />
+                            <i class="fa fa-cog fa-spin imgloadingbtn" data-ng-show="uploading"></i>
+                            <i class="fa fa-paperclip" data-ng-hide="uploading"></i>
+                            <span >Upload Outlet</span>
+                        </span>
+                        <span class="btn btn-sm btn-warning fileinput-button form-control">
+                            <input data-ng-file-select="onUserOutletSelect($files, selectedCompanyID)" class="form-control input-sm required" type="file"  data-ng-click="resetInputFile()" />
+                            <i class="fa fa-cog fa-spin imgloadingbtn" data-ng-show="uploading"></i>
+                            <i class="fa fa-paperclip" data-ng-hide="uploading"></i>
+                            <span >Upload Staff Outlet</span>
+                        </span>
+                            <div class="validationErrMsg hidden"></div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

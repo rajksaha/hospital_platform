@@ -1,0 +1,30 @@
+<div class="generic-container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr >
+                    <td class="text-center"><label >Outlet Code</label></td>
+                    <td class="text-center"><label >Visit Target RME</label></td>
+                    <td class="text-center"><label>Visit Target AM</label></td>
+                    <td class="text-center"><label>UTD Visit RME %</label></td>
+                    <td class="text-center"><label>UTD Visit AM %</label></td>
+                    <td class="text-center"><label>A/OTC Score RME</label></td>
+                    <td class="text-center"><label>A/OTC Score AM</label></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="outlet in outletSubmissionList">
+                    <td class="text-center"  ><label >{{outlet.outletCode}}</label></td>
+                    <td class="text-center">{{outlet.avgVisitByRME}} / 24</td>
+                    <td class="text-center">{{outlet.avgVisitByAM}} / 24</td>
+                    <td class="text-center">{{(outlet.avgVisitByRME / 24) * 100| myCurrency }}</td>
+                    <td class="text-center">{{(outlet.avgVisitByAM / 24) * 100| myCurrency }}</td>
+                    <td class="text-center">{{outlet.rmeNpsScoreAvg| myCurrency }}</td>
+                    <td class="text-center">{{outlet.amNpsScoreAvg | myCurrency }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

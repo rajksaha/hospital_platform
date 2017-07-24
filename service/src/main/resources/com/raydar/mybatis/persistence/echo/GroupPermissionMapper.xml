@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.echo.GroupPermissionMapper">
+
+
+
+	<insert id="create" parameterType="UserGroupPermission"  useGeneratedKeys="true" keyProperty="groupPermissionID">
+
+		INSERT INTO `echo_group_permission`
+		(
+			`userGroupID`,
+			`permissionID`,
+			`statusValue`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		)
+		VALUES
+		(
+			#{userGroupID},
+			#{permissionID},
+			#{statusValue},
+			#{updatedOn},
+			#{updatedBy},
+			#{createdOn},
+			#{createdBy}
+		)
+
+
+	</insert>
+	
+	<update id="update" parameterType="UserGroupPermission">
+
+		UPDATE `echo_group_permission`
+		SET
+		`userGroupID` = #{userGroupID},
+		`permissionID` = #{permissionID},
+		`statusValue` = #{statusValue},
+		`updatedOn` = #{updatedOn},
+		`updatedBy` = #{updatedBy}
+		WHERE `groupPermissionID` = #{groupPermissionID};
+	</update>
+
+	<select id="getByID" parameterType="int" resultType="UserGroupPermission">
+
+		SELECT
+			`userGroupID`,
+			`permissionID`,
+			`statusValue`,
+			`groupPermissionID`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		FROM `echo_group_permission`
+
+		WHERE groupPermissionID = #{groupPermissionID}
+
+	</select>
+
+	<select id="getByParam" parameterType="map" resultType="UserGroupPermission">
+
+		SELECT
+		`userGroupID`,
+		`permissionID`,
+		`statusValue`,
+		`groupPermissionID`,
+		`updatedOn`,
+		`updatedBy`,
+		`createdOn`,
+		`createdBy`
+		FROM `echo_group_permission`
+		WHERE 1 = 1
+		<if test="groupPermissionID != null">
+			AND groupPermissionID = #{groupPermissionID}
+		</if>
+
+	</select>
+
+	<delete id="deletePermissionByGroup" parameterType="int">
+			DELETE FROM echo_group_permission WHERE userGroupID = #{userGroupID}
+	</delete>
+
+
+</mapper>

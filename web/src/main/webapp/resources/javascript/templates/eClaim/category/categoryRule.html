@@ -1,0 +1,242 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div id="breadCum" class="col-md-8 col-lg-8 col-sm-8">
+                <strong> Category : {{categoryData.shortName}}</strong>
+            </div>
+            <div class="pull-right" class="col-md-4 col-lg-4 col-sm-4"> <button class="btn btn-sm btn-warning" data-ng-click="goToCategoryList()"><span class="fa fa-undo"></span> Category List</button></div>
+        </div>
+    </div>
+</div>
+<div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+    {{message}}
+</div>
+<div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+    {{message}}
+</div>
+
+<div id="validationRequired" ng-show="showForm">
+    <div class="panel panel-default mt-15">
+        <div class="panel-body p15">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Rule Name<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="categoryRule.shortName" class="form-control input-sm required" maxlength="100">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Sub Category Type</label>
+                        <select class="form-control input-sm" data-ng-model="categoryRule.subCategoryTypeID" data-ng-options="subType.subCategoryTypeID as subType.shortName for subType in subCategoryTypeList" data-ng-change="bringSubCategoryOption(categoryRule.subCategoryTypeID)">
+                            <option value="">--Select--</option>
+                        </select>
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Sub Category <span class="text-red" data-ng-if="categoryRule.subCategoryTypeID > 0">*</span></label>
+                        <select class="form-control input-sm" data-ng-class="{'required' : categoryRule.subCategoryTypeID > 0}" data-ng-model="categoryRule.subCategoryID" data-ng-options="subCat.subCategoryID as subCat.shortName for subCat in subCategoryList">
+                            <option value="">--Select--</option>
+                        </select>
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4" data-ng-if="categoryRule.subCategoryTypeID > 0">
+                    <div class="form-group mb-0">
+                        <label>Sub Category Column<span class="text-red" data-ng-if="categoryRule.subCategoryTypeID > 0">*</span></label>
+                        <select class="form-control input-sm" data-ng-class="{'required' : categoryRule.subCategoryTypeID > 0}" data-ng-model="categoryRule.subCatActionColumnID" data-ng-options="categoryField.categoryFieldID as categoryField.shortName for categoryField in categoryFieldList">
+                            <option value="">--Select--</option>
+                        </select>
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Applied Field<span class="text-red">*</span></label>
+                        <select class="form-control input-sm required" data-ng-model="categoryRule.categoryFieldID" data-ng-options="categoryField.categoryFieldID as categoryField.shortName for categoryField in categoryFieldList">
+                            <option value="">--Select--</option>
+                        </select>
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Validation Type<span class="text-red">*</span></label>
+                        <select class="form-control input-sm" data-ng-model="categoryRule.ruleType">
+                            <option value="">--Select--</option>
+                            <option value="0">Range</option>
+                            <option value="1">Millage</option>
+                            <option value="2">Duplicate Check</option>
+                        </select>
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Limit<span class="text-red">*</span></label>
+                        <select class="form-control input-sm" data-ng-model="categoryRule.limit" data-ng-class="{'required' : categoryRule.ruleType != 2}" data-ng-change="displaySetting(categoryRule,categoryRule.limit)">
+                            <option value="">--Select--</option>
+                            <option value="1">Per Receipt</option>
+                            <option value="2">Per Month</option>
+                            <option value="3">Per Year</option>
+                            <option value="4">Per Day</option>
+                        </select>
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Error message<span class="text-red">*</span></label>
+                        <input type="text" data-ng-model="categoryRule.errorMsg" class="form-control input-sm" maxlength="200">
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="form-group mb-0">
+                        <label>Allow Exception <span class="text-red">*</span></label>
+                        <select class="form-control input-sm required" data-ng-model="categoryRule.allowException">
+                            <option value="">--Select--</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4" data-ng-if="categoryRule.limit == 4" data-ng-repeat="ruleSetting in categoryRule.ruleSettingList">
+                    <div class="form-group mb-0">
+                        <label>Select Field<span class="text-red">*</span></label>
+                        <select class="form-control input-sm" data-ng-model="ruleSetting.categoryFieldID" data-ng-options="categoryField.categoryFieldID as categoryField.shortName for categoryField in categoryFieldList">
+                            <option value="">--Select--</option>
+                        </select>
+                        <div class="validationErrMsg hidden"></div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <button class="btn btn-info btnLanier pull-right" data-ng-if="categoryRule.ruleType == 1" ng-click="addMillage(categoryRule)">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="col-md-12 col-lg-12 col-sm-12" data-ng-repeat="ruleValue in categoryRule.ruleValueList" data-ng-show="categoryRule.ruleType != 2" >
+                    <div class="row">
+                        <div class="form-group mb-0 col-md-4 col-lg-4 col-sm-4">
+                            <label data-ng-if="categoryRule.ruleType != 1" >Min<span class="text-red">*</span></label>
+                            <label data-ng-if="categoryRule.ruleType == 1" >Start from<span class="text-red">*</span></label>
+                            <input type="text" data-ng-model="ruleValue.limit1" class="form-control input-sm" maxlength="100" data-ng-class="{'required' : categoryRule.ruleType != 2}">
+                            <div class="validationErrMsg hidden"></div>
+                        </div>
+                        <div class="form-group mb-0 col-md-4 col-lg-4 col-sm-4">
+                            <label data-ng-if="categoryRule.ruleType != 1" >Max<span class="text-red">*</span></label>
+                            <label data-ng-if="categoryRule.ruleType == 1" >End At<span class="text-red">*</span></label>
+                            <input type="text" data-ng-model="ruleValue.limit2" class="form-control input-sm" maxlength="100">
+                            <div class="validationErrMsg hidden"></div>
+                        </div>
+                        <div class="form-group mb-0 col-md-3 col-lg-3 col-sm-3" data-ng-if="categoryRule.ruleType == 1">
+                            <label>Rate<span class="text-red">*</span></label>
+                            <input type="text" data-ng-model="ruleValue.limit3" class="form-control input-sm required" maxlength="100">
+                            <div class="validationErrMsg hidden"></div>
+                        </div>
+                        <div class="form-group mb-0 col-md-1 col-lg-1 col-sm-1" data-ng-if="categoryRule.ruleType == 1">
+                            <label>&nbsp;</label>
+                            <label class="fa fa-trash form-control text-center btn-danger input-sm" data-ng-click="deleteFromRuleValue(categoryRule.ruleValueList, $index)"></label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 mt-10" data-ng-show="categoryRule.ruleType != 2">
+                    <table class="table table-bordered table-condensed table-striped table-hover fams-table">
+                        <thead>
+                        <tr class="bg-primary">
+                            <th width="15%">Select</th>
+                            <th>Choose </th>
+                            <th width="5%">
+                                <button class="btn btn-sm btn-primary pull-right" data-ng-click="addCondition(categoryRule)"><span class="fa fa-undo"></span> Add condition</button>
+                            </th>
+                        </tr>
+                        <tr data-ng-repeat="applyTo in categoryRule.applyToList">
+                            <td>
+                                <div class="form-group mb-0">
+                                    <select class="form-control" data-ng-class="{'required' : categoryRule.ruleType != 2}" data-ng-model="applyTo.levelName" data-ng-options="content.shortName as content.shortName for content in contentDetailList | unique: 'shortName'" data-ng-change="changeApplyToSelector(applyTo)">
+                                        <option value="">--Select--</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row" style="font-size: 11px">
+                                    <div class="col-md-3 checkbox" data-ng-repeat="result in applyTo.uiResultList">
+                                        <label><input type="checkbox" data-ng-model="result.status"> {{result.content}}</label>
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td>
+                                <i class="fa " data-ng-class="{'fa-check-square-o': applyTo.status == true, 'fa-square-o': applyTo.status != true}" data-ng-show="applyTo.uiResultList.length > 0" data-ng-click="selectAll(applyTo)"></i>
+                                <a href="" class="" data-ng-if="$index > 0"
+                                   echo-confirmation="deleteFromApplyList(item)"
+                                   confirmation-message="Are you sure to remove?"
+                                   confirmation-title="Confirmation"
+                                   item="$index">
+                                    <span class="fa fa-trash"></span> </a>
+                            </td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="text-right">
+                <button class="btn btn-sm btn-warning" data-ng-click="reset()"><span class="fa fa-undo"></span> Reset</button>
+                <button class="btn btn-sm btn-success" data-ng-click="save(categoryRule)" data-ng-hide="categoryRule.categoryRuleID > 0"><span class="fa fa-floppy-o"></span> Save</button>
+                <button class="btn btn-sm btn-success" data-ng-click="update(categoryRule)" data-ng-show="categoryRule.categoryRuleID > 0"><span class="fa fa-floppy-o"></span> Update</button>
+                <button class="btn btn-sm btn-danger" data-ng-click="cancel()"><span class="fa fa-times"></span> Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default mt-15" ng-show="!showForm">
+    <div class="panel-heading clearfix">
+        <strong>Category Ruless List</strong>
+        <button class="btn btn-sm btn-success pull-right" data-ng-click="add()"><span class="fa fa-plus"></span> Add Rule</button>
+    </div>
+    <div class="alert alert-info" data-ng-show="categoryRuleList.length == 0">No Field Found</div>
+
+    <table class="table table-bordered table-condensed table-striped table-hover fams-table" data-ng-show="categoryRuleList.length > 0">
+        <thead>
+        <tr class="bg-primary">
+            <th width="8%">Sl</th>
+            <th>Name</th>
+            <th>Sub Category</th>
+            <th>Applied Field</th>
+            <th>Validation Type</th>
+            <th>Limit</th>
+            <th>Allow Exception</th>
+            <th width="10%">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="categoryRule in categoryRuleList">
+            <td>{{$index + 1}}</td>
+            <td>{{categoryRule.shortName}}</td>
+            <td>{{categoryRule.subcategoryName}}</td>
+            <td>{{categoryRule.categoryFieldName}}</td>
+            <td>{{getTextForRule(categoryRule.ruleType)}}</td>
+            <td>{{getTextForLimit(categoryRule.limit)}}</td>
+            <td>{{categoryRule.allowException == 1 ? "Yes" : "No"}}</td>
+            <td>
+                <a href="" class="" data-ng-click="edit(categoryRule)"><span class="fa fa-pencil-square-o"></span></a>
+                <a href="" class=""
+                   echo-confirmation="delete(categoryRule, $index)"
+                   confirmation-message="Are you sure to remove?"
+                   confirmation-title="Confirmation"
+                   item="item">
+                    <span class="fa fa-trash"></span> </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

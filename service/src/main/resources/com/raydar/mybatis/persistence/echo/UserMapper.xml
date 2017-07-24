@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.echo.UserMapper">
+
+
+	<insert id="create" parameterType="User" useGeneratedKeys="true" keyProperty="userID">
+
+		INSERT INTO `echo_user`
+		(
+			`userName`,
+			`password`,
+			`status`,
+			`isBlocked`,
+			`companyID`,
+			`secretKey`,
+			`secretKeyCreatedOn`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		)
+		VALUES
+		(
+			#{userName},
+			#{password},
+			#{status},
+			#{isBlocked},
+			#{companyID},
+			#{secretKey},
+			#{secretKeyCreatedOn},
+			#{updatedOn},
+			#{updatedBy},
+			#{createdOn},
+			#{createdBy}
+		)
+
+
+	</insert>
+
+	<update id="update" parameterType="User">
+
+		UPDATE `echo_user`
+		SET
+		`userName` = #{userName},
+		`password` = #{password},
+		`status` = #{status},
+		`isBlocked` = #{isBlocked},
+		`companyID` = #{companyID},
+		`secretKey` = #{secretKey},
+		`secretKeyCreatedOn` = #{secretKeyCreatedOn},
+		`updatedOn` = #{updatedOn},
+		`updatedBy` =#{updatedBy}
+		WHERE `userID` = #{userID}
+
+	</update>
+
+	<update id="updatePassword" parameterType="User">
+
+
+		UPDATE `echo_user`
+		SET
+		`password` = #{password},
+		`updatedOn` = #{updatedOn},
+		`updatedBy` =#{updatedBy}
+		WHERE `userID` = #{userID}
+
+
+	</update>
+
+	<update id="updateStatus" parameterType="User">
+
+		UPDATE `echo_user`
+		SET
+		`status` = #{status},
+		`updatedOn` = #{updatedOn},
+		`updatedBy` =#{updatedBy}
+		WHERE `userID` = #{userID}
+
+	</update>
+
+	<resultMap id="userProfileMap" type="User">
+		<result property="userProfileData.lastWorkingDay" column="lastWorkingDay"/>
+	</resultMap>
+
+	<select id="getUserByUserName" parameterType="string" resultType="User" resultMap="userProfileMap">
+		SELECT
+			eu.`userID`,
+			eu.`userName`,
+			eu.`password`,
+			eu.`status`,
+			eu.`isBlocked`,
+			eu.`companyID`,
+			eu.`secretKey`,
+			eu.`secretKeyCreatedOn`,
+			eu.`updatedOn`,
+			eu.`updatedBy`,
+			eu.`createdOn`,
+			eu.`createdBy`,
+			eup.lastWorkingDay AS lastWorkingDay
+		FROM echo_user eu
+		LEFT JOIN echo_user_profile eup ON eu.userID = eup.userID
+		WHERE userName = #{userName};
+
+	</select>
+
+	<select id="getUserByUserByID" parameterType="int" resultType="User">
+		SELECT
+		`userID`,
+		`userName`,
+		`password`,
+		`status`,
+		`isBlocked`,
+		`companyID`,
+		`secretKey`,
+		`secretKeyCreatedOn`,
+		`updatedOn`,
+		`updatedBy`,
+		`createdOn`,
+		`createdBy`
+		FROM echo_user
+		WHERE userID = #{userID};
+
+	</select>
+
+	<select id="getUserByParam" parameterType="map" resultType="User">
+		SELECT
+		`userID`,
+		`userName`,
+		`password`,
+		`status`,
+		`isBlocked`,
+		`companyID`,
+		`secretKey`,
+		`secretKeyCreatedOn`,
+		`updatedOn`,
+		`updatedBy`,
+		`createdOn`,
+		`createdBy`
+		FROM echo_user
+		WHERE 1 = 1
+
+		<if test="userID != null">
+			AND userID = #{userID}
+		</if>
+		<if test="secretKey != null">
+			AND secretKey = #{secretKey}
+		</if>
+		<if test="companyID != null">
+			AND companyID = #{companyID}
+		</if>
+
+
+	</select>
+
+	<select id="getUserPermissionByUserID" parameterType="int" resultType="UserGroupPermission">
+		SELECT
+			p.functionCode
+		FROM echo_user u
+		JOIN echo_user_group_assignment uga ON u.userID = uga.userID
+		JOIN echo_group_permission gp ON uga.userGroupID = gp.userGroupID
+		JOIN echo_permission p ON gp.permissionID = p.permissionID
+		WHERE u.userID = #{userID};
+	</select>
+
+
+
+
+</mapper>

@@ -1,0 +1,157 @@
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <div class="row">
+            <div class="col-md-8 col-lg-8 col-sm-8">
+                <strong>Outlet Tracking & Coaching Report</strong>
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <select ng-show="!reportView" class="form-control pull-right" data-ng-model="year" data-ng-options="year.value as year.data for year in yearList">
+                    <option value="">--Year--</option>
+                </select>
+            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <select ng-show="!reportView"  class="form-control pull-right" data-ng-model="month" data-ng-options="month.value as month.data for month in monthList">
+                    <option value="">--Month--</option>
+                </select>
+                <div class="pull-right">
+                    <button class="btn btn-sm btn-primary" ng-show="reportView" title="Back To Dashboard" data-ng-click="reportView = false" ><span class="glyphicon glyphicon-arrow-left"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div >
+
+    <div class="generic-container">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <div class="row mb-5">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <span class="lead" >RME Visit Tracking </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <label >Region : </label>
+                        <select class="form-control pull-right" data-ng-model="rmeRegionID" data-ng-options="region.regionID as region.shortName for region in regionList" data-ng-change="regionOnChange(rmeRegionID,'RME')">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        &nbsp;&nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered" >
+                    <thead>
+                    <tr >
+                        <td class="text-center" ><label >RME Staff code</label></td>
+                        <td class="text-center" ><label >MTD</label></td>
+                        <td class="text-center" ><label >Report Completeness</label></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="profile in rmeProfileList">
+                        <td class="text-center">{{profile.firstName}} - {{profile.employeeCode}}</td>
+                        <td class="text-center">{{profile.otcNumOfVisit}} /24 </td>
+                        <td class="text-center"> {{ ((profile.otcNumOfVisit / 24 ) * 100) | myCurrency }} %</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="generic-container">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <div class="row mb-5">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <span class="lead" >AM Visit Tracking</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <label >Region : </label>
+                        <select class="form-control" data-ng-model="amRegionID" data-ng-options="region.regionID as region.shortName for region in regionList" data-ng-change="regionOnChange(amRegionID, 'AM')">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        &nbsp;&nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered" >
+                    <thead>
+                    <tr >
+                        <td class="text-center" ><label >AM Staff code</label></td>
+                        <td class="text-center" ><label >MTD</label></td>
+                        <td class="text-center" ><label >Report Completeness</label></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="profile in amProfileList">
+                        <td class="text-center">{{profile.firstName}} - {{profile.employeeCode}}</td>
+                        <td class="text-center">{{profile.otcNumOfVisit}} /24 </td>
+                        <td class="text-center"> {{ ((profile.otcNumOfVisit / 24 ) * 100) | myCurrency }} %</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="generic-container">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <div class="row mb-5">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <span class="lead" >Outlet Visit Tracking (RME)</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <label >Region : </label>
+                        <select class="form-control pull-right" data-ng-model="outletRegion" data-ng-options="region.regionID as region.shortName for region in regionList" data-ng-change="bringOutlet(outletRegion)">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <label >Outlet : </label>
+                        <select class="form-control pull-right" data-ng-disabled="outletRegion == null" data-ng-model="outletID" data-ng-options="outlet.outletID as outlet.outletName for outlet in outletList" data-ng-change="outletOnChange(outletID)">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered" >
+                    <thead>
+                    <tr >
+                        <td class="text-center" ><label >RME Staff code</label></td>
+                        <td class="text-center" ><label >MTD</label></td>
+                        <td class="text-center" ><label >Report Completeness</label></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="profile in rmeOutletProfileList">
+                        <td class="text-center">{{profile.firstName}} - {{profile.employeeCode}}</td>
+                        <td class="text-center">{{profile.otcNumOfVisit}} /24 </td>
+                        <td class="text-center"> {{ ((profile.otcNumOfVisit / 24 ) * 100) | myCurrency }} %</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
