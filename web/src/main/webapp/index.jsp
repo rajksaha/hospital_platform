@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="icon" href="<c:url value="/resources/images/logo.png"/>" type="image/gif" sizes="16x16">
-    <title>echo</title>
+    <title>hospital</title>
 
     <%--bootstrap & jquery ui--%>
     <link href="<c:url value="/resources/javascript/lib/css/bootstrap.min.css"/>" type="text/css" rel="stylesheet" />
