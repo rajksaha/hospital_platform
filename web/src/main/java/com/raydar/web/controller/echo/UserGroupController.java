@@ -1,7 +1,6 @@
 package com.raydar.web.controller.echo;
 
 import com.raydar.common.exception.RaydarException;
-import com.raydar.mybatis.domain.eclaim.SubCategoryDATA;
 import com.raydar.mybatis.domain.user.UserGroupData;
 import com.raydar.service.user.UserGroupService;
 import com.raydar.web.controller.BaseController;

@@ -4,7 +4,6 @@ import com.raydar.common.exception.RaydarException;
 import com.raydar.common.type.EmailType;
 import com.raydar.common.type.QueueConfig;
 import com.raydar.mybatis.domain.SearchData;
-import com.raydar.mybatis.domain.otc.*;
 import com.raydar.mybatis.domain.user.UserData;
 import com.raydar.mybatis.domain.user.UserProfileData;
 import com.raydar.queue.QueueProducer;

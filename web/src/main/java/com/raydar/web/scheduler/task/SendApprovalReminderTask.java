@@ -1,14 +1,6 @@
 package com.raydar.web.scheduler.task;
 
 import com.raydar.common.exception.RaydarException;
-import com.raydar.common.type.EmailType;
-import com.raydar.common.type.QueueConfig;
-import com.raydar.common.utility.DateUtil;
-import com.raydar.common.utility.EClaimCommonUtils;
-import com.raydar.common.utility.EchoProperties;
-import com.raydar.common.utility.FTPUtil;
-import com.raydar.mybatis.domain.eclaim.CompanyApprovalData;
-import com.raydar.mybatis.domain.eclaim.CompanyGlobalRuleData;
 import com.raydar.queue.QueueProducer;
 import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;

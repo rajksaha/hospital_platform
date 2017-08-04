@@ -2,7 +2,7 @@
 
 var httpHeaders;
 
-var jsVersion = "?v=2";
+var jsVersion = "?v=4";
 
 // This will store the original URL before login sequence
 var originalLocation = "/login";
@@ -212,357 +212,6 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
         }
     };
 
-    var category = {
-        name  : 'root.category',
-        url   : '/category',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/category/category.html',
-                controller : 'CategoryController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/category/categoryController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/category/categoryService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-    var categoryField = {
-        name  : 'root.categoryField',
-        url   : '/categoryField?categoryID',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/category/categoryField.html',
-                controller : 'CategoryFieldController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/category/categoryFieldController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/category/categoryService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-    var categoryRule = {
-        name  : 'root.categoryRule',
-        url   : '/categoryRule?categoryID',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/category/categoryRule.html',
-                controller : 'CategoryRuleController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/category/categoryRuleController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/category/categoryService.js' + jsVersion,
-                            'resources/javascript/services/eClaim/contentDetailService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-
-    var subCategoryType = {
-        name  : 'root.subCategoryType',
-        url   : '/subCategoryType?categoryID',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/category/subCategoryType.html',
-                controller : 'SubCategoryTypeController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/category/subCategoryTypeController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/category/categoryService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-
-    var subCategory = {
-        name  : 'root.subCategory',
-        url   : '/subCategory?subCategoryTypeID?categoryID',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/category/subCategory.html',
-                controller : 'SubCategoryController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/category/subCategoryController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/category/categoryService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-    var claimForm = {
-        name  : 'root.claimForm',
-        url   : '/claimForm?claimType',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/claimForm/claimForm.html',
-                controller : 'ClaimFormController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/claimForm/claimFormController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/category/categoryService.js' + jsVersion, 'resources/javascript/services/eClaim/globalSetup/globalSetupService.js' + jsVersion,
-                            'resources/javascript/services/eClaim/claim/claimService.js' + jsVersion, 'resources/javascript/services/eClaim/claim/claimValidationService.js' + jsVersion,
-                            'resources/javascript/services/user/userService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-    var claimFormSingle = {
-        name  : 'root.claimFormSingle',
-        url   : '/claimFormSingle',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/claimFormSingle/claimForm.html',
-                controller : 'ClaimFormSingleController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/claimFormSingle/claimFormController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/category/categoryService.js' + jsVersion,
-                            'resources/javascript/services/eClaim/claim/claimService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-    var claimList = {
-        name  : 'root.claimList',
-        url   : '/claimList?claimType',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/claimForm/claimList.html',
-                controller : 'ClaimListController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/claimForm/claimListController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/category/categoryService.js' + jsVersion, 'resources/javascript/services/eClaim/globalSetup/globalSetupService.js' + jsVersion,
-                            'resources/javascript/services/eClaim/claim/claimService.js' + jsVersion, 'resources/javascript/services/eClaim/claim/claimValidationService.js' + jsVersion,
-                            'resources/javascript/services/user/userService.js' + jsVersion, 'resources/javascript/services/eClaim/approvalLevel/approvalLevelService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-    var adminClaimList = {
-        name  : 'root.adminClaimList',
-        url   : '/adminClaimList',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/claimForm/adminClaimList.html',
-                controller : 'AdminClaimListController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/claimForm/adminClaimListController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/category/categoryService.js' + jsVersion,
-                            'resources/javascript/services/eClaim/claim/claimService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-    var adminSetup = {
-        name  : 'root.adminSetup',
-        url   : '/adminSetup',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/adminSetup/adminSetup.html',
-                controller : 'AdminSetupController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/adminSetup/adminSetupController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/category/categoryService.js' + jsVersion, 'resources/javascript/services/eClaim/claim/claimService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-    var approval = {
-        name  : 'root.approval',
-        url   : '/approval?claimType?actionState',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/approval/approval.html',
-                controller : 'ApprovalController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/approval/approvalController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/category/categoryService.js' + jsVersion, 'resources/javascript/services/eClaim/claim/claimService.js' + jsVersion,
-                            'resources/javascript/services/eClaim/approval/approvalService.js' + jsVersion, 'resources/javascript/services/eClaim/approvalLevel/approvalLevelService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
     var globalSetup = {
         name  : 'root.globalSetup',
         url   : '/globalSetup',
@@ -718,7 +367,6 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
         }
     };
 
-
     var module = {
         name  : 'root.module',
         url   : '/module',
@@ -812,13 +460,13 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
         }
     };
 
-    var approvalLevel = {
-        name  : 'root.approvalLevel',
-        url   : '/approvalLevel',
+    var doctor = {
+        name  : 'root.doctor',
+        url   : '/doctor',
         views : {
             'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/approvalLevel/approvalLevel.html',
-                controller : 'ApprovalLevelController'
+                templateUrl : 'resources/javascript/templates/doctor/doctor.html',
+                controller : 'DoctorController'
             }
         },
         resolve : {
@@ -827,7 +475,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
                     {
                         name: 'echoApp',
                         files: [
-                            'resources/javascript/controllers/eClaim/approvalLevel/approvalLevelController.js' + jsVersion
+                            'resources/javascript/controllers/doctor/doctorController.js' + jsVersion
                         ]
                     });
             }],
@@ -836,20 +484,23 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
                     {
                         name: 'echoApp',
                         files: [
-                            'resources/javascript/services/eClaim/approvalLevel/approvalLevelService.js' + jsVersion
+                            'resources/javascript/services/user/userService.js' + jsVersion,
+                            'resources/javascript/services/user/userManagementService.js' + jsVersion,
+                            'resources/javascript/services/echo/echoCommonService.js' + jsVersion,
+                            'resources/javascript/services/eClaim/contentDetailService.js' + jsVersion
                         ]
                     });
             }]
         }
     };
 
-    var companyFormation = {
-        name  : 'root.companyFormation',
-        url   : '/companyFormation',
+    var patient = {
+        name  : 'root.patient',
+        url   : '/patient',
         views : {
             'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/companyFormation/companyFormation.html',
-                controller : 'CompanyFormationController'
+                templateUrl : 'resources/javascript/templates/patient/patient.html',
+                controller : 'PatientController'
             }
         },
         resolve : {
@@ -858,7 +509,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
                     {
                         name: 'echoApp',
                         files: [
-                            'resources/javascript/controllers/eClaim/companyFormation/companyFormationController.js' + jsVersion
+                            'resources/javascript/controllers/patient/patientController.js' + jsVersion
                         ]
                     });
             }],
@@ -867,20 +518,23 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
                     {
                         name: 'echoApp',
                         files: [
-                            'resources/javascript/services/eClaim/contentDetailService.js' + jsVersion, 'resources/javascript/services/eClaim/companyFormation/companyFormationService.js' + jsVersion
+                            'resources/javascript/services/user/userService.js' + jsVersion,
+                            'resources/javascript/services/user/userManagementService.js' + jsVersion,
+                            'resources/javascript/services/echo/echoCommonService.js' + jsVersion,
+                            'resources/javascript/services/eClaim/contentDetailService.js' + jsVersion
                         ]
                     });
             }]
         }
     };
 
-    var pendingOriginal = {
-        name  : 'root.pendingOriginal',
-        url   : '/pendingOriginal',
+    var appointment = {
+        name  : 'root.appointment',
+        url   : '/appointment',
         views : {
             'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/orgDocument/pendingDocument.html',
-                controller : 'PendingDocumentController'
+                templateUrl : 'resources/javascript/templates/appointment/appointment.html',
+                controller : 'AppointmentController'
             }
         },
         resolve : {
@@ -889,7 +543,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
                     {
                         name: 'echoApp',
                         files: [
-                            'resources/javascript/controllers/eClaim/orgDocument/pendingDocumentController.js' + jsVersion
+                            'resources/javascript/controllers/appointment/appointmentController.js' + jsVersion
                         ]
                     });
             }],
@@ -898,20 +552,20 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
                     {
                         name: 'echoApp',
                         files: [
-                            'resources/javascript/services/eClaim/approval/approvalService.js' + jsVersion, 'resources/javascript/services/eClaim/approvalLevel/approvalLevelService.js' + jsVersion
+                            'resources/javascript/services/appointment/appointmentService.js' + jsVersion
                         ]
                     });
             }]
         }
     };
 
-    var eClaimReport = {
-        name  : 'root.eClaimReport',
-        url   : '/eClaimReport?claimType',
+    var doctorAppointment = {
+        name  : 'root.doctorAppointment',
+        url   : '/doctorAppointment',
         views : {
             'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/report/eClaimReport.html',
-                controller : 'EClaimReportController'
+                templateUrl : 'resources/javascript/templates/doctorAppointment/doctorAppointment.html',
+                controller : 'DoctorAppointmentController'
             }
         },
         resolve : {
@@ -920,7 +574,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
                     {
                         name: 'echoApp',
                         files: [
-                            'resources/javascript/controllers/eClaim/report/eClaimReportController.js' + jsVersion
+                            'resources/javascript/controllers/doctorAppointment/doctorAppointmentController.js' + jsVersion
                         ]
                     });
             }],
@@ -929,266 +583,13 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
                     {
                         name: 'echoApp',
                         files: [
-                            'resources/javascript/services/eClaim/report/eClaimReportService.js' + jsVersion
+                            'resources/javascript/services/appointment/appointmentService.js' + jsVersion
                         ]
                     });
             }]
         }
     };
 
-
-
-
-    var masterReport = {
-        name  : 'root.masterReport',
-        url   : '/masterReport',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/otc/dashboard/masterReport.html',
-                controller : 'MasterReportController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/otc/dashboard/masterReportController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/otc/dashboard/dashboardService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-
-    var reportTracker = {
-        name  : 'root.reportTracker',
-        url   : '/reportTracker',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/otc/dashboard/reportTracker.html',
-                controller : 'ReportTrackerController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/otc/dashboard/reportTrackerController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/otc/dashboard/dashboardService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-    var inputCompleteness = {
-        name  : 'root.inputCompleteness',
-        url   : '/inputCompleteness',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/otc/dashboard/inputCompleteness.html',
-                controller : 'InputCompletenessController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/otc/dashboard/inputCompletenessController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/otc/dashboard/dashboardService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-    var npsScore = {
-        name  : 'root.npsScore',
-        url   : '/npsScore',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/otc/dashboard/npsScore.html',
-                controller : 'NpsScoreController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/otc/dashboard/npsScoreController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/otc/dashboard/dashboardService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-
-    var companyTax = {
-        name  : 'root.companyTax',
-        url   : '/companyTax',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/companyTax/companyTax.html',
-                controller : 'CompanyTaxController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/companyTax/companyTaxController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/companyTax/companyTaxService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-
-    var viewClaim = {
-        name  : 'root.viewClaim',
-        url   : '/viewClaim?claimType',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/eClaim/adminSetup/viewClaim.html',
-                controller : 'ViewClaimController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/eClaim/adminSetup/viewClaimController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/approval/approvalService.js' + jsVersion, 'resources/javascript/services/eClaim/approvalLevel/approvalLevelService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-    var userOutlet = {
-        name  : 'root.userOutlet',
-        url   : '/userOutlet',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/otc/userOutlet/userOutlet.html',
-                controller : 'UserOutletController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/controllers/otc/userOutlet/userOutletController.js' + jsVersion
-                        ]
-                    });
-            }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-                return $ocLazyLoad.load(
-                    {
-                        name: 'echoApp',
-                        files: [
-                            'resources/javascript/services/eClaim/approval/approvalService.js' + jsVersion, 'resources/javascript/services/otc/dashboard/dashboardService.js' + jsVersion
-                        ]
-                    });
-            }]
-        }
-    };
-
-    var approvalOnBehalf = {
-        name  : 'root.approvalOnBehalf',
-        url   : '/approvalOnBehalf?claimType',
-        views : {
-        'container@' : {
-            templateUrl : 'resources/javascript/templates/eClaim/approvalOnBehalf/approvalOnBehalf.html',
-                controller : 'ApprovalOnBehalfController'
-        }
-    },
-    resolve : {
-        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-            return $ocLazyLoad.load(
-                {
-                    name: 'echoApp',
-                    files: [
-                        'resources/javascript/controllers/eClaim/approvalOnBehalf/approvalOnBehalfController.js' + jsVersion
-                    ]
-                });
-        }],
-            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
-            return $ocLazyLoad.load(
-                {
-                    name: 'echoApp',
-                    files: [
-                        'resources/javascript/services/eClaim/approval/approvalService.js' + jsVersion, 'resources/javascript/services/eClaim/approvalLevel/approvalLevelService.js' + jsVersion, 'resources/javascript/services/eClaim/companyTax/companyTaxService.js' + jsVersion
-                    ]
-                });
-        }]
-    }
-    };
 
 
 
@@ -1198,17 +599,6 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
         .state(home)
         .state(forgetPassword)
         .state(resetPassword)
-        .state(category)
-        .state(categoryField)
-        .state(categoryRule)
-        .state(subCategoryType)
-        .state(subCategory)
-        .state(adminSetup)
-        .state(claimList)
-        .state(adminClaimList)
-        .state(claimForm)
-        .state(claimFormSingle)
-        .state(approval)
         .state(globalSetup)
         .state(userUpload)
         .state(user)
@@ -1217,18 +607,10 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
         .state(module)
         .state(company)
         .state(companyModule)
-        .state(approvalLevel)
-        .state(companyFormation)
-        .state(pendingOriginal)
-        .state(eClaimReport)
-        .state(inputCompleteness)
-        .state(reportTracker)
-        .state(npsScore)
-        .state(companyTax)
-        .state(viewClaim)
-        .state(masterReport)
-        .state(approvalOnBehalf)
-        .state(userOutlet);
+        .state(doctor)
+        .state(patient)
+        .state(appointment)
+        .state(doctorAppointment)
 
     //set debug:true if need ocLazyLoad log
 	$ocLazyLoadProvider.config({debug:false, events:true});

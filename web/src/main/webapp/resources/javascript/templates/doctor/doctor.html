@@ -1,22 +1,16 @@
 <script type="text/ng-template" id="action_template">
     <a href="" data-ng-click="edit(item)"><i class="fa fa-edit"></i> </a>
-    <a href="" data-ng-click="userGroup(item)"><i class="fa fa-users"></i> </a>
-    <!--<a href="" data-ng-click="manageField(item)"><i class="fa fa-desktop"></i>Field Detail</a>
-    <a href="" data-ng-click="manageSub(item)"><i class="fa fa-desktop"></i> Sub Category</a>
-    <a href="" data-ng-click="applyRule(item)"><i class="fa fa-desktop"></i> Apply Rule</a>-->
 </script>
 
 <div class="panel panel-default mt-15">
     <div class="panel-heading clearfix">
         <div class="row">
             <div class="col-md-6 col-lg-6" >
-                <select data-ng-if="userData.userID == 1" class="form-control required" data-ng-model="searchParam.companyID" data-ng-options="company.companyID as company.companyName for company in companyList" data-ng-change="search()">
-                    <option value="">--Hospital--</option>
-                </select>
+                Doctor Setup
             </div>
-            <div class="pull-right col-md-6 col-lg-6">
-                <button class="btn btn-sm btn-success pull-right" data-ng-if="userData.companyID != 1 && companySelected" ng-show="!showForm" title="Add User" data-ng-click="add()"><span class="glyphicon glyphicon-plus"></span></button>
-                <button class="btn btn-sm btn-warning pull-right" ng-show="showForm" title="Back To List" data-ng-click="backToList()"><span class="glyphicon glyphicon-arrow-left"></span></button>
+            <div class=" col-md-6 col-lg-6">
+                <button class="pull-right btn btn-sm btn-success" data-ng-if="userData.companyID != 1 && companySelected" ng-show="!showForm" title="Add User" data-ng-click="add()"><span class="glyphicon glyphicon-plus"></span></button>
+                <button class="pull-right btn btn-sm btn-warning" ng-show="showForm" title="Back To List" data-ng-click="backToList()"><span class="glyphicon glyphicon-arrow-left"></span></button>
             </div>
         </div>
     </div>
@@ -33,21 +27,21 @@
         <div class="row" id="validationRequired" ng-show="showForm">
             <div class="col-md-4 col-lg-4" >
                 <div class="form-group">
-                    <label>First Name<span class="text-red">*</span></label>
+                    <label>Doctor's First Name<span class="text-red">*</span></label>
                     <input type="text" data-ng-model="userProfile.firstName" class="form-control input-sm required" maxlength="90">
                     <div class="validationErrMsg small text-danger mt-5 hidden"></div>
                 </div>
             </div>
             <div class="col-md-4 col-lg-4" >
                 <div class="form-group">
-                    <label>Last Name<span class="text-red">*</span></label>
+                    <label>Doctor's  Last Name<span class="text-red">*</span></label>
                     <input type="text" data-ng-model="userProfile.lastName" class="form-control input-sm" maxlength="90">
                     <div class="validationErrMsg small text-danger mt-5 hidden"></div>
                 </div>
             </div>
             <div class="col-md-4 col-lg-4" >
                 <div class="form-group">
-                    <label>Username<span class="text-red">*</span></label>
+                    <label>Doctor's Code<span class="text-red">*</span></label>
                     <input type="text" data-ng-model="userProfile.userName" class="form-control input-sm required" maxlength="90" data-ng-disabled="userProfile.userID > 0">
                     <div class="validationErrMsg small text-danger mt-5 hidden"></div>
                 </div>
@@ -80,98 +74,82 @@
                 </div>
             </div>
             <div class="col-md-12 col-lg-12">
-                <div class="form-group">
-                    <h4 style="background-color: #CCCCCC;border: 5px solid silver;padding: 10px 10px 10px 10px">Company Designation</h4>
-                </div>
+                <div class="bs-divider"><i class="fa fa-user-md"></i> Doctor Config</div>
             </div>
 
-            <div class="form-group col-md-3 col-lg-3" data-ng-repeat="company in userProfile.companyLevelList">
-                <label class="">{{company.levelName}}</label>
-                <div class="form-group mb-0">
-                    <select data-ng-model="company.levelValue" class="form-control" data-ng-options="contentData.content as contentData.content for contentData in contentDetailList | filter: {shortName: company.levelName}" >
-                        <option value="">--ALL--</option>
-                    </select>
-                </div>
-            </div>
-            <!--<div class="form-group col-md-3 col-lg-3">
-                <label class="">Location</label>
-                <div class="form-group mb-0">
-                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
-                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group col-md-3 col-lg-3">
-                <label class="">Cost Center</label>
-                <div class="form-group mb-0">
-                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
-                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group col-md-3 col-lg-3">
-                <label class="">Occupation Description</label>
-                <div class="form-group mb-0">
-                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
-                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
-                    </select>
-                </div>
-            </div>
             <div class="form-group col-md-3 col-lg-3">
                 <label class="">Category</label>
                 <div class="form-group mb-0">
-                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
-                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
+                    <select data-ng-model="userProfile.categoryID" class="form-control" >
+                        <option value="">--Select--</option>
+                        <option value="1">Medicine</option>
+                        <option value="2">Cardiologist</option>
+                        <option value="3">Gastrologist</option>
+                        <option value="4">Neurologist</option>
                     </select>
                 </div>
             </div>
+
             <div class="form-group col-md-3 col-lg-3">
-                <label class="">Section</label>
+                <label class="">Fee<span class="text-red">*</span></label>
                 <div class="form-group mb-0">
-                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
-                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
-                    </select>
+                    <input type="text" data-ng-model="userProfile.fee" class="form-control input-sm decimal" >
+                </div>
+            </div>
+
+            <div class="form-group col-md-3 col-lg-3">
+                <label class="">Date Of Birth<span class="text-red">*</span></label>
+                <div class="form-group mb-0">
+                    <input type="text"  data-ng-model="userProfile.dateOfBirth" class="form-control form-control-date input-sm" ng-class="{'required': userProfile.status == 0}" maxlength="100"
+                           datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true"  >
+                </div>
+            </div>
+
+            <div class="form-group col-md-3 col-lg-3" >
+                <label>Sex<span class="text-red">*</span></label>
+                <select data-ng-model="userProfile.sex" class="form-control input-sm required">
+                    <option value="">--Select--</option>
+                    <option value="MALE">--Male--</option>
+                    <option value="FRMALE">--Female--</option>
+                </select>
+                <div class="validationErrMsg small text-danger mt-5 hidden"></div>
+            </div>
+
+            <div class="form-group col-md-3 col-lg-3">
+                <label class="">Weekly Off<span class="text-red">*</span></label>
+                <div class="form-group mb-0">
+                    <input type="text" data-ng-model="userProfile.weeklyOff" class="form-control input-sm required" >
+                </div>
+            </div>
+
+            <div class="form-group col-md-3 col-lg-3">
+                <label class="">Counseling hour Starts<span class="text-red">*</span></label>
+                <div class="form-group mb-0">
+                    <input type="text" data-ng-model="userProfile.startTime" class="form-control input-sm required" >
                 </div>
             </div>
             <div class="form-group col-md-3 col-lg-3">
-                <label class="">Division</label>
+                <label class="">Counseling hour End<span class="text-red">*</span></label>
                 <div class="form-group mb-0">
-                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
-                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
-                    </select>
+                    <input type="text" data-ng-model="userProfile.endTime" class="form-control input-sm required" >
                 </div>
             </div>
+
             <div class="form-group col-md-3 col-lg-3">
-                <label class="">Company Code</label>
+                <label class="">Phone<span class="text-red">*</span></label>
                 <div class="form-group mb-0">
-                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
-                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
-                    </select>
+                    <input type="text" data-ng-model="userProfile.contactNo" class="form-control input-sm required" >
                 </div>
             </div>
-            <div class="form-group col-md-3 col-lg-3">
-                <label class="">Branch</label>
-                <div class="form-group mb-0">
-                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
-                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group col-md-3 col-lg-3">
-                <label class="">Job Grade</label>
-                <div class="form-group mb-0">
-                    <select data-ng-model="searchData.companyCode" class="form-control" data-ng-options="companyCode.content as companyCode.content for companyCode in companyCodeList" data-ng-change="displayDownload = false">
-                        <option value="">&#45;&#45;ALL&#45;&#45;</option>
-                    </select>
-                </div>
-            </div>-->
+
+
         </div>
 
         <div class="row" ng-show="!showForm && companySelected">
             <div class="form-group col-md-5 col-lg-5">
                 <div class="input-group">
                     <input type="text" class="form-control" enter-event="search()" ng-model="searchParam.employeeCode" />
-                    <span class="input-group-addon">Employee Code</span>
+                    <span class="input-group-addon">Doctor Code</span>
                 </div>
             </div>
             <div class="col-md-3 col-lg-3">
@@ -183,7 +161,7 @@
                                page-sizes="[10, 15, 20]"
                                page-loader="methods.pageLoader"
                                pagination-btn-group-classes="pagination pagination-sm"
-                               items-not-found-message="No User found"
+                               items-not-found-message="No Doctor found"
                                state="{sortKey: 'eup.userProfileID', sortDirection: 'ASC'}"
                                column-definition="columnDefinition"
                                ajax-config="dataSourceConfig">

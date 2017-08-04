@@ -2,7 +2,7 @@
  * Created by raj on 1/6/16.
  */
 
-app.controller('MenuController', function($scope, $state, $rootScope, $http, $timeout, $location, $modal, ApprovalLevelService) {
+app.controller('MenuController', function($scope, $state, $rootScope, $http, $timeout, $location, $modal) {
 
     $scope.isCollapse = [];
 
@@ -10,7 +10,6 @@ app.controller('MenuController', function($scope, $state, $rootScope, $http, $ti
         $state.go('home');
     };
 
-    $scope.approvalLevelList = [];
 
     $scope.menuItem = "";
 
@@ -19,39 +18,7 @@ app.controller('MenuController', function($scope, $state, $rootScope, $http, $ti
     };
 
     $scope.init = function (){
-
-            ApprovalLevelService.getAll.query({}, {} ).$promise.then(function(result) {
-                $scope.approvalLevelList = result;
-
-                $scope.initMenu($location.path());
-            });
-    };
-
-    $scope.getApprovalLevelName = function(level){
-
-        var temp = null;
-        for(var i= 0;i<$scope.approvalLevelList.length;i++){
-            if($scope.approvalLevelList[i].sortOrder == level){
-                temp =  $scope.approvalLevelList[i].approvalState;
-                break;
-            }
-        }
-
-        return temp;
-    };
-
-    $scope.getActionStateCode = function(permissionCode){
-
-        var temp = null;
-        for(var i= 0;i<$scope.approvalLevelList.length;i++){
-            if($scope.approvalLevelList[i].permissionCode == permissionCode){
-                temp =  $scope.approvalLevelList[i].actionStateCode;
-                break;
-            }
-        }
-
-        return temp;
-
+        $scope.initMenu($location.path());
     };
 
     $scope.changeState = function (url, claimType, actionState){
@@ -90,14 +57,7 @@ app.controller('MenuController', function($scope, $state, $rootScope, $http, $ti
 
     $scope.changeView = function(url, claimType, actionState){
 
-        if(claimType == null && actionState == null){
-            $state.go(url);
-        }else if(claimType != null && actionState == null){
-            $state.go(url, {claimType : claimType});
-        }else if(claimType !=null && actionState != null){
-            var page = $scope.getActionStateCode(actionState);
-            $state.go(url, {actionState : page, claimType : claimType});
-        }
+        $state.go(url);
 
     };
 

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.appointment.AppointmentMapper">
+
+
+
+	<resultMap id="patientInfo" type="AppointmentData">
+		<result property="patientProfileData.userID" column="userID"/>
+		<result property="patientProfileData.firstName" column="firstName"/>
+		<result property="patientProfileData.dateOfBirth" column="dateOfBirth"/>
+		<result property="patientProfileData.address" column="address"/>
+		<result property="patientProfileData.contactNo" column="contactNo"/>
+		<result property="patientProfileData.sex" column="sex"/>
+	</resultMap>
+
+	<select id="getAppointmentByParam" parameterType="map" resultType="AppointmentData" resultMap="patientInfo">
+			SELECT
+				app.appointmentID,
+				app.doctorID,
+				app.patientID,
+				app.appointmentDate,
+				app.status,
+				app.createdBy,
+				app.appointmentType,
+				up.userID AS userID,
+				up.firstName AS firstName,
+				up.dateOfBirth AS dateOfBirth,
+				up.address AS address,
+				up.contactNo AS contactNo,
+				up.sex AS sex,
+				aty.shortName AS appointmentTypeName
+		FROM `appointment` app
+		JOIN appointment_type aty ON aty.appointmentTypeID = app.appointmentType
+		LEFT JOIN user_profile up ON app.patientID = up.userID
+		WHERE 1 =  1
+		<if test="doctorID != null">
+			AND app.doctorID = #{doctorID}
+		</if>
+		<if test="appointmentDate != null">
+			AND DATE(app.appointmentDate)= DATE(#{appointmentDate})
+		</if>
+		order by app.appointmentID ASC
+	</select>
+
+	<select id="bringAppointment" parameterType="map" resultType="AppointmentData" resultMap="patientInfo">
+		SELECT
+		app.appointmentID,
+		app.doctorID,
+		app.patientID,
+		app.appointmentDate,
+		app.status,
+		app.createdBy,
+		app.appointmentType,
+		up.userID AS userID,
+		up.firstName AS firstName,
+		up.dateOfBirth AS dateOfBirth,
+		up.address AS address,
+		up.contactNo AS contactNo,
+		up.sex AS sex,
+		aty.shortName AS appointmentTypeName
+		FROM `appointment` app
+		JOIN appointment_type aty ON aty.appointmentTypeID = app.appointmentType
+		LEFT JOIN user_profile up ON app.patientID = up.userID
+		WHERE app.appointmentID = #{appointmentID}
+	</select>
+
+
+
+	<insert id="create" parameterType="AppointmentData" useGeneratedKeys="true" keyProperty="appointmentID">
+
+		INSERT INTO
+			`appointment`
+		(
+			`doctorID`,
+			`patientID`,
+			`appointmentDate`,
+			`status`,
+			`appointmentType`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		)
+		VALUES
+		(
+			#{doctorID},
+			#{patientID},
+			#{appointmentDate},
+			#{status},
+			#{appointmentType},
+			#{updatedOn},
+			#{updatedBy},
+			#{createdOn},
+			#{createdBy}
+		)
+
+	</insert>
+
+
+	
+
+
+
+
+</mapper>

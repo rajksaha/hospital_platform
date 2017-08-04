@@ -1,13 +1,6 @@
 package com.raydar.mybatis.domain;
 
 import com.raydar.mybatis.domain.echo.CompanyTaxInfoData;
-import com.raydar.mybatis.domain.eclaim.CategoryDATA;
-import com.raydar.mybatis.domain.eclaim.ClaimBulkData;
-import com.raydar.mybatis.domain.eclaim.ClaimFromData;
-import com.raydar.mybatis.domain.eclaim.CompanyFormationMappingData;
-import com.raydar.mybatis.domain.otc.EvolutionData;
-import com.raydar.mybatis.domain.otc.OutletData;
-import com.raydar.mybatis.domain.otc.WeaknessData;
 import com.raydar.mybatis.domain.user.ContentDetailData;
 
 import java.math.BigDecimal;
@@ -44,9 +37,6 @@ public class SearchData {
     private String approvedStatus;
     private String nonApprovedStatus;
 
-    private List<CategoryDATA> categoryList;
-    private List<ClaimBulkData> claimBulkDataList;
-    private List<ClaimFromData> claimFormDataList;
 
     private String entityStatus;
     private Integer entityID;
@@ -57,7 +47,6 @@ public class SearchData {
     private String userFirstName;
     private String staffCode;
 
-    private List<OutletData> outletList;
 
     private String companyCode;
     private String locationCode;
@@ -66,9 +55,6 @@ public class SearchData {
 
     private CompanyTaxInfoData companyTaxInfoData;
 
-    private List<WeaknessData> weaknessDataList;
-
-    private List<EvolutionData> evolutionDataList;
 
     private Integer claimType;
 
@@ -80,7 +66,6 @@ public class SearchData {
 
     private Integer outletID;
 
-    private List<CompanyFormationMappingData> formationMappingList;
 
     private List<ContentDetailData> contentList;
 
@@ -92,13 +77,6 @@ public class SearchData {
         this.contentList = contentList;
     }
 
-    public List<CompanyFormationMappingData> getFormationMappingList() {
-        return formationMappingList;
-    }
-
-    public void setFormationMappingList(List<CompanyFormationMappingData> formationMappingList) {
-        this.formationMappingList = formationMappingList;
-    }
 
     public Integer getReportID() {
         return reportID;
@@ -124,21 +102,6 @@ public class SearchData {
         this.appVersion = appVersion;
     }
 
-    public List<EvolutionData> getEvolutionDataList() {
-        return evolutionDataList;
-    }
-
-    public void setEvolutionDataList(List<EvolutionData> evolutionDataList) {
-        this.evolutionDataList = evolutionDataList;
-    }
-
-    public List<WeaknessData> getWeaknessDataList() {
-        return weaknessDataList;
-    }
-
-    public void setWeaknessDataList(List<WeaknessData> weaknessDataList) {
-        this.weaknessDataList = weaknessDataList;
-    }
 
     public Integer getSubCategoryID() {
         return subCategoryID;
@@ -228,13 +191,7 @@ public class SearchData {
         this.categoryID = categoryID;
     }
 
-    public List<CategoryDATA> getCategoryList() {
-        return categoryList;
-    }
 
-    public void setCategoryList(List<CategoryDATA> categoryList) {
-        this.categoryList = categoryList;
-    }
 
     public String getApprovedStatus() {
         return approvedStatus;
@@ -276,13 +233,7 @@ public class SearchData {
         this.entityName = entityName;
     }
 
-    public List<ClaimBulkData> getClaimBulkDataList() {
-        return claimBulkDataList;
-    }
 
-    public void setClaimBulkDataList(List<ClaimBulkData> claimBulkDataList) {
-        this.claimBulkDataList = claimBulkDataList;
-    }
 
     public Boolean getStatus() {
         return status;
@@ -308,13 +259,7 @@ public class SearchData {
         this.entityType = entityType;
     }
 
-    public List<ClaimFromData> getClaimFormDataList() {
-        return claimFormDataList;
-    }
 
-    public void setClaimFormDataList(List<ClaimFromData> claimFormDataList) {
-        this.claimFormDataList = claimFormDataList;
-    }
 
     public Integer getUserID() {
         return userID;
@@ -324,13 +269,7 @@ public class SearchData {
         this.userID = userID;
     }
 
-    public List<OutletData> getOutletList() {
-        return outletList;
-    }
 
-    public void setOutletList(List<OutletData> outletList) {
-        this.outletList = outletList;
-    }
 
     public String getUserFirstName() {
         return userFirstName;

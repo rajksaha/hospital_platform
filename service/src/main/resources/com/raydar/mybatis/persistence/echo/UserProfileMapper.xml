@@ -15,9 +15,16 @@
 			`lastName`,
 			`employeeCode`,
 			`emailAddress`,
-			`jsonString`,
 			`lastWorkingDay`,
-			`otcUserDesignation`,
+			`sex`,
+			`startTime`,
+			`endTime`,
+			`dateOfBirth`,
+			`fee`,
+			`categoryID`,
+			`contactNo`,
+			`userType`,
+			`weeklyOff`,
 			`updatedBy`,
 			`updatedOn`,
 			`createdBy`,
@@ -30,9 +37,16 @@
 			#{lastName},
 			#{employeeCode},
 			#{emailAddress},
-			#{jsonString},
 			#{lastWorkingDay},
-			#{otcUserDesignation},
+			#{sex},
+			#{startTime},
+			#{endTime},
+			#{dateOfBirth},
+			#{fee},
+			#{categoryID},
+			#{contactNo},
+			#{userType},
+			#{weeklyOff},
 			#{updatedBy},
 			#{updatedOn},
 			#{createdBy},
@@ -48,10 +62,17 @@
 		SET
 			`firstName` = #{firstName},
 			`lastName` = #{lastName},
-			`otcUserDesignation` = #{otcUserDesignation},
+			`sex` = #{sex},
 			`emailAddress` = #{emailAddress},
-			`jsonString` = #{jsonString},
+			`startTime` = #{startTime},
+			`endTime` = #{endTime},
+			`dateOfBirth` = #{dateOfBirth},
 			`lastWorkingDay` = #{lastWorkingDay},
+			`fee` = #{fee},
+			`categoryID` = #{categoryID},
+			`userType` = #{userType},
+			`weeklyOff` = #{weeklyOff},
+			`contactNo` = #{contactNo},
 			`updatedBy` = #{updatedBy},
 			`updatedOn` = #{updatedOn}
 		WHERE `userID` = #{userID}
@@ -61,19 +82,26 @@
 	<select id="getUserProfileByID" parameterType="int" resultType="UserProfile">
 
 		SELECT
-			eup.`userProfileID`,
-			eup.`userID`,
-			eup.`firstName`,
-			eup.`lastName`,
-			eup.`employeeCode`,
-			eup.`emailAddress`,
-			eup.`jsonString`,
-			eup.lastWorkingDay,
-			eup.`updatedBy`,
-			eup.`updatedOn`,
-			eup.`createdBy`,
-			eup.`createdOn`,
-			eup.otcUserDesignation,
+			`eup`.`userProfileID`,
+			`eup`.`userID`,
+			`eup`.`firstName`,
+			`eup`.`lastName`,
+			`eup`.`sex`,
+			`eup`.`employeeCode`,
+			`eup`.`emailAddress`,
+			`eup`.`lastWorkingDay`,
+			`eup`.`startTime`,
+			`eup`.`endTime`,
+			`eup`.`dateOfBirth`,
+			`eup`.`fee`,
+			`eup`.`categoryID`,
+			`eup`.`contactNo`,
+			`eup`.`userType`,
+			eup.weeklyOff,
+			`eup`.`updatedBy`,
+			`eup`.`updatedOn`,
+			`eup`.`createdBy`,
+			`eup`.`createdOn`,
 			eu.status AS status,
 			eu.userName AS userName,
 			eu.companyID AS companyID
@@ -86,21 +114,29 @@
 	<select id="getUserProfileByParam" parameterType="map" resultType="UserProfile">
 
 		SELECT
-			eup.`userProfileID`,
-			eup.`userID`,
-			eup.`firstName`,
-			eup.`lastName`,
-			eup.`employeeCode`,
-			eup.`emailAddress`,
-			eup.`jsonString`,
-			eup.`lastWorkingDay`,
-			eup.`updatedBy`,
-			eup.`updatedOn`,
-			eup.`createdBy`,
-			eup.`createdOn`,
-			eup.otcUserDesignation,
+			`eup`.`userProfileID`,
+			`eup`.`userID`,
+			`eup`.`firstName`,
+			`eup`.`lastName`,
+			`eup`.`sex`,
+			`eup`.`employeeCode`,
+			`eup`.`emailAddress`,
+			`eup`.`lastWorkingDay`,
+			`eup`.`startTime`,
+			`eup`.`endTime`,
+			`eup`.`dateOfBirth`,
+			`eup`.`fee`,
+			`eup`.`categoryID`,
+			`eup`.`contactNo`,
+			`eup`.`userType`,
+			eup.weeklyOff,
+			`eup`.`updatedBy`,
+			`eup`.`updatedOn`,
+			`eup`.`createdBy`,
+			`eup`.`createdOn`,
 			eu.status AS status,
-			eu.userName AS userName
+			eu.userName AS userName,
+			eu.companyID AS companyID
 		FROM `echo_user_profile` eup
 		JOIN `echo_user` eu ON eup.userID = eu.userID
 		WHERE 1 = 1
@@ -112,6 +148,9 @@
 		</if>
 		<if test="companyID != null">
 			AND eu.companyID = #{companyID}
+		</if>
+		<if test="userType != null">
+			AND eup.userType = #{userType}
 		</if>
 		<if test="employeeCode != null">
 			AND eup.employeeCode = #{employeeCode}
@@ -140,6 +179,9 @@
 		</if>
 		<if test="companyID != null">
 			AND eu.companyID = #{companyID}
+		</if>
+		<if test="userType != null">
+			AND eup.userType = #{userType}
 		</if>
 		<if test="employeeCode != null">
 			AND eup.employeeCode = #{employeeCode}

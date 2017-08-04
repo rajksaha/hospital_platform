@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.raydar.common.exception.RaydarException;
 import com.raydar.common.utility.JsonConverter;
 import com.raydar.mybatis.domain.SearchData;
-import com.raydar.mybatis.domain.eclaim.CompanyApprovalData;
-import com.raydar.mybatis.domain.user.CompanyLevelData;
 import com.raydar.mybatis.domain.user.UserData;
 import com.raydar.mybatis.domain.user.UserGroupData;
 import com.raydar.mybatis.domain.user.UserProfileData;
@@ -48,7 +46,7 @@ public class UserController extends BaseController {
 
 
         Map<String, Object> params = this.parseParameter(request);
-        if(this.getEchoUserDetail().getUserProfilePermissionData().getCompanyID() == null){
+            if(this.getEchoUserDetail().getUserProfilePermissionData().getCompanyID() == null){
             if(params.get("companyID") == null){
                 params.put("companyID", -1);
             }else{
@@ -78,14 +76,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = {"/getUserProfile/userID/{userID}"}, method = RequestMethod.GET)
     @ResponseBody
     public UserProfileData getUserProfile(@PathVariable("userID") Integer userID, HttpServletRequest request) throws RaydarException {
-
-        UserProfileData userProfileData = this.userService.getUserProfileByID(userID);
-        if(userProfileData != null){
-            List<CompanyLevelData> resultList = JsonConverter.convertJsonToList(userProfileData.getJsonString(), CompanyLevelData.class);
-
-            userProfileData.setCompanyLevelList(resultList);
-        }
-        return userProfileData;
+        return this.userService.getUserProfileByID(userID);
     }
 
     @RequestMapping(value = {"/updateUserPassword"}, method = RequestMethod.POST)
@@ -131,10 +122,6 @@ public class UserController extends BaseController {
         result.put("success", true);
 
 
-        Gson gson = new Gson();
-        String jsoString = gson.toJson(data.getCompanyLevelList());
-
-        data.setJsonString(jsoString);
         this.userService.updateUserProfile(data);
         UserData userData = new UserData();
         userData.setStatus(data.getStatus());

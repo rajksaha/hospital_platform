@@ -27,8 +27,8 @@ app.controller('CompanyModuleController', function($scope, $rootScope, $state, $
 
     // column definition
     $scope.columnDefinition = [
-        {columnHeaderDisplayName: 'Company Module Name', displayProperty: 'shortName', sortKey: 'shortName'},
-        {columnHeaderDisplayName: 'Company Name', displayProperty: 'companyName', sortKey: 'companyName'},
+        {columnHeaderDisplayName: 'Hospital Module Name', displayProperty: 'shortName', sortKey: 'shortName'},
+        {columnHeaderDisplayName: 'Hospital Name', displayProperty: 'companyName', sortKey: 'companyName'},
         {columnHeaderDisplayName: 'Module Name', displayProperty: 'moduleName', sortKey: 'moduleName'},
         {columnHeaderDisplayName: 'Action', templateUrl: 'action_template', width: '5em'}
     ];

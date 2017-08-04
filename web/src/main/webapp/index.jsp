@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="icon" href="<c:url value="/resources/images/logo.png"/>" type="image/gif" sizes="16x16">
+    <link rel="icon" href="<c:url value="/resources/images/hos.png"/>" type="image/gif" sizes="16x16">
     <title>hospital</title>
 
     <%--bootstrap & jquery ui--%>

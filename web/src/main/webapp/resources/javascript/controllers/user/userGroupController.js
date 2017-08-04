@@ -27,8 +27,8 @@ app.controller('UserGroupController', function($scope, $rootScope, $state, $http
     // column definition
     $scope.columnDefinition = [
         {columnHeaderDisplayName: 'Group Name', displayProperty: 'shortName', sortKey: 'shortName'},
-        {columnHeaderDisplayName: 'Company Module Name', displayProperty: 'companyModuleName', sortKey: 'companyModuleName'},
-        {columnHeaderDisplayName: 'Company Name', displayProperty: 'companyName', sortKey: 'companyName'},
+        {columnHeaderDisplayName: 'Hospital Module Name', displayProperty: 'companyModuleName', sortKey: 'companyModuleName'},
+        {columnHeaderDisplayName: 'Hospital Name', displayProperty: 'companyName', sortKey: 'companyName'},
         {columnHeaderDisplayName: 'Module Name', displayProperty: 'moduleName', sortKey: 'moduleName'},
         {columnHeaderDisplayName: 'Action', templateUrl: 'action_template', width: '5em'}
     ];

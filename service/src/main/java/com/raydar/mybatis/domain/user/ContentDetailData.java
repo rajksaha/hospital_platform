@@ -1,7 +1,6 @@
 package com.raydar.mybatis.domain.user;
 
 import com.raydar.mybatis.domain.BaseData;
-import com.raydar.mybatis.domain.eclaim.CompanyFormationMappingData;
 
 import java.util.List;
 
@@ -18,15 +17,7 @@ public class ContentDetailData extends BaseData {
     private String content;
     private String url;
     private String format;
-    private List<CompanyFormationMappingData> formationList;
 
-    public List<CompanyFormationMappingData> getFormationList() {
-        return formationList;
-    }
-
-    public void setFormationList(List<CompanyFormationMappingData> formationList) {
-        this.formationList = formationList;
-    }
 
     public Integer getContentDetailID() {
         return contentDetailID;

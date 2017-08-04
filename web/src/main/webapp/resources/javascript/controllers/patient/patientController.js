@@ -1,4 +1,4 @@
-app.controller('UserController', function($scope, $rootScope, $state, $filter, $http, $timeout, $location, UserSetupService, $modal, EchoCommonService, ContentDetailService) {
+app.controller('PatientController', function($scope, $rootScope, $state, $filter, $http, $timeout, $location, UserSetupService, $modal, EchoCommonService, ContentDetailService) {
 
     $scope.hasError = false;
     $scope.hasSuccess = false;
@@ -39,9 +39,8 @@ app.controller('UserController', function($scope, $rootScope, $state, $filter, $
 
     // column definition
     $scope.columnDefinition = [
-        {columnHeaderDisplayName: 'SL', displayProperty: 'serial', width: '4em'},
         {columnHeaderDisplayName: 'Name', displayProperty: 'firstName', sortKey: 'firstName'},
-        {columnHeaderDisplayName: 'Employee Code', displayProperty: 'userName', sortKey: 'userName'},
+        {columnHeaderDisplayName: 'Contact', displayProperty: 'contactNo', sortKey: 'contactNo'},
         {columnHeaderDisplayName: 'Action', templateUrl: 'action_template', width: '30em'}
     ];
 
@@ -50,7 +49,7 @@ app.controller('UserController', function($scope, $rootScope, $state, $filter, $
         $scope.dataSourceConfig = {
             url: 'rest/user/getAll',
             method: "GET",
-            params: {userType : 3},
+            params: {userType : 2},
             paginationConfig: {
                 response: {
                     totalItems: 'count',
@@ -64,7 +63,7 @@ app.controller('UserController', function($scope, $rootScope, $state, $filter, $
     $scope.dataSourceConfig = {
         url: 'rest/user/getAll',
         method: "GET",
-        params: {userType : 3},
+        params: {userType : 2},
         paginationConfig: {
             response: {
                 totalItems: 'count',
@@ -77,7 +76,7 @@ app.controller('UserController', function($scope, $rootScope, $state, $filter, $
         $scope.hideMessage();
         userProfile.companyID = $scope.searchParam.companyID;
         if(validator.validateForm("#validationRequired",".validatorMsg",null)) {
-            userProfile.userType = 3;
+            userProfile.userType = 2;
             UserSetupService.save.query({}, userProfile ).$promise.then(function(result) {
                 if(result && result.success) {
                     $scope.showSuccessMessage("Information saved successfully");
@@ -144,14 +143,6 @@ app.controller('UserController', function($scope, $rootScope, $state, $filter, $
             $scope.userProfile = result;
             $scope.hideMessage();
             $scope.showForm = true;
-
-            if(!$scope.contentDetailList){
-                var contentDetail = {};
-                contentDetail.entityType = "USERCATEGORY";
-                ContentDetailService.getContent.query({}, contentDetail).$promise.then(function(result) {
-                    $scope.contentDetailList = result;
-                });
-            }
         });
 
     };
@@ -163,13 +154,7 @@ app.controller('UserController', function($scope, $rootScope, $state, $filter, $
     };
 
     $scope.add = function(){
-        if(!$scope.contentDetailList){
-            var contentDetail = {};
-            contentDetail.entityType = "USERCATEGORY";
-            ContentDetailService.getContent.query({}, contentDetail).$promise.then(function(result) {
-                $scope.contentDetailList = result;
-            });
-        }
+
         $scope.editObj = {};
         $scope.reset();
         $scope.showForm = true;
@@ -184,54 +169,6 @@ app.controller('UserController', function($scope, $rootScope, $state, $filter, $
         $scope.cancel();
     };
 
-
-
-    $scope.userGroup = function(userProfile){
-
-        var modalInstance = $modal.open({
-            templateUrl: 'resources/javascript/templates/user/userGroupAssignmentModal.html',
-            controller: 'UserGroupAssignmentController',
-            backdrop: "static",
-            windowClass: 'fade in ',
-            resolve: {
-                modalConfig: function () {
-                    return userProfile;
-                }
-            }
-        });
-        modalInstance.result.then(function(result) {
-            $scope.showSuccessMessage("Information updated successfully");
-            $scope.bringData();
-        });
-
-    };
-
     $scope.init();
-
-});
-
-app.controller('UserGroupAssignmentController', function($scope, $modalInstance, $timeout, $filter, modalConfig, UserManagementService) {
-
-    $scope.userProfile = modalConfig;
-    $scope.userProfile.userGroupList = [];
-
-    $scope.cancel = function (){
-        $modalInstance.dismiss('cancel');
-    };
-
-    $scope.save = function (){
-
-        UserManagementService.updateUserGroupAssignment.query({}, $scope.userProfile ).$promise.then(function(result) {
-            $modalInstance.close();
-        });
-    };
-
-    var searchData = {};
-    searchData.userID = $scope.userProfile.userID;
-    //searchData.companyID = $scope.userProfile.companyID;
-    UserManagementService.getUserGroup.query({}, searchData ).$promise.then(function(result) {
-        //$scope.userProfile.userGroupList = [];
-        $scope.userProfile.userGroupList = result;
-    });
 
 });

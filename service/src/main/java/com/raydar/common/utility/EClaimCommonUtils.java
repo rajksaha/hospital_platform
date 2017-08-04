@@ -1,9 +1,6 @@
 package com.raydar.common.utility;
 
 import com.raydar.common.exception.RaydarException;
-import com.raydar.mybatis.domain.eclaim.CategoryFieldDATA;
-import com.raydar.mybatis.domain.eclaim.CompanyGlobalRuleData;
-import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -98,26 +95,7 @@ public class EClaimCommonUtils {
         return param;
     }
 
-    public static BigDecimal getAmount(List<CategoryFieldDATA> fieldList){
 
-        for(CategoryFieldDATA result : fieldList){
-            if(result.getIsAmount().equals(1)){
-                return getDecimalFromString(result.getFieldValue());
-            }
-        }
-        return BigDecimal.ZERO;
-    }
-
-    public static Timestamp getDate(List<CategoryFieldDATA> fieldList){
-
-        for(CategoryFieldDATA result : fieldList){
-            if(result.getFieldType().equals(2)){
-                String dateValue = result.getFieldValueStr() == null ? result.getFieldValue() : result.getFieldValueStr();
-                return DateUtil.getTimestampFromString(dateValue.substring(0, 10), "yyyy-MM-dd");
-            }
-        }
-        return null;
-    }
     public static String getApplicationUrl(String status){
         String host = EchoProperties.INSTANCE.getProperty("web.app.host");
         String path = EchoProperties.INSTANCE.getProperty("web.app.context.path");

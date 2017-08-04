@@ -1,9 +1,9 @@
 package com.raydar.mybatis.domain.user;
 
 import com.raydar.mybatis.domain.BaseData;
-import org.apache.commons.lang.WordUtils;
 
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -20,15 +20,18 @@ public class UserProfileData extends BaseData {
     private String lastName;
     private String employeeCode;
     private String emailAddress;
-    private String jsonString;
     private Integer status;
-    private String otcUserDesignation;
-    private Integer otcNumOfVisit;
-    private BigDecimal otcNpsScore;
-    private BigDecimal otcNpsScore1;
-    private BigDecimal otcNpsScore2;
     private Integer companyID;
     private Timestamp lastWorkingDay;
+    private String startTime;
+    private String endTime;
+    private String contactNo;
+    private BigDecimal fee;
+    private String weeklyOff;
+    private Timestamp dateOfBirth;
+    private Integer categoryID;
+    private Integer userType;
+    private String sex;
 
     private List<CompanyLevelData> companyLevelList;
     private List<UserGroupAssignmentData> groupAssignmentList;
@@ -42,6 +45,14 @@ public class UserProfileData extends BaseData {
         this.userProfileID = userProfileID;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public Integer getUserID() {
         return userID;
     }
@@ -51,7 +62,7 @@ public class UserProfileData extends BaseData {
     }
 
     public String getFirstName() {
-        return firstName !=null ? WordUtils.capitalizeFully(firstName) : null;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -74,20 +85,108 @@ public class UserProfileData extends BaseData {
         this.employeeCode = employeeCode;
     }
 
-    public String getJsonString() {
-        return jsonString;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setJsonString(String jsonString) {
-        this.jsonString = jsonString;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
-    public String getUserName() {
-        return userName;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getCompanyID() {
+        return companyID;
+    }
+
+    public void setCompanyID(Integer companyID) {
+        this.companyID = companyID;
+    }
+
+    public Timestamp getLastWorkingDay() {
+        return lastWorkingDay;
+    }
+
+    public void setLastWorkingDay(Timestamp lastWorkingDay) {
+        this.lastWorkingDay = lastWorkingDay;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getContactNo() {
+        return contactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
+    }
+
+    public BigDecimal getFee() {
+        return fee;
+    }
+
+    public void setFee(BigDecimal fee) {
+        this.fee = fee;
+    }
+
+    public String getWeeklyOff() {
+        return weeklyOff;
+    }
+
+    public void setWeeklyOff(String weeklyOff) {
+        this.weeklyOff = weeklyOff;
+    }
+
+    public Timestamp getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Timestamp dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Integer getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(Integer categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public List<CompanyLevelData> getCompanyLevelList() {
@@ -106,83 +205,11 @@ public class UserProfileData extends BaseData {
         this.groupAssignmentList = groupAssignmentList;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
     public List<UserGroupData> getUserGroupList() {
         return userGroupList;
     }
 
     public void setUserGroupList(List<UserGroupData> userGroupList) {
         this.userGroupList = userGroupList;
-    }
-
-    public String getOtcUserDesignation() {
-        return otcUserDesignation;
-    }
-
-    public void setOtcUserDesignation(String otcUserDesignation) {
-        this.otcUserDesignation = otcUserDesignation;
-    }
-
-    public Integer getCompanyID() {
-        return companyID;
-    }
-
-    public void setCompanyID(Integer companyID) {
-        this.companyID = companyID;
-    }
-
-    public Integer getOtcNumOfVisit() {
-        return otcNumOfVisit;
-    }
-
-    public void setOtcNumOfVisit(Integer otcNumOfVisit) {
-        this.otcNumOfVisit = otcNumOfVisit;
-    }
-
-    public BigDecimal getOtcNpsScore() {
-        return otcNpsScore;
-    }
-
-    public void setOtcNpsScore(BigDecimal otcNpsScore) {
-        this.otcNpsScore = otcNpsScore;
-    }
-
-    public BigDecimal getOtcNpsScore1() {
-        return otcNpsScore1;
-    }
-
-    public void setOtcNpsScore1(BigDecimal otcNpsScore1) {
-        this.otcNpsScore1 = otcNpsScore1;
-    }
-
-    public BigDecimal getOtcNpsScore2() {
-        return otcNpsScore2;
-    }
-
-    public void setOtcNpsScore2(BigDecimal otcNpsScore2) {
-        this.otcNpsScore2 = otcNpsScore2;
-    }
-
-    public Timestamp getLastWorkingDay() {
-        return lastWorkingDay;
-    }
-
-    public void setLastWorkingDay(Timestamp lastWorkingDay) {
-        this.lastWorkingDay = lastWorkingDay;
     }
 }

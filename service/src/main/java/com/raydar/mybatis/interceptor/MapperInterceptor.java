@@ -7,7 +7,6 @@ import com.raydar.common.utility.JsonConverter;
 import com.raydar.context.AppContextManager;
 import com.raydar.mybatis.domain.Audit;
 import com.raydar.mybatis.domain.BaseData;
-import com.raydar.mybatis.domain.eclaim.ClaimAuditData;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;

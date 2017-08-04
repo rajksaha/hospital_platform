@@ -2,8 +2,6 @@ package com.raydar.mybatis.domain.echo;
 
 
 import com.raydar.mybatis.domain.BaseData;
-import com.raydar.mybatis.domain.eclaim.CompanyApprovalData;
-import com.raydar.mybatis.domain.eclaim.CompanyGlobalRuleData;
 
 import java.util.List;
 
@@ -17,7 +15,6 @@ public class CompanyData extends BaseData {
     private String companyName;
 
 
-    private CompanyGlobalRuleData globalRuleData;
 
 
     public Integer getCompanyID() {
@@ -44,12 +41,6 @@ public class CompanyData extends BaseData {
         this.companyName = companyName;
     }
 
-    public CompanyGlobalRuleData getGlobalRuleData() {
-        return globalRuleData;
-    }
 
-    public void setGlobalRuleData(CompanyGlobalRuleData globalRuleData) {
-        this.globalRuleData = globalRuleData;
-    }
 
 }

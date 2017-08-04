@@ -5,10 +5,10 @@ import com.raydar.common.type.QueueConfig;
 import com.raydar.common.utility.JsonConverter;
 import com.raydar.common.utility.PasswordEncryptor;
 import com.raydar.common.exception.RaydarException;
-import com.raydar.mybatis.domain.eclaim.CompanyGlobalRuleData;
-import com.raydar.mybatis.domain.user.CompanyLevelData;
 import com.raydar.mybatis.domain.user.UserData;
+import com.raydar.mybatis.domain.user.UserGroupAssignmentData;
 import com.raydar.mybatis.domain.user.UserProfileData;
+import com.raydar.mybatis.persistence.echo.UserGroupAssignmentMapper;
 import com.raydar.mybatis.persistence.echo.UserMapper;
 import com.raydar.mybatis.persistence.echo.UserProfileMapper;
 import com.google.gson.Gson;
@@ -44,6 +44,9 @@ public class UserService {
     @Autowired
     private QueueProducer queueProducer;
 
+    @Autowired
+    private UserGroupAssignmentMapper userGroupAssignmentMapper;
+
 
     public UserData getUserByUserName(String userName) throws RaydarException {
         return this.userMapper.getUserByUserName(userName);
@@ -71,12 +74,6 @@ public class UserService {
     public UserProfileData getUserProfileByID(Integer userID) throws RaydarException {
         UserProfileData userProfileData = this.userProfileMapper.getUserProfileByID(userID);
 
-        if (userProfileData != null && userProfileData.getJsonString() != null) {
-
-            List<CompanyLevelData> result = JsonConverter.convertJsonToList(userProfileData.getJsonString(),CompanyLevelData.class);
-
-            userProfileData.setCompanyLevelList(result);
-        }
 
         return userProfileData;
     }
@@ -95,33 +92,20 @@ public class UserService {
 
         this.create(userData);
 
-        if (userData != null) {
-            userProfileData.setUserID(userData.getUserID());
-            this.handleOTCUserDesignation(userProfileData);
-            this.userProfileMapper.create(userProfileData);
+        userProfileData.setUserID(userData.getUserID());
+        this.userProfileMapper.create(userProfileData);
+
+        if(userProfileData.getUserType() == 1){
+            UserGroupAssignmentData userGroupAssignmentData = new UserGroupAssignmentData();
+            userGroupAssignmentData.setUserID(userData.getUserID());
+            userGroupAssignmentData.setUserGroupID(2);
+            userGroupAssignmentData.setStatus(1);
+            userGroupAssignmentMapper.create(userGroupAssignmentData);
         }
     }
 
     public void updateUserProfile(UserProfileData userProfileData) throws RaydarException {
-        this.handleOTCUserDesignation(userProfileData);
         this.userProfileMapper.update(userProfileData);
-    }
-
-    public void handleOTCUserDesignation(UserProfileData userProfileData)throws RaydarException{
-
-        if(CollectionUtils.isNotEmpty(userProfileData.getCompanyLevelList())){
-            for(CompanyLevelData comLevel : userProfileData.getCompanyLevelList()){
-                if(comLevel.getLevelName().equalsIgnoreCase("OCCUPATION_DESC")){
-                    if(comLevel.getLevelValue().equalsIgnoreCase("AREA MANAGER")){
-                        userProfileData.setOtcUserDesignation("AM");
-                    }else if(comLevel.getLevelValue().equalsIgnoreCase("RETAIL MARKETING EXE")){
-                        userProfileData.setOtcUserDesignation("RME");
-                    }
-                    break;
-                }
-            }
-        }
-
     }
 
     public List<UserProfileData> getUserProfileByParam(Map<String, Object> param) throws RaydarException {

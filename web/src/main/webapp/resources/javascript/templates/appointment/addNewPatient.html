@@ -1,0 +1,50 @@
+<div class="modal-header modalHead ">
+	<h4 class="modal-title">Add New Patient</h4>
+</div>
+<div class="modal-body modalBody"  style="position:relative; z-index:1;">
+	<div class="alert alert-danger alert-dismissable" data-ng-show="error">
+        <div>{{errorMessage}}</div>
+        <div id="lblMsg_modal"></div>
+    </div>
+
+
+    	<div  class="row step4Width" id="validateReq">
+   			<div class="form-group col-xs-12 col-sm-12">
+   				<label>Patient  Name: <span class="red" >*</span></label>
+   				<input type="text" class="form-control required" data-ng-model="patientProfileData.name" errmsg="Please enter patient name" maxlength="40">
+			</div>
+			
+			<div class="form-group col-xs-12 col-sm-12" >
+				<label>Age: <span class="red" >*</span></label> 
+				<input class="form-control decimal" type="text" maxlength="6" data-ng-model="patientProfileData.age" errmsg="Please enter patient age">
+			</div>
+			
+			<div class="form-group col-xs-12 col-sm-12 ">
+				<label>Gender:</label> 
+				<select data-ng-model="patientProfileData.sex" class="form-control">
+					<option value="MALE">Male</option>
+					<option value="FEMALE">Female</option>
+					<option value="OTHER">Other</option>
+				</select>
+			</div>
+			
+			<div class="form-group col-xs-12 col-sm-12">
+				<label>Phone:</label> 
+				<input class="form-control phnnr" type="text" maxlength="16" data-ng-model="patientProfileData.phone">
+			</div>
+			
+			<div class="form-group col-xs-12 col-sm-12 ">
+				<label>Address:</label> 
+				<input class="form-control" type="text" maxlength="100" data-ng-model="patientProfileData.address">
+			</div>
+    	</div>
+	
+</div>
+<div class="modal-footer modalFoot">
+	<button class="btn btnLanier btn-success" data-ng-click="createNewPatient()" >
+		<span class="glyphicons glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Save
+	</button>
+	<button class="btn btnLanier btn-danger" data-ng-click="cancelNewPatient()" >
+		<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Cancel
+	</button>
+</div>

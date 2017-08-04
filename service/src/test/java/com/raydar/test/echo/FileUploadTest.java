@@ -1,11 +1,6 @@
 package com.raydar.test.echo;
 
 import com.raydar.common.exception.RaydarException;
-import com.raydar.common.utility.DateUtil;
-import com.raydar.common.utility.EchoProperties;
-import com.raydar.common.utility.FTPUtil;
-import com.raydar.mybatis.domain.eclaim.CategoryRuleDATA;
-import com.raydar.mybatis.domain.eclaim.CategoryRuleValueDATA;
 import com.raydar.test.BaseTest;
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Ignore;
@@ -66,31 +61,6 @@ public class FileUploadTest extends BaseTest {
 
     }
 
-    private BigDecimal calculateOnly(List<CategoryRuleValueDATA> ruleValueList, BigDecimal amount){
-
-
-        BigDecimal totalAmount = BigDecimal.ZERO;
-
-        for (CategoryRuleValueDATA ruleValue : ruleValueList){
-
-            if(ruleValue.getLimit2() == null){
-                totalAmount = totalAmount.add(amount.multiply(ruleValue.getLimit3()));
-            }else{
-                BigDecimal temp = amount;
-                BigDecimal diff = ruleValue.getLimit2().subtract(ruleValue.getLimit1()).add(BigDecimal.ONE);
-                if(amount.compareTo(diff)  > 0){
-                    temp = diff;
-                }
-                totalAmount = totalAmount.add(temp.multiply(ruleValue.getLimit3()));
-                amount = amount.subtract(diff);
-                if(amount.compareTo(BigDecimal.ZERO) <= 0){
-                    break;
-                }
-            }
-        }
-
-        return totalAmount;
-    }
 
     private void handleArray(Integer number){
 

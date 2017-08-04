@@ -100,4 +100,5 @@ public class UserData extends BaseData {
     public void setUserProfileData(UserProfileData userProfileData) {
         this.userProfileData = userProfileData;
     }
+
 }

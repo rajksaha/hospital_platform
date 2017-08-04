@@ -24,6 +24,10 @@
 		<typeAlias alias="ContentDetail" type="com.raydar.mybatis.domain.user.ContentDetailData"/>
 		<typeAlias alias="CompanyTax" type="com.raydar.mybatis.domain.echo.CompanyTaxInfoData"/>
 
+		<typeAlias type="com.raydar.mybatis.domain.appointment.AppointmentData" alias="AppointmentData"/>
+
+
+
 
 	</typeAliases>
 
