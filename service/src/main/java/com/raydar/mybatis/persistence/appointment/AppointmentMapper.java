@@ -3,6 +3,7 @@ package com.raydar.mybatis.persistence.appointment;
 
 import com.raydar.common.exception.RaydarException;
 import com.raydar.mybatis.domain.appointment.AppointmentData;
+import com.raydar.request.Appointment;
 
 import java.util.List;
 import java.util.Map;
@@ -12,9 +13,11 @@ import java.util.Map;
  */
 public interface AppointmentMapper {
 
-    List<AppointmentData> getAppointmentByParam(Map<String, Object> params) throws RaydarException;
+    List<Appointment> getAppointmentByParam(Map<String, Object> params) throws RaydarException;
 
-    AppointmentData bringAppointment(Integer appointmentID) throws RaydarException;
+    public Integer getCountByParam(Map<String, Object> param) throws RaydarException;
+
+    Appointment bringAppointment(Integer appointmentID) throws RaydarException;
 
     void create(AppointmentData appointmentData)throws RaydarException;
 

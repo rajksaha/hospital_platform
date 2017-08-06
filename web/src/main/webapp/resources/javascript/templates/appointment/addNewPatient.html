@@ -9,33 +9,35 @@
 
 
     	<div  class="row step4Width" id="validateReq">
-   			<div class="form-group col-xs-12 col-sm-12">
+			<div class="form-group col-xs-6 col-sm-6">
+				<label>Doctor  Name: <span class="red" >*</span></label>
+				<input type="text" data-ng-model="doctorName" typeahead="patientList.firstName for patientList in getPatientList(1, $viewValue)"  class="form-control" placeholder="Search Doctor by name" typeahead-on-select='onSelectItem($item, $model, $label, 1)'/>
+			</div>
+
+   			<div class="form-group col-xs-6 col-sm-6">
    				<label>Patient  Name: <span class="red" >*</span></label>
-   				<input type="text" class="form-control required" data-ng-model="patientProfileData.name" errmsg="Please enter patient name" maxlength="40">
+				<input type="text" data-ng-model="patientName" typeahead="patientList.firstName for patientList in getPatientList(2, $viewValue)"  class="form-control" placeholder="Search Patient by name" typeahead-on-select='onSelectItem($item, $model, $label, 2)'/>
 			</div>
 			
-			<div class="form-group col-xs-12 col-sm-12" >
-				<label>Age: <span class="red" >*</span></label> 
-				<input class="form-control decimal" type="text" maxlength="6" data-ng-model="patientProfileData.age" errmsg="Please enter patient age">
+			<div class="form-group col-xs-6 col-sm-6" >
+				<label>Date: <span class="red" >*</span></label>
+				<input type="text" data-ng-model="appointmentData.appointmentDate" class="form-control form-control-date input-sm" maxlength="100" datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true">
+				<!--<input class="form-control decimal" type="text" maxlength="6" data-ng-model="appointmentData.appointmentDate">-->
 			</div>
-			
-			<div class="form-group col-xs-12 col-sm-12 ">
-				<label>Gender:</label> 
-				<select data-ng-model="patientProfileData.sex" class="form-control">
-					<option value="MALE">Male</option>
-					<option value="FEMALE">Female</option>
-					<option value="OTHER">Other</option>
+
+			<div class="form-group col-xs-6 col-sm-6" >
+				<label>Time: <span class="red" >*</span></label>
+				<div timepicker data-ng-model="appointmentData.appointmentTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+				<!--<input class="form-control decimal" type="text" maxlength="6" data-ng-model="appointmentData.appointmentTime">-->
+			</div>
+
+			<div class="form-group col-xs-6 col-sm-6" >
+				<label>Appointment Type: <span class="red" >*</span></label>
+				<select  ng-model="appointmentData.appointmentType" class="form-control input-sm required"  >
+					<option value="" >--Select--</option>
+					<option value="1" >Counseling </option>
+					<option value="2" >Report</option>
 				</select>
-			</div>
-			
-			<div class="form-group col-xs-12 col-sm-12">
-				<label>Phone:</label> 
-				<input class="form-control phnnr" type="text" maxlength="16" data-ng-model="patientProfileData.phone">
-			</div>
-			
-			<div class="form-group col-xs-12 col-sm-12 ">
-				<label>Address:</label> 
-				<input class="form-control" type="text" maxlength="100" data-ng-model="patientProfileData.address">
 			</div>
     	</div>
 	

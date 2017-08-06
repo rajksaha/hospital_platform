@@ -6,76 +6,100 @@
 
 
 
-	<resultMap id="patientInfo" type="AppointmentData">
-		<result property="patientProfileData.userID" column="userID"/>
-		<result property="patientProfileData.firstName" column="firstName"/>
-		<result property="patientProfileData.dateOfBirth" column="dateOfBirth"/>
-		<result property="patientProfileData.address" column="address"/>
-		<result property="patientProfileData.contactNo" column="contactNo"/>
-		<result property="patientProfileData.sex" column="sex"/>
-	</resultMap>
 
-	<select id="getAppointmentByParam" parameterType="map" resultType="AppointmentData" resultMap="patientInfo">
-			SELECT
-				app.appointmentID,
-				app.doctorID,
-				app.patientID,
-				app.appointmentDate,
-				app.status,
-				app.createdBy,
-				app.appointmentType,
-				up.userID AS userID,
-				up.firstName AS firstName,
-				up.dateOfBirth AS dateOfBirth,
-				up.address AS address,
-				up.contactNo AS contactNo,
-				up.sex AS sex,
-				aty.shortName AS appointmentTypeName
+	<select id="getAppointmentByParam" parameterType="map" resultType="Appointment">
+		SELECT
+		app.appointmentID,
+		app.companyID,
+		app.doctorID,
+		app.patientID,
+		app.status,
+		app.createdBy,
+		app.appointmentType,
+		app.appointmentTime,
+		app.appointmentDate,
+		pat.firstName AS patientFirstName,
+		pat.dateOfBirth AS patientDateOfBirth,
+		pat.contactNo AS patientContact,
+		pat.sex AS patientSex,
+		doc.firstName AS doctorFirstName,
+		doc.dateOfBirth AS doctorDateOfBirth,
+		doc.contactNo AS doctorContact,
+		doc.sex AS doctorSex
+
 		FROM `appointment` app
-		JOIN appointment_type aty ON aty.appointmentTypeID = app.appointmentType
-		LEFT JOIN user_profile up ON app.patientID = up.userID
+		JOIN echo_user_profile pat ON app.patientID = pat.userID
+		JOIN echo_user_profile doc ON app.doctorID = doc.userID
+
 		WHERE 1 =  1
 		<if test="doctorID != null">
 			AND app.doctorID = #{doctorID}
 		</if>
+		<if test="companyID != null">
+			AND app.companyID = #{companyID}
+		</if>
 		<if test="appointmentDate != null">
 			AND DATE(app.appointmentDate)= DATE(#{appointmentDate})
 		</if>
-		order by app.appointmentID ASC
+		<if test="offset != null and limit != null and sortColumn != null and sortOrder != null">
+			ORDER BY ${sortColumn} ${sortOrder}
+			LIMIT #{limit} OFFSET #{offset}
+		</if>
 	</select>
 
-	<select id="bringAppointment" parameterType="map" resultType="AppointmentData" resultMap="patientInfo">
+	<select id="getCountByParam" parameterType="map" resultType="int">
+		SELECT COUNT(app.appointmentID)
+		FROM `appointment` app
+		JOIN echo_user_profile pat ON app.patientID = pat.userID
+		JOIN echo_user_profile doc ON app.doctorID = doc.userID
+
+		WHERE 1 =  1
+		<if test="doctorID != null">
+			AND app.doctorID = #{doctorID}
+		</if>
+		<if test="companyID != null">
+			AND app.companyID = #{companyID}
+		</if>
+		<if test="appointmentDate != null">
+			AND DATE(app.appointmentDate)= DATE(#{appointmentDate})
+		</if>
+	</select>
+
+	<select id="bringAppointment" parameterType="map" resultType="Appointment" >
 		SELECT
 		app.appointmentID,
+		app.companyID,
 		app.doctorID,
 		app.patientID,
-		app.appointmentDate,
 		app.status,
 		app.createdBy,
 		app.appointmentType,
-		up.userID AS userID,
-		up.firstName AS firstName,
-		up.dateOfBirth AS dateOfBirth,
-		up.address AS address,
-		up.contactNo AS contactNo,
-		up.sex AS sex,
-		aty.shortName AS appointmentTypeName
+		app.appointmentDate,
+		app.appointmentTime,
+		pat.firstName AS patientFirstName,
+		pat.dateOfBirth AS patientDateOfBirth,
+		pat.contactNo AS patientContact,
+		pat.sex AS patientSex,
+		doc.firstName AS doctorFirstName,
+		doc.dateOfBirth AS doctorDateOfBirth,
+		doc.contactNo AS doctorContact,
+		doc.sex AS doctorSex
 		FROM `appointment` app
 		JOIN appointment_type aty ON aty.appointmentTypeID = app.appointmentType
 		LEFT JOIN user_profile up ON app.patientID = up.userID
 		WHERE app.appointmentID = #{appointmentID}
 	</select>
 
-
-
 	<insert id="create" parameterType="AppointmentData" useGeneratedKeys="true" keyProperty="appointmentID">
 
 		INSERT INTO
 			`appointment`
 		(
+			companyID,
 			`doctorID`,
 			`patientID`,
 			`appointmentDate`,
+			`appointmentTime`,
 			`status`,
 			`appointmentType`,
 			`updatedOn`,
@@ -85,9 +109,11 @@
 		)
 		VALUES
 		(
+			#{companyID},
 			#{doctorID},
 			#{patientID},
 			#{appointmentDate},
+			#{appointmentTime},
 			#{status},
 			#{appointmentType},
 			#{updatedOn},

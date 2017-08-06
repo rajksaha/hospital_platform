@@ -155,6 +155,9 @@
 		<if test="employeeCode != null">
 			AND eup.employeeCode = #{employeeCode}
 		</if>
+		<if test="likeFirstName != null">
+			AND LOWER(eup.firstName) LIKE LOWER(CONCAT('%',#{likeFirstName},'%')) LIMIT 20
+		</if>
 		<if test="likeStaffCode != null">
 			AND LOWER(eup.employeeCode) LIKE LOWER(CONCAT('%',#{likeStaffCode},'%')) LIMIT 20
 		</if>

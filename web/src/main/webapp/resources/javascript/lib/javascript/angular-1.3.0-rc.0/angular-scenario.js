@@ -18682,7 +18682,7 @@ function $IntervalProvider() {
       *         function($interval, dateFilter) {
       *           // return the directive link function. (compile function not needed)
       *           return function(scope, element, attrs) {
-      *             var format,  // date format
+      *             var format,  date
       *                 stopTime; // so that we can cancel the time updates
       *
       *             // used to update the UI

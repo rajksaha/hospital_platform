@@ -35,10 +35,10 @@ app.service('AppointmentService', function ($resource) {
                 isArray:true
             }
         }),
-        getItemForTypeHead : $resource('rest/appointment/getItemForTypeHead/data/:data/field/:field', {}, {
+        getItemForTypeHead : $resource('rest/appointment/getItemForTypeHead/userType/:userType/field/:field', {}, {
             'query':  {
                 method:'GET',
-                params: {data : '@data', field : '@field'},
+                params: {userType : '@userType', field : '@field'},
                 isArray:true
             }
         }),

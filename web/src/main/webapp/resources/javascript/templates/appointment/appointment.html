@@ -1,103 +1,75 @@
-<div class="col-md-2">
-    <span class="headerText">Appointment</span>
-</div>
-<div class="panel  col-md-12 filter-panel">
-    <div class="col-md-12 panel panel-primary mainPanelColor panel1">
-        <div class="col-md-6">
-            <span class="">Welcome {{userData.userProfileData.name}}</span>
-        </div>
-        <div class="col-md-6">
-            <a href="javascript:" data-ng-click="addNewAppointment()"><span class="fa fa-plus">New Appointment</span></a>
-            <a href="javascript:" data-ng-click="followUpSearch = !followUpSearch"><span >F.U Appointment</span></a>
-            <a href="#/researchHome">Research</a>
-            <a href="#/settings" ><span>Setting</span></a>
-        </div>
-    </div>
-</div>
-<section  data-ng-show="followUpSearch" class=" contacts row" id="generalInfoContact">
-    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-        <div class="panel panel-default">
-            <div class="panel-body">
+<script type="text/ng-template" id="action_template">
+    <a href="" data-ng-click="edit(item)"><i class="fa fa-edit"></i> </a>
+    <a href="" class=""
+       echo-confirmation="delete(item)"
+       confirmation-message="Are you sure to remove?"
+       confirmation-title="Confirmation"
+       item="item">
+        <span class="fa fa-trash"></span> </a>
 
-                <div class="text-muted form-group">By ID</div>
-                <div class="room-desc form-group m-b-0" id="the-basics" >
-                    <label >ID </label>
-                    <input type="text" data-ng-model="patientCode" typeahead="patients.patientID for patients in getPatients($viewValue, 'userID')"  class="form-control" placeholder="Search Patients" typeahead-on-select='onSelectPatientCode($item, $model, $label)'/>
-                    <button class="btn btn-primary" data-ng-click="addAppFollowUP()" data-ng-show="addByID"><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span> Add</button>
-                </div>
+</script>
 
-            </div>
+<div class="panel panel-default mt-15">
+    <div class="panel-heading clearfix">
+        <strong>Appointment List</strong>
+        <div class="pull-right">
+            <button class="btn btn-sm btn-success" ng-show="!showForm" title="Add Appoinment" data-ng-click="add()"><span class="glyphicon glyphicon-plus"></span></button>
+            <button class="btn btn-sm btn-warning" ng-show="showForm" title="Back To List" data-ng-click="backToList()"><span class="glyphicon glyphicon-arrow-left"></span></button>
         </div>
     </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="text-muted form-group">By Name</div>
-                <div class="room-desc">
-                    <label > Name</label>
-                    <input type="text" data-ng-model="patientName" typeahead="patients.name for patients in getPatients($viewValue, 'name')"  class="form-control" placeholder="Search Patients" typeahead-on-select='onSelectNamePatient($item, $model, $label)'/>
-                </div>
-                <button class="btn btn-primary pull-right" data-ng-click="addAppFollowUP()" data-ng-show="addByName"><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span> Add</button>
-            </div>
+    <div class="panel-body">
+        <div class="alert alert-danger alert-dismissable" data-ng-show="hasError">
+            {{message}}
         </div>
-    </div>
+        <div class="alert alert-success alert-dismissable" data-ng-show="hasSuccess">
+            {{message}}
+        </div>
 
-    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-        <div class="panel panel-default" >
-            <div class="panel-body">
-                <div class="text-muted form-group">By Phone</div>
-                <div class="room-desc">
-                    <label >Phone</label>
-                    <input type="text" data-ng-model="patientPhone" typeahead="patients.phone for patients in getPatients($viewValue, 'phone')"  class="form-control" placeholder="Search Patients" typeahead-on-select='onSelectPatientPhone($item, $model, $label)'/>
-                    <button class="btn btn-primary" data-ng-click="addAppFollowUP()" data-ng-show="addByPhone"><span class='glyphicon glyphicon glyphicon-plus' aria-hidden='true'></span> Add</button>
+
+        <div class="row">
+            <div class="form-group col-md-3 col-lg-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" enter-event="search()" ng-model="searchParam.patientFirstName" />
+                    <span class="input-group-addon">Patient Name</span>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
-
-<div class="panel col-md-12 appointment">
-    <div class="col-md-8 panel panel-primary mainPanelColor panel1" style="padding-top: 12px;padding-bottom: 12px">
-        <div  style="padding-top: 25px;">
-            <div class="col-xs-12  col-lg-12" >
-                <div class="panelHead">
-                    <div class="panelHead-body">
-                        <span>Today's Appointment List</span>
-                        <span class="pull-right">Total:{{numberOfAppointment}}</span>
-                    </div>
+            <div class="form-group col-md-3 col-lg-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" enter-event="search()" ng-model="searchParam.doctorFirstName" />
+                    <span class="input-group-addon">Doctor Name</span>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="col-xs-12 col-lg-12" style="height: 400px; overflow-y: auto;" >
-                <div class="panelChild">
-                    <div class="" data-ng-repeat="appointmentData in appointmentList" >
-                        <div class="panelChild-body form-group" data-ng-show="appointmentData.status == 0"  >
-                            <span class="textSpc" data-ng-click="letsPrescribe(appointmentData)" >{{$index + 1}} | {{appointmentData.patientProfileData.name}} | {{appointmentData.patientProfileData.age}} yrs  | {{appointmentData.patientProfileData.address}}</span>
-                            <span class="textSpc pull-right"><button class="btn btn-danger pull-right" data-ng-click="removeFromAppointment(appointmentData.appointmentID)" ><span class='glyphicon glyphicon glyphicon-minus' aria-hidden='true'></span> Remove From Appointment</button></span>
-                        </div>
-                        <div  class="panelVisited-body form-group " data-ng-show="appointmentData.status == 1">
-										<span class="textSpc"
-                                              ktr-confirmation="letsPrescribe(item)"
-                                              confirmation-message="Want to re-visit this patient?"
-                                              confirmation-title="Confirmation"
-                                              item="appointmentData">{{$index + 1}} | {{appointmentData.patientProfileData.name}} | {{appointmentData.patientProfileData.age}} yrs  | {{appointmentData.patientProfileData.address}}</span>
-                            <span class="textSpc pull-right"><button class="btn btn-danger pull-right" data-ng-click="removeFromAppointmentList(appointmentData.appointmentID)" ><span class='glyphicon glyphicon glyphicon-minus' aria-hidden='true'></span> Remove From List</button></span>
-                        </div>
-                    </div>
+            <div class="form-group col-md-3 col-lg-3">
+                <div class="input-group">
+                    <input type="text" data-ng-model="searchParam.appointmentDate" class="form-control form-control-date input-sm" maxlength="100" datepicker-popup="dd/MM/yyyy" close-text="Close" is_open="dt1" ng-focus="dt1 = true" ng-click="dt1 = true">
+                    <span class="input-group-addon">Appointment Date</span>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-4 panel panel-primary mainPanelColor panel1" style="padding-top: 12px;padding-bottom: 12px; height: 526px;">
-        <div>
-            <div class="col-xs-12 col-lg-12" >
-                <!--<img alt="products" src="resources/images/product.jpg" style="height: 500px; width: 100%">-->
+            <div class="col-md-3 col-lg-3">
+                <button class="btn btn-primary" ng-click="search()"><i class="fa fa-search"></i></button>
+            </div>
+
+            <div class="col-md-12 col-lg-12">
+                <ad-table-ajax table-classes="table table-bordered table-hover bfpb-table"
+                               page-sizes="[10, 20, 30]"
+                               page-loader="methods.pageLoader"
+                               pagination-btn-group-classes="pagination pagination-sm"
+                               items-not-found-message="No Appointment found"
+                               state="{sortKey: 'appointmentDate', sortDirection: 'ASC'}"
+                               column-definition="columnDefinition"
+                               ajax-config="dataSourceConfig">
+                </ad-table-ajax>
             </div>
         </div>
+
     </div>
 
+    <div class="panel-footer" ng-show="showForm">
+        <div class="text-right">
+            <button class="btn btn-sm btn-warning" data-ng-click="reset()"><span class="glyphicon glyphicon-remove"></span> Reset</button>
+            <button class="btn btn-sm btn-success" data-ng-click="save(category)" data-ng-hide="category.categoryID > 0"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+            <button class="btn btn-sm btn-success" data-ng-click="update(category)" data-ng-show="category.categoryID > 0"><span class="glyphicon glyphicon-floppy-disk"></span> Update</button>
+            <button class="btn btn-sm btn-danger" data-ng-click="cancel()"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</button>
+        </div>
+    </div>
 </div>

@@ -35,7 +35,6 @@ app.controller('CompanyTaxController', function($scope, $modal, $state, $filter,
 
 
     $scope.getTypeHeadItem = function(term, field) {
-
         return  CompanyTaxInfoService.getItemForTypeHead.query({}, {data : term, field :field}).$promise.then(function(result) {
             $scope.productList = result;
             return limitToFilter($scope.productList, 10);
