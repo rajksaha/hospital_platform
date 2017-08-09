@@ -430,5 +430,11 @@
 			<version>1.72-1.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.sql2o</groupId>
+			<artifactId>sql2o</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+
 	</dependencies>
 </project>

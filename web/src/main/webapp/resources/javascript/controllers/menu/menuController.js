@@ -21,7 +21,7 @@ app.controller('MenuController', function($scope, $state, $rootScope, $http, $ti
         $scope.initMenu($location.path());
     };
 
-    $scope.changeState = function (url, claimType, actionState){
+    $scope.changeState = function (url, appointmentID, actionState){
 
 
         if($rootScope.updateMode){
@@ -51,13 +51,19 @@ app.controller('MenuController', function($scope, $state, $rootScope, $http, $ti
                 $scope.changeView(url, claimType, actionState);
             });
         }else{
-            $scope.changeView(url, claimType, actionState);
+            $scope.changeView(url, appointmentID, actionState);
         }
     };
 
-    $scope.changeView = function(url, claimType, actionState){
+    $scope.changeView = function(url, appointmentID, actionState){
 
-        $state.go(url);
+        if(appointmentID){
+            $state.go(url, {appointmentID : appointmentID});
+        }else{
+            $state.go(url);
+        }
+
+
 
     };
 

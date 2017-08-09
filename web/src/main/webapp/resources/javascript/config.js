@@ -2,7 +2,7 @@
 
 var httpHeaders;
 
-var jsVersion = "?v=6";
+var jsVersion = "?v=9";
 
 // This will store the original URL before login sequence
 var originalLocation = "/login";
@@ -590,6 +590,90 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
         }
     };
 
+    var prescription = {
+        name : 'root.prescription',
+        url : '/prescription?appointmentID',
+        views : {
+            'container@' : {
+                templateUrl : 'resources/javascript/templates/prescription/prescription.html',
+                controller : 'PrescriptionController'
+            }
+        },
+        resolve : {
+            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load(
+                    {
+                        name: 'echoApp',
+                        files: ['resources/javascript/services/jsonService.js' + jsVersion,
+                            'resources/javascript/services/appointment/appointmentService.js' + jsVersion,
+                            'resources/javascript/services/prescription/prescriptionService.js' + jsVersion
+                        ]
+                    });
+            }],
+            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                // you can lazy load files for an existing module
+                return $ocLazyLoad.load(
+                    {
+                        name: 'echoApp',
+                        files: [
+                            'resources/javascript/controllers/prescription/prescriptionController.js' + jsVersion,
+                            'resources/javascript/controllers/prescription/prescribeDrugsController.js' + jsVersion
+                        ]
+                    });
+            }]
+
+        }
+    };
+
+    var drugs = {
+        name : 'root.drugs',
+        url : '/drugs',
+        views : {
+            'container@' : {
+                templateUrl : 'resources/javascript/templates/drugs/drugs.html',
+                controller : 'PrescribeDrugsController'
+            }
+        },
+        resolve : {
+            loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
+                return $ocLazyLoad.load(
+                    {
+                        name: 'doctorPlatform',
+                        files: ['resources/javascript/services/jsonService.js' + jsVersion]
+                    });
+            }],
+            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                // you can lazy load files for an existing module
+                return $ocLazyLoad.load(
+                    {
+                        name: 'doctorPlatform',
+                        files: ['resources/javascript/controllers/drugs/drugs.js' ]
+                    });
+            }]
+        }
+    };
+
+    var inv = {
+        name : 'root.inv',
+        url : '/inv',
+        views : {
+            'container@' : {
+                templateUrl : 'resources/javascript/templates/inv/inv.html',
+                controller : 'PrescribeInvController'
+            }
+        },
+        resolve : {
+            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                // you can lazy load files for an existing module
+                return $ocLazyLoad.load(
+                    {
+                        name: 'doctorPlatform',
+                        files: ['resources/javascript/controllers/inv/inv.js' ]
+                    });
+            }]
+        }
+    };
+
 
 
 
@@ -611,6 +695,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
         .state(patient)
         .state(appointment)
         .state(doctorAppointment)
+        .state(prescription)
 
     //set debug:true if need ocLazyLoad log
 	$ocLazyLoadProvider.config({debug:false, events:true});

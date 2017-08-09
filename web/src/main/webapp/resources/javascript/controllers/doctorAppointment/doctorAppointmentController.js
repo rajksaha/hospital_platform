@@ -1,4 +1,4 @@
-app.controller('AppointmentController', function($scope, $rootScope, $state, $http, $timeout, $location, AppointmentService, $modal, limitToFilter, $filter) {
+app.controller('DoctorAppointmentController', function($scope, $rootScope, $state, $http, $timeout, $location, AppointmentService, $modal, limitToFilter, $filter) {
 
     $scope.hasError = false;
     $scope.hasSuccess = false;
@@ -39,7 +39,7 @@ app.controller('AppointmentController', function($scope, $rootScope, $state, $ht
     $scope.dataSourceConfig = {
         url: 'rest/appointment/getByParam',
         method: "GET",
-        params: {userType : 3},
+        params: {userType : 1},
         paginationConfig: {
             response: {
                 totalItems: 'count',
@@ -70,8 +70,6 @@ app.controller('AppointmentController', function($scope, $rootScope, $state, $ht
         });
     };
 
-
-
     $scope.addAppFollowUP  = function (){
 
         var appointmentData = {};
@@ -92,6 +90,9 @@ app.controller('AppointmentController', function($scope, $rootScope, $state, $ht
     };
 
 
+    $scope.consult = function (item) {
+        $state.go('root.prescription', {appointmentID : item.appointmentID});
+    };
 
     $scope.showErrorMessage = function(message){
         $scope.hasError = true;

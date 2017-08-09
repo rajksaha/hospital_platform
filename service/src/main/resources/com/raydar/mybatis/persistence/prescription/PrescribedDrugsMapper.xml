@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.prescription.PrescribedDrugsMapper">
+
+
+	<select id="bringByID" parameterType="int" resultType="DrugPrescribedData" >
+		SELECT
+				dp.drugPrescriptionID,
+				dp.appointmentID,
+				dp.drugTypeID,
+				dp.drugID,
+				dp.drugTimeID,
+				dp.drugDoseUnit,
+				dp.drugAdviceID,
+				dt.initial AS typeInitial,
+				dp.drugWhenID,
+				d.drugName AS drugName,
+				d.strength AS drugStrength,
+				dwt.textEng AS drugWhenStr,
+				dat.textEng AS drugAdviceStr,
+			FROM
+				drug_prescription dp
+					JOIN
+				drugtype dt ON dp.drugTypeID = dt.drugTypeID
+					JOIN
+				drug d ON dp.drugID = d.drugID
+					JOIN
+				drugwhentype dwt ON dp.drugWhenID = dwt.drugWhentypeID
+					JOIN
+				drugadvicetype dat ON dp.drugAdviceID = dat.drugAdviceID
+
+			WHERE dp.`appointmentID`= #{appointmentID}
+	</select>
+
+
+	<insert id="create" parameterType="DrugPrescribedData" useGeneratedKeys="true" keyProperty="drugPrescriptionID">
+
+		INSERT INTO `complain`
+		(
+		`appointmentID`,
+		`drugTypeID`,
+		`drugID`,
+		`drugDoseUnit`,
+		`drugTimeID`,
+		`drugAdviceID`,
+		`drugWhenID`
+		)
+		VALUES
+		(
+		#{appointmentID},
+		#{drugTypeID},
+		#{drugID},
+		#{drugDoseUnit},
+		#{drugTimeID},
+		#{drugAdviceID},
+		#{drugWhenID}
+		)
+	</insert>
+
+	<update id="update" parameterType="DrugPrescribedData">
+		UPDATE drug_prescription SET drugTypeID = #{drugTypeID}, drugID = #{drugID},  drugDoseUnit = #{drugDoseUnit}, drugTimeID = #{drugTimeID},
+		 drugAdviceID = #{drugAdviceID},
+		 drugWhenID = #{drugWhenID}
+
+		WHERE appointmentID = #{appointmentID}
+	</update>
+
+	<select id="getDrugs" parameterType="map" resultType="DrugData">
+		SELECT d.`drugID`, d.`typeID`, d.`companyID`, CONCAT(d.drugName, ' - ',  d.`strength`) As displayName, d.drugName, d.`strength`
+		FROM `drug` d
+		WHERE 1 = 1
+		<if test="drugName != null">
+			AND LOWER(d.`drugName`) LIKE LOWER(CONCAT('%',#{drugName},'%'))
+		</if>
+		<if test="typeID != null">
+			AND d.typeID = #{typeID}
+		</if>
+		<if test="name != null">
+			AND d.drugName = #{name}
+		</if>
+	</select>
+
+	<insert id="createDrug" parameterType="DrugData" useGeneratedKeys="true" keyProperty="drugID">
+
+
+		INSERT INTO `drug`
+		(
+			`typeID`,
+			`hospitalID`,
+			`drugName`,
+			`strength`
+		)
+		VALUES
+		(
+			#{typeID},
+			#{hospitalID},
+			#{drugName},
+			#{strength}
+		)
+
+
+	</insert>
+
+
+
+
+	
+
+
+
+
+</mapper>

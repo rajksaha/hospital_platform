@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.prescription.NextVisitMapper">
+
+
+	<select id="bringByID" parameterType="int" resultType="NextVisitData" >
+		SELECT
+			nv.nextVisitID,
+			`nv`.`appointmentID`,
+			`nv`.`nextVisitType`,
+			`nv`.`date`,
+			`nv`.`numOfDay`,
+			`nv`.`dayType`
+		FROM `next_visit_info` nv
+		WHERE nv.`appointmentID`= #{appointmentID}
+	</select>
+
+	<insert id="create" parameterType="NextVisitData" useGeneratedKeys="true" keyProperty="nextVisitID">
+
+		INSERT INTO `next_visit_info`
+		(
+		`appointmentID`,
+		`date`,
+		`numOfDay`,
+		`dayType`,
+		`nextVisitType`
+		)
+		VALUES
+		(
+		#{appointmentID},
+		#{date},
+		#{numOfDay},
+		#{dayType},
+		#{nextVisitType}
+		)
+	</insert>
+
+	<update id="update" parameterType="ComplainData">
+		UPDATE next_visit_info SET date = #{date}, numOfDay = #{numOfDay},  dayType = #{dayType}, nextVisitType = #{nextVisitType} WHERE appointmentID = #{appointmentID}
+	</update>
+
+
+</mapper>

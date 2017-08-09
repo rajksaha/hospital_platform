@@ -67,26 +67,27 @@
 
 	<select id="bringAppointment" parameterType="map" resultType="Appointment" >
 		SELECT
-		app.appointmentID,
-		app.companyID,
-		app.doctorID,
-		app.patientID,
-		app.status,
-		app.createdBy,
-		app.appointmentType,
-		app.appointmentDate,
-		app.appointmentTime,
-		pat.firstName AS patientFirstName,
-		pat.dateOfBirth AS patientDateOfBirth,
-		pat.contactNo AS patientContact,
-		pat.sex AS patientSex,
-		doc.firstName AS doctorFirstName,
-		doc.dateOfBirth AS doctorDateOfBirth,
-		doc.contactNo AS doctorContact,
-		doc.sex AS doctorSex
+			app.appointmentID,
+			app.companyID,
+			app.doctorID,
+			app.patientID,
+			app.status,
+			app.createdBy,
+			app.appointmentType,
+			app.appointmentTime,
+			app.appointmentDate,
+			pat.firstName AS patientFirstName,
+			pat.dateOfBirth AS patientDateOfBirth,
+			pat.contactNo AS patientContact,
+			pat.sex AS patientSex,
+			doc.firstName AS doctorFirstName,
+			doc.dateOfBirth AS doctorDateOfBirth,
+			doc.contactNo AS doctorContact,
+			doc.sex AS doctorSex
+
 		FROM `appointment` app
-		JOIN appointment_type aty ON aty.appointmentTypeID = app.appointmentType
-		LEFT JOIN user_profile up ON app.patientID = up.userID
+		JOIN echo_user_profile pat ON app.patientID = pat.userID
+		JOIN echo_user_profile doc ON app.doctorID = doc.userID
 		WHERE app.appointmentID = #{appointmentID}
 	</select>
 

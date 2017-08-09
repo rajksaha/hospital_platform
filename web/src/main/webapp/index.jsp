@@ -10,7 +10,6 @@
     <%--bootstrap & jquery ui--%>
     <link href="<c:url value="/resources/javascript/lib/css/bootstrap.min.css"/>" type="text/css" rel="stylesheet" />
     <link href="<c:url value="/resources/javascript/lib/css/smt-bootstrap.css"/>" type="text/css" rel="stylesheet" />
-    <link href="<c:url value="/resources/javascript/lib/css/bootstrap-theme.css"/>" rel="stylesheet"/>
     <link href="<c:url value="/resources/javascript/lib/css/custom-icon.css"/>" rel="stylesheet"/>
     <link href="<c:url value="/resources/javascript/lib/css/jquery-ui-1.11.0/jquery-ui.min.css"/>" rel="stylesheet"/>
 
@@ -19,8 +18,6 @@
 
 
     <!-- ng-table -->
-    <link href="<c:url value="/resources/javascript/lib/css/ng-table.min.css"/>" rel="stylesheet"/>
-    <link href="<c:url value="/resources/javascript/lib/css/ng-sortable.min.css"/>" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/ngGallery.css"/>" rel="stylesheet"/>
 
     <!-- Animate.css -->

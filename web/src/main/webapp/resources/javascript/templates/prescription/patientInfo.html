@@ -1,0 +1,39 @@
+<div class="col-sm-2 col-md-2 col-lg-2 form-group">
+    <label data-ng-show="!appointmentData.editMode" >Name: <span >{{appointmentData.patientFirstName}}</span></label>
+    <input data-ng-show="appointmentData.editMode" data-ng-model="appointmentData.patientFirstName" class="form-control required input-sm" />
+</div>
+<div class="col-sm-2 col-md-2 col-lg-2 form-group">
+    <label data-ng-show="!appointmentData.editMode" >Phone: {{appointmentData.patientContact}}</label>
+    <input data-ng-show="appointmentData.editMode" data-ng-model="appointmentData.patientContact" class="form-control input-sm" maxlength="100" placeholder="Address" />
+</div>
+<div class="col-sm-2 col-md-2 col-lg-2 form-group">
+    <label data-ng-show="!appointmentData.editMode" > Date of birth : {{appointmentData.patientDateOfBirth | date :'dd/MM/yyyy'}}</label>
+    <input data-ng-show="appointmentData.editMode" data-ng-model="appointmentData.patientDateOfBirth" class="form-control required input-sm" />
+</div>
+<div class="col-sm-2 col-md-2 col-lg-2 form-group">
+    <label data-ng-show="!appointmentData.editMode" >Sex: {{appointmentData.patientSex}}</label>
+    <select data-ng-show="appointmentData.editMode" data-ng-model="appointmentData.patientSex" class="form-control input-sm">
+        <option value="MALE">Male</option>
+        <option value="FEMALE">Female</option>
+        <option value="OTHER">Other</option>
+    </select>
+</div>
+<!--<div class="col-sm-2 col-md-2 col-lg-2 form-group">
+    <label data-ng-show="!appointmentData.editMode">Reffered by: {{appointmentData.referredBy}}</label>
+    <input data-ng-show="appointmentData.editMode" data-ng-model="appointmentData.referredBy" class="form-control phnnr input-sm" maxlength="16" placeholder="Phone"/>
+</div>
+<div class="col-sm-2 col-md-2 col-lg-2 form-group">
+    <label data-ng-show="!appointmentData.editMode" >Occupation: {{appointmentData.occupation}}</label>
+    <select data-ng-show="appointmentData.editMode" data-ng-model="appointmentData.occupation" class="form-control input-sm">
+        <option value="HOUSEEWIFE">Housewife</option>
+        <option value="SERVICE">Service</option>
+        <option value="BUSINESS">Business</option>
+        <option value="STUDENT">Student</option>
+        <option value="NA">N/A</option>
+    </select>
+</div>-->
+<!---->
+<div id="source-button" data-ng-show="hoverState">
+    <a href="javascript:;" class="btn btn-circular btn-default" data-ng-click="editPatientInfo()"><i class="fa fa-pencil"></i></a>
+</div>
+

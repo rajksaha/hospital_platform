@@ -26,6 +26,12 @@
 
 		<typeAlias type="com.raydar.mybatis.domain.appointment.AppointmentData" alias="AppointmentData"/>
 		<typeAlias type="com.raydar.request.Appointment" alias="Appointment"/>
+		<typeAlias type="com.raydar.mybatis.domain.prescription.DiagnosisData" alias="DiagnosisData"/>
+		<typeAlias type="com.raydar.mybatis.domain.prescription.ComplainData" alias="ComplainData"/>
+		<typeAlias type="com.raydar.mybatis.domain.prescription.ContentData" alias="ContentData"/>
+		<typeAlias type="com.raydar.mybatis.domain.prescription.NextVisitData" alias="NextVisitData"/>
+		<typeAlias type="com.raydar.mybatis.domain.prescription.drug.DrugData" alias="DrugData"/>
+		<typeAlias type="com.raydar.mybatis.domain.prescription.drug.DrugPrescriptionData" alias="DrugPrescribedData"/>
 
 
 

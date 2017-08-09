@@ -1,6 +1,8 @@
 package com.raydar.mybatis.domain;
 
 import com.raydar.mybatis.domain.echo.CompanyTaxInfoData;
+import com.raydar.mybatis.domain.prescription.ComplainData;
+import com.raydar.mybatis.domain.prescription.drug.DrugPrescriptionData;
 import com.raydar.mybatis.domain.user.ContentDetailData;
 
 import java.math.BigDecimal;
@@ -55,6 +57,26 @@ public class SearchData {
 
     private CompanyTaxInfoData companyTaxInfoData;
 
+
+    private List<ComplainData> complainList;
+
+    private List<DrugPrescriptionData> prescribedDrugList;
+
+    public List<ComplainData> getComplainList() {
+        return complainList;
+    }
+
+    public void setComplainList(List<ComplainData> complainList) {
+        this.complainList = complainList;
+    }
+
+    public List<DrugPrescriptionData> getPrescribedDrugList() {
+        return prescribedDrugList;
+    }
+
+    public void setPrescribedDrugList(List<DrugPrescriptionData> prescribedDrugList) {
+        this.prescribedDrugList = prescribedDrugList;
+    }
 
     private Integer claimType;
 
