@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.appointment.AppointmentInfoMapper">
+
+
+
+
+	<select id="getAppointmentByParam" parameterType="map" resultType="AppointmentInfo">
+		SELECT
+		app.appointmentInfoID,
+		app.appointmentID,
+		app.itemType,
+		app.itemID,
+		app.itemDescription
+		FROM `appointment_info` app
+
+		WHERE 1 =  1
+		<if test="appointmentID != null">
+			AND app.appointmentID = #{appointmentID}
+		</if>
+		<if test="itemType != null">
+			AND app.itemType = #{itemType}
+		</if>
+		<if test="offset != null and limit != null and sortColumn != null and sortOrder != null">
+			ORDER BY ${sortColumn} ${sortOrder}
+			LIMIT #{limit} OFFSET #{offset}
+		</if>
+	</select>
+
+	<select id="bringAppointmentInfo" parameterType="map" resultType="AppointmentInfo" >
+		SELECT
+		app.appointmentInfoID,
+		app.appointmentID,
+		app.itemType,
+		app.itemID,
+		app.itemDescription
+		FROM `appointment_info` app
+		WHERE app.appointmentInfoID = #{appointmentInfoID}
+	</select>
+
+	<insert id="create" parameterType="AppointmentInfo" useGeneratedKeys="true" keyProperty="appointmentInfoID">
+
+		INSERT INTO
+			`appointment_info`
+		(
+			`appointmentID`,
+			`itemType`,
+			`itemID`,
+			`itemDescription`,
+			`updatedOn`,
+			`updatedBy`,
+			`createdOn`,
+			`createdBy`
+		)
+		VALUES
+		(
+			#{appointmentID},
+			#{itemType},
+			#{itemID},
+			#{itemDescription},
+			#{updatedOn},
+			#{updatedBy},
+			#{createdOn},
+			#{createdBy}
+		)
+
+	</insert>
+
+	<update id="update" parameterType="AppointmentInfo">
+
+		UPDATE `appointment_info`
+		SET
+		`itemID` = #{itemID},
+		`itemDescription` = #{itemDescription},
+		`updatedBy` = #{updatedBy},
+		`updatedOn` = #{updatedOn}
+		WHERE `appointmentInfoID` = #{appointmentInfoID}
+
+	</update>
+
+	<delete id="delete" parameterType="map">
+		DELETE  FROM appointment_info app
+		WHERE 1 = 1
+		<if test="appointmentInfoID != null">
+			AND app.appointmentInfoID = #{appointmentInfoID}
+		</if>
+		<if test="appointmentID != null">
+			AND app.appointmentID = #{appointmentID}
+		</if>
+		<if test="itemType != null">
+			AND app.itemType = #{itemType}
+		</if>
+	</delete>
+
+
+	
+
+
+
+
+</mapper>

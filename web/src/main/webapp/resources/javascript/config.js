@@ -2,7 +2,7 @@
 
 var httpHeaders;
 
-var jsVersion = "?v=9";
+var jsVersion = "?v=12";
 
 // This will store the original URL before login sequence
 var originalLocation = "/login";

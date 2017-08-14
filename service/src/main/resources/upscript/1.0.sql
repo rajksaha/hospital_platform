@@ -88,3 +88,13 @@ INSERT INTO drug_type (name, initial, unit, unitInitial, optionalUnitInitial) VA
 INSERT INTO drug_type (name, initial, unit, unitInitial, optionalUnitInitial) VALUES ('Emulsion', 'Emulsion', '1', '', '');
 INSERT INTO drug_type (name, initial, unit, unitInitial, optionalUnitInitial) VALUES ('Shampoo', 'Shampoo', '1', '', '');
 INSERT INTO drug_type (name, initial, unit, unitInitial, optionalUnitInitial) VALUES ('Vaccine', 'Vac', '1', '', '');
+
+
+CREATE TABLE appointment_info
+(
+  appointmentInfoID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  appointmentID INTEGER(11),
+  itemType VARCHAR(255),
+  itemID INTEGER(11),
+  itemDescription VARCHAR(500)
+);

@@ -44,18 +44,22 @@
 		
 		<div class="form-group col-xs-12 col-sm-12" >
 				<div class="form-group col-xs-6 col-sm-6">
-					<label>Times a day</label> 
-					<select  class="form-control" data-ng-model="drugData.drugTimeID" data-ng-options="drugTime.code for drugTime in drugtimesADay" data-ng-change="timeChanger(drugData.addMood,drugData.drugType.drugTypeID, drugData.drugTimeID, 3)" />
-					<select class="form-control" data-ng-show="drugData.drugTimeID == -1" data-ng-model="drugData.preodicValue"  data-ng-change="timeChanger(drugData.addMood,drugData.drugTypeID, drugData.timesADay.code, drugData.preodicValue)" >
+					<label>Times a day</label>
+					<select  class="form-control" data-ng-model="drugData.drugTimeID" data-ng-options="drugTime.code as  drugTime.name for drugTime in drugTimesADay" data-ng-change="timeChanger(drugData.addMood,drugData.drugType.drugTypeID, drugData.drugTimeID, 3)" >
+						<option value="">--Select--</option>
+					</select>
+					<!--<select class="form-control" data-ng-show="drugData.drugTimeID == -1" data-ng-model="drugData.preodicValue"  data-ng-change="timeChanger(drugData.addMood,drugData.drugTypeID, drugData.timesADay.code, drugData.preodicValue)" >
 						<option value="2">2</option>
                      	<option value="3">3</option>
                      	<option value="4">4</option>
-					</select>
+					</select>-->
 				</div>
 				
 				<div class="form-group col-xs-6 col-sm-6">
 					<label>When</label> 
-					<select  class="form-control" data-ng-model="drugData.drugWhenID" data-ng-options="drugTime.drugWhenTypeID as drugTime.textEng || '--Select--' for drugTime in drugWhatTypeList" />
+					<select  class="form-control" data-ng-model="drugData.drugWhenID" data-ng-options="drugWhen.drugWhenTypeID as drugWhen.textEng for drugWhen in drugWhatTypeList" >
+						<option value="">--Select--</option>
+					</select>
 				</div>
 				
 				
@@ -65,27 +69,27 @@
 			
 				<div class="form-group col-xs-12 col-sm-12">
 					
-					<div data-ng-repeat="preiodicData in drugData.preiodicList" class="row">
+					<div data-ng-repeat="periodic in drugData.periodicList" class="row">
 						<div class="form-group col-xs-6">
 							<label>Interval Wise Dose</label><br>
-	                		<button data-ng-click="doseChanger( .5, preiodicData.doseDataList)" >+</button>
-	                 		<span data-ng-repeat="drugDose in preiodicData.doseDataList">
+	                		<button data-ng-click="doseChanger( .5, periodic.doseDataList)" >+</button>
+	                 		<span data-ng-repeat="drugDose in periodic.doseDataList">
 	                 			<span data-ng-show="$index != 0 && $index % 3 == 0"><br></span>
 	                 			<input data-ng-if="!drugDose.isSameAs" type="text" size="2" data-ng-model="drugDose.value">
 	                 			<input data-ng-if="drugDose.isSameAs" type="text"  data-ng-model="drugDose.value">
 							</span>
-	                		<button data-ng-click="doseChanger( -.5, preiodicData.doseDataList)" >-</button>
+	                		<button data-ng-click="doseChanger( -.5, periodic.doseDataList)" >-</button>
 						</div>
 						
 						<div class="form-group col-xs-3">
 							<label>Duration num</label>
-	                		<select class="form-control"  data-ng-model="preiodicData.dataNumOFDay"  data-ng-show="preiodicData.durationDayType.drugDayTypeID < 5" data-ng-options="drugDay.name for drugDay in preiodicData.drugNumOfDayList">
+	                		<select class="form-control"  data-ng-model="periodic.numOffDay"  data-ng-show="periodic.durationType < 5" data-ng-options="drugDay.value as drugDay.name for drugDay in drugNumOfDayList">
 	                		</select>
 						</div>
 						
 						<div class="form-group col-xs-3">
 	                		<label>Duration Type</label>
-							<select class="form-control"   data-ng-model="preiodicData.durationDayType"data-ng-options="drugTime.textEng for drugTime in preiodicData.drugDayTypeList">
+							<select class="form-control"   data-ng-model="periodic.durationType	" data-ng-options="dayType.drugDayTypeID as  dayType.textEng for dayType in drugDayTypeList">
 							</select>
 						</div>
                 		
@@ -110,7 +114,9 @@
 										
 			<div class="form-group col-xs-12 col-sm-12 ">
 				<label>Drug Adivice</label> 
-					<select class="form-control" data-ng-model="drugData.adviceType" data-ng-options="drugTime.textEng || '--Select--' for drugTime in drugAdviceTypeList" />
+					<select class="form-control" data-ng-model="drugData.drugAdviceID" data-ng-options="drugAdvice.drugAdviceID as drugAdvice.textEng for drugAdvice in drugAdviceTypeList">
+						<option value="">--Select--</option>
+					</select>
 			</div>
 			
 	</div>

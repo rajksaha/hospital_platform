@@ -1,5 +1,6 @@
 package com.raydar.mybatis.domain;
 
+import com.raydar.mybatis.domain.appointment.AppointmentInfo;
 import com.raydar.mybatis.domain.echo.CompanyTaxInfoData;
 import com.raydar.mybatis.domain.prescription.ComplainData;
 import com.raydar.mybatis.domain.prescription.drug.DrugPrescriptionData;
@@ -56,11 +57,20 @@ public class SearchData {
     private String costCenterCode;
 
     private CompanyTaxInfoData companyTaxInfoData;
+    private List<AppointmentInfo> appointmentInfoList;
 
 
     private List<ComplainData> complainList;
 
     private List<DrugPrescriptionData> prescribedDrugList;
+
+    public List<AppointmentInfo> getAppointmentInfoList() {
+        return appointmentInfoList;
+    }
+
+    public void setAppointmentInfoList(List<AppointmentInfo> appointmentInfoList) {
+        this.appointmentInfoList = appointmentInfoList;
+    }
 
     public List<ComplainData> getComplainList() {
         return complainList;

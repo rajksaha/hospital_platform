@@ -32,6 +32,8 @@
 		<typeAlias type="com.raydar.mybatis.domain.prescription.NextVisitData" alias="NextVisitData"/>
 		<typeAlias type="com.raydar.mybatis.domain.prescription.drug.DrugData" alias="DrugData"/>
 		<typeAlias type="com.raydar.mybatis.domain.prescription.drug.DrugPrescriptionData" alias="DrugPrescribedData"/>
+		<typeAlias type="com.raydar.mybatis.domain.prescription.drug.DrugDoseData" alias="DrugDose"/>
+		<typeAlias type="com.raydar.mybatis.domain.appointment.AppointmentInfo" alias="AppointmentInfo"/>
 
 
 

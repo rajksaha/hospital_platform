@@ -1,21 +1,47 @@
-/**
- * Created by raj on 1/12/2017.
- */
-
 app.controller('PrescribeDrugsController', function($scope, $http, $modalInstance, limitToFilter, JsonService, drugData, PrescriptionService) {
 
     $scope.drugTypeList =[];
     $scope.drugNumOfDayList = JsonService.numberList;
-    $scope.drugtimesADay = JsonService.timesADay;
+    $scope.drugTimesADay = JsonService.timesADay;
     $scope.drugDayTypeList =[];
     $scope.drugsWhenList =[];
     $scope.drugAdviceTypeList =[];
     $scope.drugDoseList =[];
-    $scope.drugData = {};
+
     $scope.drugPeriodicDoseList = [];
     $scope.enteredDrugDoseList = [];
     $scope.addByName = false;
     $scope.doseList = [];
+
+
+    $scope.drugData = {};
+    $scope.drugData.periodicList = [];
+
+    var doseDataList = [{value : 1}, {value : 1}, {value : 1}]
+    var period = {doseDataList : doseDataList, numOffDay : 7, durationType: 1};
+    $scope.drugData.periodicList.push(period);
+
+    $scope.drugData.drugTimeID = 3;
+    PrescriptionService.bringDrugType.query({},{}).$promise.then(function(result) {
+        $scope.drugTypeList = result;
+        $scope.drugData.drugTypeID = $scope.drugTypeList[0].drugTypeID;
+    });
+
+    PrescriptionService.bringDrugWhenType.query({},{}).$promise.then(function(result) {
+        $scope.drugWhatTypeList = result;
+        $scope.drugData.drugWhenID = $scope.drugWhatTypeList[0].drugWhenTypeID;
+    });
+
+    PrescriptionService.bringDrugAdviceType.query({},{}).$promise.then(function(result) {
+        $scope.drugAdviceTypeList = result;
+    });
+
+    PrescriptionService.bringDrugDayType.query({},{}).$promise.then(function(result) {
+        $scope.drugDayTypeList = result;
+    });
+
+
+
 
     $scope.drugNameList = {};
 
@@ -24,7 +50,7 @@ app.controller('PrescribeDrugsController', function($scope, $http, $modalInstanc
     };
 
 
-    $scope.bringPresCribedDrugs = function (){
+    /*$scope.bringPresCribedDrugs = function (){
 
         if(drugData.drugPrescribeID){
 
@@ -367,7 +393,7 @@ app.controller('PrescribeDrugsController', function($scope, $http, $modalInstanc
 
 
 
-    };
+    };*/
 
 
 
@@ -459,7 +485,7 @@ app.controller('PrescribeDrugsController', function($scope, $http, $modalInstanc
     };
 
 
-    $scope.bringPresCribedDrugs();
+    //$scope.bringPresCribedDrugs();
 
     /*$scope.saveToDoctorDrugSetting = function(){
 

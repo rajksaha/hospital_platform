@@ -24,6 +24,10 @@ public interface ComplainMapper {
 
     void update(ComplainData data)throws RaydarException;
 
+    void createInv(ContentData contentData)throws RaydarException;
+
+    List<ContentData> getInvByParam(Map<String, Object> param) throws RaydarException;
+
 
 
 }

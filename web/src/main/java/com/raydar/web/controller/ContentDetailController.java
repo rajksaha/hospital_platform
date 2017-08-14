@@ -30,11 +30,6 @@ public class ContentDetailController extends BaseController{
         Map<String, Object> param = new HashMap<>();
         param.put("entityType", data.getEntityType());
         param.put("orderByShortName", true);
-        if(data.getEntityType().equalsIgnoreCase(EntityType.USERCATEGORY.name())){
-            data.setEntityID(this.getEchoUserDetail().getUserProfilePermissionData().getCompanyID());
-        }else{
-            data.setEntityID(this.getEchoUserDetail().getUserProfilePermissionData().getUserID());
-        }
         param.put("entityID", data.getEntityID());
         try {
             List<ContentDetailData> contentDetailList = this.contentDetailService.getByParam(param);

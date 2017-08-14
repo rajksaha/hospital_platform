@@ -29,6 +29,10 @@ public class ComplainService {
         return complainMapper.getSymptomByParam(param);
     }
 
+    public List<ContentData> getInvByParam(Map<String, Object> param) throws RaydarException{
+        return complainMapper.getInvByParam(param);
+    }
+
     public void save(List<ComplainData> complainList)throws RaydarException{
 
         for(ComplainData complain : complainList){

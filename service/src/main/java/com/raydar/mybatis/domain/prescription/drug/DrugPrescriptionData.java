@@ -19,8 +19,18 @@ public class DrugPrescriptionData {
     private String drugWhenStr;
     private Integer drugAdviceID;
     private String drugAdviceStr;
+    private String typeInitial;
 
     private List<DrugDoseData> periodicList;
+
+
+    public String getTypeInitial() {
+        return typeInitial;
+    }
+
+    public void setTypeInitial(String typeInitial) {
+        this.typeInitial = typeInitial;
+    }
 
     public Integer getDrugPrescriptionID() {
         return drugPrescriptionID;

@@ -2,6 +2,7 @@ package com.raydar.mybatis.persistence.prescription;
 
 import com.raydar.common.exception.RaydarException;
 import com.raydar.mybatis.domain.prescription.drug.DrugData;
+import com.raydar.mybatis.domain.prescription.drug.DrugDoseData;
 import com.raydar.mybatis.domain.prescription.drug.DrugPrescriptionData;
 
 import java.util.List;
@@ -22,6 +23,10 @@ public interface PrescribedDrugsMapper {
     void create(DrugPrescriptionData data)throws RaydarException;
 
     void update(DrugPrescriptionData data)throws RaydarException;
+
+    void createDose(DrugDoseData data)throws RaydarException;
+
+    List<DrugDoseData> getDrugDose(Integer drugPrescriptionID) throws RaydarException;
 
 
 

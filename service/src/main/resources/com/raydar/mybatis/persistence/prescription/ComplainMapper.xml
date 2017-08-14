@@ -59,4 +59,19 @@
 		INSERT INTO `symptom` (`name`) VALUES(#{name})
 	</insert>
 
+	<select id="getInvByParam" parameterType="map" resultType="ContentData">
+		SELECT id, name FROM inv
+		WHERE 1 = 1
+		<if test="data != null">
+			AND LOWER(name) LIKE LOWER(CONCAT('%',#{data},'%'))
+		</if>
+		<if test="name != null">
+			AND name = #{name}
+		</if>
+	</select>
+
+	<insert id="createInv" parameterType="ContentData" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `inv` (`name`) VALUES(#{name})
+	</insert>
+
 </mapper>

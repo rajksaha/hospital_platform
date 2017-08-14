@@ -2,15 +2,19 @@ package com.raydar.web.controller.prescription;
 
 
 import com.raydar.common.exception.RaydarException;
+import com.raydar.common.type.EntityType;
 import com.raydar.mybatis.domain.SearchData;
+import com.raydar.mybatis.domain.appointment.AppointmentInfo;
 import com.raydar.mybatis.domain.prescription.ComplainData;
 import com.raydar.mybatis.domain.prescription.DiagnosisData;
 import com.raydar.mybatis.domain.prescription.NextVisitData;
 import com.raydar.mybatis.domain.prescription.drug.DrugPrescriptionData;
 import com.raydar.request.Appointment;
+import com.raydar.service.appointment.AppointmentInfoService;
 import com.raydar.service.appointment.AppointmentService;
 import com.raydar.service.prescription.ComplainService;
 import com.raydar.service.prescription.NextVisitService;
+import com.raydar.service.prescription.PrescribedDrugsService;
 import com.raydar.service.prescription.diagnosis.DiagnosisService;
 import com.raydar.web.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +51,12 @@ public class PrescriptionController extends BaseController {
     @Autowired
     private NextVisitService nextVisitService;
 
+    @Autowired
+    private AppointmentInfoService appointmentInfoService;
+
+    @Autowired
+    private PrescribedDrugsService prescribedDrugsService;
+
 
     @RequestMapping(value = {"/bringAppointment/appointmentID/{appointmentID}"}, method = RequestMethod.POST)
     @ResponseBody
@@ -60,10 +70,19 @@ public class PrescriptionController extends BaseController {
         return this.complainService.bringByID(appointmentID);
     }
 
+    @RequestMapping(value = {"/bringPresInv/appointmentID/{appointmentID}"}, method = RequestMethod.POST)
+    @ResponseBody
+    public List<AppointmentInfo> bringPresInv(@PathVariable("appointmentID") Integer appointmentID, HttpServletRequest request) throws RaydarException{
+        Map<String, Object> params = new HashMap<>();
+        params.put("appointmentID" , appointmentID);
+        params.put("itemType" , EntityType.INV.name());
+        return this.appointmentInfoService.getAppointmentInfoByParam(params);
+    }
+
     @RequestMapping(value = {"/bringPrescribedDrugs/appointmentID/{appointmentID}"}, method = RequestMethod.POST)
     @ResponseBody
     public List<DrugPrescriptionData> bringPrescribedDrugs(@PathVariable("appointmentID") Integer appointmentID, HttpServletRequest request) throws RaydarException{
-        return null;
+        return this.prescribedDrugsService.bringByAppointmentID(appointmentID);
     }
 
     @RequestMapping(value = {"/bringDiagnosis/appointmentID/{appointmentID}"}, method = RequestMethod.POST)
@@ -103,10 +122,16 @@ public class PrescriptionController extends BaseController {
         this.complainService.save(data.getComplainList());
     }
 
+    @RequestMapping(value = {"/saveInv"}, method = RequestMethod.POST)
+    @ResponseBody
+    public void saveInv(@RequestBody SearchData data, HttpServletRequest request) throws RaydarException{
+        this.appointmentInfoService.save(data.getAppointmentInfoList(), EntityType.INV.name());
+    }
+
     @RequestMapping(value = {"/saveDrugs"}, method = RequestMethod.POST)
     @ResponseBody
     public void saveDrugs(@RequestBody SearchData data, HttpServletRequest request) throws RaydarException{
-        this.complainService.save(data.getComplainList());
+        this.prescribedDrugsService.save(data.getPrescribedDrugList());
     }
 
 
@@ -124,6 +149,9 @@ public class PrescriptionController extends BaseController {
                     break;
                 case "SYMPTOM" :
                     result.put("symptomList", complainService.getSymptomByParam(params));
+                    break;
+                case "INV" :
+                    result.put("invList", complainService.getInvByParam(params));
                     break;
                 default:
                     break;

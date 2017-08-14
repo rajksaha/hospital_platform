@@ -7,57 +7,29 @@
 
 	<select id="bringByID" parameterType="int" resultType="DrugPrescribedData" >
 		SELECT
-				dp.drugPrescriptionID,
-				dp.appointmentID,
-				dp.drugTypeID,
-				dp.drugID,
-				dp.drugTimeID,
-				dp.drugDoseUnit,
-				dp.drugAdviceID,
-				dt.initial AS typeInitial,
-				dp.drugWhenID,
-				d.drugName AS drugName,
-				d.strength AS drugStrength,
-				dwt.textEng AS drugWhenStr,
-				dat.textEng AS drugAdviceStr,
+			  dp.drugPrescriptionID,
+			  dp.appointmentID,
+			  dp.drugTypeID,
+			  dp.drugID,
+			  dp.drugTimeID,
+			  dp.drugDoseUnit,
+			  dp.drugAdviceID,
+			  dp.drugWhenID,
+			  dt.initial AS typeInitial,
+			  d.drugName AS drugName,
+			  d.strength AS drugStrength,
+			  dwt.textEng AS drugWhenStr,
+			  dat.textEng AS drugAdviceStr
 			FROM
-				drug_prescription dp
-					JOIN
-				drugtype dt ON dp.drugTypeID = dt.drugTypeID
-					JOIN
-				drug d ON dp.drugID = d.drugID
-					JOIN
-				drugwhentype dwt ON dp.drugWhenID = dwt.drugWhentypeID
-					JOIN
-				drugadvicetype dat ON dp.drugAdviceID = dat.drugAdviceID
+			  drug_prescription dp
+			  JOIN drug_type dt ON dp.drugTypeID = dt.drugTypeID
+			  JOIN drug d ON dp.drugID = d.drugID
+			  JOIN drug_when_type dwt ON dp.drugWhenID = dwt.drugWhentypeID
+			  JOIN drug_advice_type dat ON dp.drugAdviceID = dat.drugAdviceID
 
 			WHERE dp.`appointmentID`= #{appointmentID}
 	</select>
 
-
-	<insert id="create" parameterType="DrugPrescribedData" useGeneratedKeys="true" keyProperty="drugPrescriptionID">
-
-		INSERT INTO `complain`
-		(
-		`appointmentID`,
-		`drugTypeID`,
-		`drugID`,
-		`drugDoseUnit`,
-		`drugTimeID`,
-		`drugAdviceID`,
-		`drugWhenID`
-		)
-		VALUES
-		(
-		#{appointmentID},
-		#{drugTypeID},
-		#{drugID},
-		#{drugDoseUnit},
-		#{drugTimeID},
-		#{drugAdviceID},
-		#{drugWhenID}
-		)
-	</insert>
 
 	<update id="update" parameterType="DrugPrescribedData">
 		UPDATE drug_prescription SET drugTypeID = #{drugTypeID}, drugID = #{drugID},  drugDoseUnit = #{drugDoseUnit}, drugTimeID = #{drugTimeID},
@@ -103,7 +75,32 @@
 
 	</insert>
 
+	<insert id="createDose" parameterType="DrugDose" useGeneratedKeys="true" keyProperty="drugDoseID">
 
+
+		INSERT INTO `drug_dose_period`
+		(
+		`drugPrescriptionID`,
+		`dose`,
+		`numOffDay`,
+		`durationType`
+		)
+		VALUES
+		(
+		#{drugPrescriptionID},
+		#{dose},
+		#{numOffDay},
+		#{durationType}
+		)
+
+
+	</insert>
+
+	<select id="getDrugDose" parameterType="int" resultType="DrugDose">
+		SELECT drugDoseID, drugPrescriptionID, dose, numOffDay, durationType
+		FROM drug_dose_period
+		WHERE drugPrescriptionID = #{drugPrescriptionID}
+	</select>
 
 
 	
