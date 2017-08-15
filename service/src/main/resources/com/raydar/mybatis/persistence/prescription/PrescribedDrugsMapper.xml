@@ -122,7 +122,7 @@
 	<select id="getDrugDose" parameterType="int" resultType="DrugDose">
 		SELECT dp.drugDoseID, dp.drugPrescriptionID, dp.dose, dp.numOffDay, dp.durationType, dwt.textEng AS drugWhenStr
 		FROM drug_dose_period dp
-		LEFT JOIN drug_when_type dwt ON dp.drugWhenID = dwt.drugWhentypeID
+		LEFT JOIN drug_when_type dwt ON dp.durationType = dwt.drugWhentypeID
 		WHERE drugPrescriptionID = #{drugPrescriptionID}
 	</select>
 
