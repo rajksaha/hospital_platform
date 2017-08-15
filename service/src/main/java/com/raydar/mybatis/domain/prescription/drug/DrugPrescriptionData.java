@@ -14,12 +14,20 @@ public class DrugPrescriptionData {
     private Integer drugID;
     private String drugName;
     private Integer drugTimeID;
-    private Integer drugDoseUnit;
+    private String drugStrength;
     private Integer drugWhenID;
     private String drugWhenStr;
     private Integer drugAdviceID;
     private String drugAdviceStr;
     private String typeInitial;
+
+    public String getDrugStrength() {
+        return drugStrength;
+    }
+
+    public void setDrugStrength(String drugStrength) {
+        this.drugStrength = drugStrength;
+    }
 
     private List<DrugDoseData> periodicList;
 
@@ -88,13 +96,6 @@ public class DrugPrescriptionData {
         this.drugTimeID = drugTimeID;
     }
 
-    public Integer getDrugDoseUnit() {
-        return drugDoseUnit;
-    }
-
-    public void setDrugDoseUnit(Integer drugDoseUnit) {
-        this.drugDoseUnit = drugDoseUnit;
-    }
 
     public Integer getDrugWhenID() {
         return drugWhenID;

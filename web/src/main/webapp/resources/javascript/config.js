@@ -617,7 +617,8 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
                         name: 'echoApp',
                         files: [
                             'resources/javascript/controllers/prescription/prescriptionController.js' + jsVersion,
-                            'resources/javascript/controllers/prescription/prescribeDrugsController.js' + jsVersion
+                            'resources/javascript/controllers/prescription/prescribeDrugsController.js' + jsVersion,
+                            'resources/javascript/controllers/prescription/prescribeInvController.js' + jsVersion
                         ]
                     });
             }]

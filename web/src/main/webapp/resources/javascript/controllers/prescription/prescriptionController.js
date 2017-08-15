@@ -48,7 +48,7 @@ app.controller('PrescriptionController', function($scope, $http, $state, $modal,
         $scope.bringPrescribedDiagnosis($scope.appointmentData.appointmentID);
         $scope.bringPrescribedComplain($scope.appointmentData.appointmentID);
         $scope.bringPrescribedDrugs($scope.appointmentData.appointmentID);
-        //$scope.bringPrescribedInv($scope.appointmentData.appointmentID);
+        $scope.bringPrescribedInv($scope.appointmentData.appointmentID);
         //$scope.bringPrescribedAdvice($scope.appointmentData.appointmentID);
         //$scope.bringPrescribedVital($scope.appointmentData.appointmentID);
         //$scope.bringPrescribedComplain($scope.appointmentData.appointmentID);
@@ -84,6 +84,26 @@ app.controller('PrescriptionController', function($scope, $http, $state, $modal,
         });
         modalInstance.result.then(function(result) {
             $scope.bringPrescribedDiagnosis($scope.appointmentData.appointmentID);
+        });
+    };
+
+    $scope.performInv = function () {
+
+        var invData = $scope.appointmentData.appointmentID
+        var modalInstance = $modal.open({
+            templateUrl: 'resources/javascript/templates/prescription/inv/invModal.html',
+            windowClass: 'fade in',
+
+            controller: 'PrescribeInvController',
+            resolve: {
+                invData: function () {
+                    return invData;
+                }
+            },
+            backdrop: 'static'
+        });
+        modalInstance.result.then(function(result) {
+            $scope.bringPrescribedInv($scope.appointmentData.appointmentID);
         });
     };
 
@@ -183,7 +203,7 @@ app.controller('PrescriptionController', function($scope, $http, $state, $modal,
     $scope.addDrugsToPrescription = function(){
 
         var drugData = {};
-
+        drugData.appointmentID = $scope.appointmentData.appointmentID;
         var modalInstance = $modal.open({
             templateUrl: 'resources/javascript/templates/prescription/drug/drugModal.html',
             windowClass: 'fade in',
@@ -200,6 +220,13 @@ app.controller('PrescriptionController', function($scope, $http, $state, $modal,
             $scope.bringPrescribedDrugs($scope.appointmentData.appointmentID);
         });
 
+    };
+
+    $scope.bringPrescribedInv = function (appointmentID) {
+
+        PrescriptionService.bringPrescribedInv.query({appointmentID : appointmentID}).$promise.then(function(result) {
+            $scope.prescribedDrugList = result;
+        });
     };
 
     $scope.bringPrescribedDrugs = function (appointmentID){

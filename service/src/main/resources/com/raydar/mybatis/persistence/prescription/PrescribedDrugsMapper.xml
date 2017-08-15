@@ -5,6 +5,29 @@
 <mapper namespace="com.raydar.mybatis.persistence.prescription.PrescribedDrugsMapper">
 
 
+	<insert id="create" parameterType="DrugPrescribedData" useGeneratedKeys="true" keyProperty="drugPrescriptionID">
+
+		INSERT INTO `drug_prescription`
+		(
+		`appointmentID`,
+		`drugTypeID`,
+		`drugID`,
+		`drugTimeID`,
+		`drugAdviceID`,
+		`drugWhenID`
+		)
+		VALUES
+		(
+		#{appointmentID},
+		#{drugTypeID},
+		#{drugID},
+		#{drugTimeID},
+		#{drugAdviceID},
+		#{drugWhenID}
+		)
+
+	</insert>
+
 	<select id="bringByID" parameterType="int" resultType="DrugPrescribedData" >
 		SELECT
 			  dp.drugPrescriptionID,
@@ -24,8 +47,8 @@
 			  drug_prescription dp
 			  JOIN drug_type dt ON dp.drugTypeID = dt.drugTypeID
 			  JOIN drug d ON dp.drugID = d.drugID
-			  JOIN drug_when_type dwt ON dp.drugWhenID = dwt.drugWhentypeID
-			  JOIN drug_advice_type dat ON dp.drugAdviceID = dat.drugAdviceID
+			  LEFT JOIN drug_when_type dwt ON dp.drugWhenID = dwt.drugWhentypeID
+			  LEFT JOIN drug_advice_type dat ON dp.drugAdviceID = dat.drugAdviceID
 
 			WHERE dp.`appointmentID`= #{appointmentID}
 	</select>
@@ -97,8 +120,9 @@
 	</insert>
 
 	<select id="getDrugDose" parameterType="int" resultType="DrugDose">
-		SELECT drugDoseID, drugPrescriptionID, dose, numOffDay, durationType
-		FROM drug_dose_period
+		SELECT dp.drugDoseID, dp.drugPrescriptionID, dp.dose, dp.numOffDay, dp.durationType, dwt.textEng AS drugWhenStr
+		FROM drug_dose_period dp
+		LEFT JOIN drug_when_type dwt ON dp.drugWhenID = dwt.drugWhentypeID
 		WHERE drugPrescriptionID = #{drugPrescriptionID}
 	</select>
 

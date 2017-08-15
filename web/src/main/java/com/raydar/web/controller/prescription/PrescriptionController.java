@@ -76,7 +76,7 @@ public class PrescriptionController extends BaseController {
         Map<String, Object> params = new HashMap<>();
         params.put("appointmentID" , appointmentID);
         params.put("itemType" , EntityType.INV.name());
-        return this.appointmentInfoService.getAppointmentInfoByParam(params);
+        return this.appointmentInfoService.getInvInfoByParam(params);
     }
 
     @RequestMapping(value = {"/bringPrescribedDrugs/appointmentID/{appointmentID}"}, method = RequestMethod.POST)
@@ -124,14 +124,15 @@ public class PrescriptionController extends BaseController {
 
     @RequestMapping(value = {"/saveInv"}, method = RequestMethod.POST)
     @ResponseBody
-    public void saveInv(@RequestBody SearchData data, HttpServletRequest request) throws RaydarException{
-        this.appointmentInfoService.save(data.getAppointmentInfoList(), EntityType.INV.name());
+    public void saveInv(@RequestBody AppointmentInfo appointmentData, HttpServletRequest request) throws RaydarException{
+        appointmentData.setItemType(EntityType.INV.name());
+        this.appointmentInfoService.create(appointmentData);
     }
 
     @RequestMapping(value = {"/saveDrugs"}, method = RequestMethod.POST)
     @ResponseBody
-    public void saveDrugs(@RequestBody SearchData data, HttpServletRequest request) throws RaydarException{
-        this.prescribedDrugsService.save(data.getPrescribedDrugList());
+    public void saveDrugs(@RequestBody DrugPrescriptionData data, HttpServletRequest request) throws RaydarException{
+        this.prescribedDrugsService.save(data);
     }
 
 

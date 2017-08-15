@@ -10,7 +10,15 @@ public class DrugDoseData {
     private String dose;
     private Integer numOffDay;
     private Integer durationType;
+    private String drugWhenStr;
 
+    public String getDrugWhenStr() {
+        return drugWhenStr;
+    }
+
+    public void setDrugWhenStr(String drugWhenStr) {
+        this.drugWhenStr = drugWhenStr;
+    }
 
     public Integer getDrugDoseID() {
         return drugDoseID;

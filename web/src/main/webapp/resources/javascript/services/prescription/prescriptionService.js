@@ -52,10 +52,23 @@ app.service('PrescriptionService', function ($resource) {
             'query':  {
                 method:'POST',
                 params: {appointmentID : '@appointmentID'},
-                isArray:false
+                isArray:true
+            }
+        }),
+        bringPrescribedInv : $resource('rest/prescription/bringPresInv/appointmentID/:appointmentID', {}, {
+            'query':  {
+                method:'POST',
+                params: {appointmentID : '@appointmentID'},
+                isArray:true
             }
         }),
         saveDiagnosis : $resource('rest/prescription/saveDiagnosis', {}, {
+            'query':  {
+                method:'POST',
+                isArray:false
+            }
+        }),
+        saveInfo : $resource('rest/prescription/saveInv', {}, {
             'query':  {
                 method:'POST',
                 isArray:false
@@ -82,6 +95,12 @@ app.service('PrescriptionService', function ($resource) {
             }
         }),
         saveComplain : $resource('rest/prescription/saveComplain', {}, {
+            'query':  {
+                method:'POST',
+                isArray:false
+            }
+        }),
+        saveDrug : $resource('rest/prescription/saveDrugs', {}, {
             'query':  {
                 method:'POST',
                 isArray:false

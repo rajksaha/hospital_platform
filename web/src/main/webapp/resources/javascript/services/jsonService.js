@@ -21,7 +21,7 @@ app.service('JsonService', function(){
 
     this.timesADay = [
         {"code" : 1, "name" :'Once Daily'},
-        {"code" : 1, "name" :'12 hourly'},
+        {"code" : 2, "name" :'12 hourly'},
         {"code" : 3, "name" :'8 hourly'},
         {"code" : 4, "name" :'6 hourly'},
         {"code" : 6, "name" :'4 hourly'},

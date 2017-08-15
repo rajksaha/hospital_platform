@@ -7,7 +7,7 @@
 
 
 
-	<select id="getAppointmentByParam" parameterType="map" resultType="AppointmentInfo">
+	<select id="getAppointmentInfoByParam" parameterType="map" resultType="AppointmentInfo">
 		SELECT
 		app.appointmentInfoID,
 		app.appointmentID,

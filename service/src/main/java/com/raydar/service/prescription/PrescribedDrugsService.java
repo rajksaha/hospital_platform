@@ -33,34 +33,30 @@ public class PrescribedDrugsService {
     }
 
 
-    public void save(List<DrugPrescriptionData> drugPrescribeList)throws RaydarException{
+    public void save(DrugPrescriptionData drugPres)throws RaydarException{
 
-        for(DrugPrescriptionData drugPres : drugPrescribeList){
+        /*Map<String, Object> params = new HashMap<>();
+        params.put("name" , drugPres.getDrugName());
+        List<DrugData> drugList = this.prescribedDrugsMapper.getDrugs(params);
 
-            Map<String, Object> params = new HashMap<>();
-            params.put("name" , drugPres.getDrugName());
-            List<DrugData> drugList = this.prescribedDrugsMapper.getDrugs(params);
-
-            if(CollectionUtils.isEmpty(drugList)){
-                DrugData drugData = new DrugData();
-                prescribedDrugsMapper.createDrugs(drugData);
-                drugPres.setDrugID(drugData.getDrugID());
-            }else{
-                drugPres.setDrugID(drugList.get(0).getDrugID());
-            }
+        if(CollectionUtils.isEmpty(drugList)){
+            DrugData drugData = new DrugData();
+            prescribedDrugsMapper.createDrugs(drugData);
+            drugPres.setDrugID(drugData.getDrugID());
+        }else{
+            drugPres.setDrugID(drugList.get(0).getDrugID());
+        }*/
 
 
-            if(drugPres.getDrugPrescriptionID() != null){
-                prescribedDrugsMapper.update(drugPres);
-            }else{
-                prescribedDrugsMapper.create(drugPres);
-            }
+        if(drugPres.getDrugPrescriptionID() != null){
+            prescribedDrugsMapper.update(drugPres);
+        }else{
+            prescribedDrugsMapper.create(drugPres);
+        }
 
-            for (DrugDoseData drugDose : drugPres.getPeriodicList()){
-                drugDose.setDrugDoseID(drugPres.getDrugPrescriptionID());
-                prescribedDrugsMapper.createDose(drugDose);
-            }
-
+        for (DrugDoseData drugDose : drugPres.getPeriodicList()){
+            drugDose.setDrugDoseID(drugPres.getDrugPrescriptionID());
+            prescribedDrugsMapper.createDose(drugDose);
         }
 
     }

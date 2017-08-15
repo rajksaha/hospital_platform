@@ -68,6 +68,9 @@
 		<if test="name != null">
 			AND name = #{name}
 		</if>
+		<if test="id != null">
+			AND id = #{id}
+		</if>
 	</select>
 
 	<insert id="createInv" parameterType="ContentData" useGeneratedKeys="true" keyProperty="id">

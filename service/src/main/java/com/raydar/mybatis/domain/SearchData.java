@@ -62,7 +62,7 @@ public class SearchData {
 
     private List<ComplainData> complainList;
 
-    private List<DrugPrescriptionData> prescribedDrugList;
+    private DrugPrescriptionData prescribedDrug;
 
     public List<AppointmentInfo> getAppointmentInfoList() {
         return appointmentInfoList;
@@ -80,13 +80,6 @@ public class SearchData {
         this.complainList = complainList;
     }
 
-    public List<DrugPrescriptionData> getPrescribedDrugList() {
-        return prescribedDrugList;
-    }
-
-    public void setPrescribedDrugList(List<DrugPrescriptionData> prescribedDrugList) {
-        this.prescribedDrugList = prescribedDrugList;
-    }
 
     private Integer claimType;
 

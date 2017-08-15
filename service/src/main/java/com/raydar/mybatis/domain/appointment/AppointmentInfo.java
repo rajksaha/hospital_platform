@@ -11,7 +11,16 @@ public class AppointmentInfo extends BaseData {
     private Integer appointmentID;
     private String itemType;
     private Integer itemID;
+    private String itemName;
     private String itemDescription;
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
 
     public Integer getAppointmentInfoID() {
         return appointmentInfoID;
