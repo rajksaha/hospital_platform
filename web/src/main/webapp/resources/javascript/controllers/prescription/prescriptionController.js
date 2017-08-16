@@ -225,7 +225,7 @@ app.controller('PrescriptionController', function($scope, $http, $state, $modal,
     $scope.bringPrescribedInv = function (appointmentID) {
 
         PrescriptionService.bringPrescribedInv.query({appointmentID : appointmentID}).$promise.then(function(result) {
-            $scope.prescribedDrugList = result;
+            $scope.prescribedInvList = result;
         });
     };
 
