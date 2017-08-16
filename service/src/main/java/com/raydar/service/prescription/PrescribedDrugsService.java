@@ -55,7 +55,7 @@ public class PrescribedDrugsService {
         }
 
         for (DrugDoseData drugDose : drugPres.getPeriodicList()){
-            drugDose.setDrugDoseID(drugPres.getDrugPrescriptionID());
+            drugDose.setDrugPrescriptionID(drugPres.getDrugPrescriptionID());
             prescribedDrugsMapper.createDose(drugDose);
         }
 

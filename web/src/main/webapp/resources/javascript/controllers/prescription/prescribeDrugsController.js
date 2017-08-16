@@ -87,10 +87,19 @@ app.controller('PrescribeDrugsController', function($scope, $http, $modalInstanc
             delete $scope.drugData.drugStr;
 
             var dose = "";
-            angular.forEach($scope.drugData.periodicList[0].doseDataList, function(data, key) {
+            /*angular.forEach($scope.drugData.periodicList[0].doseDataList, function(data, key) {
                 dose = dose + "+" +  parseFloat(data.value);
 
-            });
+            });*/
+
+            for(var index = 0; index < $scope.drugData.periodicList[0].doseDataList.length; index++){
+                var data = $scope.drugData.periodicList[0].doseDataList[index];
+                if(index == 0){
+                    dose = parseFloat(data.value);
+                }else{
+                    dose = dose + "+" +  parseFloat(data.value);
+                }
+            }
             $scope.drugData.periodicList[0].dose = dose;
             delete $scope.drugData.periodicList[0].doseDataList;
             PrescriptionService.saveDrug.query({},$scope.drugData).$promise.then(function(result) {
