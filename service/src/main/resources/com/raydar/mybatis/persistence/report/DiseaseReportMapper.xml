@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.raydar.mybatis.persistence.report.DiseaseReportMapper">
+
+
+	<select id="getComplainList" parameterType="int" resultType="ContentData" >
+		SELECT  sym.name, COUNT(sym.id) as numOfTimes
+		FROM appointment app
+		JOIN diagnosis dia ON dia.appointMentID = app.appointmentID
+		JOIN complain com ON com.appointMentID = app.appointmentID
+		JOIN symptom sym ON com.symptomID = sym.id
+		WHERE dia.`diseaseID`= #{diseaseID}
+		GROUP BY sym.id
+		ORDER BY numOfTimes
+
+	</select>
+
+	<select id="getDrugList" parameterType="int" resultType="ContentData" >
+		SELECT  d.drugName AS name, COUNT(drug.drugID) as numOfTimes
+		FROM appointment app
+		JOIN diagnosis dia ON dia.appointMentID = app.appointmentID
+		JOIN drug_prescription drug ON drug.appointMentID = app.appointmentID
+		JOIN drug d ON d.drugID = drug.drugID
+		WHERE dia.`diseaseID`= #{diseaseID}
+		GROUP BY drug.drugID
+		ORDER BY numOfTimes
+	</select>
+
+
+	<select id="getInvList" parameterType="int" resultType="ContentData" >
+		SELECT  i.name, COUNT(i.id) as numOfTimes
+		FROM appointment app
+		JOIN diagnosis dia ON dia.appointMentID = app.appointmentID
+		JOIN appointment_info info ON info.appointMentID = app.appointmentID AND info.itemType = 'INV'
+		JOIN inv i ON i.name = info.itemID
+		WHERE dia.`diseaseID`= #{diseaseID}
+		GROUP BY i.id
+		ORDER BY numOfTimes
+	</select>
+
+</mapper>

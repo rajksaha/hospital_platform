@@ -7,6 +7,15 @@ public class ContentData {
 
     private Integer id;
     private String name;
+    private Integer numOfTimes;
+
+    public Integer getNumOfTimes() {
+        return numOfTimes;
+    }
+
+    public void setNumOfTimes(Integer numOfTimes) {
+        this.numOfTimes = numOfTimes;
+    }
 
     public Integer getId() {
         return id;

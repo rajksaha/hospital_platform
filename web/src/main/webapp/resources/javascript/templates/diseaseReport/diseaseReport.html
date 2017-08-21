@@ -1,0 +1,35 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <input type="text" maxlength="240" ng-model="diagnosisData.diseaseName" typeahead="diagnosisNameData.name for diagnosisNameData in getDisease($viewValue)"  class="form-control required" placeholder="Select Disease" typeahead-on-select='onSelectDisease($item, $model, $label)'/>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-4">
+                <ul class="list-group" data-ng-repeat="drug in diseaseReport.drugList">
+                    <li class="list-group-item">
+                        <span class="badge">{{drug.numOfTimes}}</span>
+                        {{drug.name}}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-4">
+                <ul class="list-group" data-ng-repeat="drug in diseaseReport.symptomList">
+                    <li class="list-group-item">
+                        <span class="badge">{{drug.numOfTimes}}</span>
+                        {{drug.name}}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-4">
+                <ul class="list-group" data-ng-repeat="drug in diseaseReport.invList">
+                    <li class="list-group-item">
+                        <span class="badge">{{drug.numOfTimes}}</span>
+                        {{drug.name}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

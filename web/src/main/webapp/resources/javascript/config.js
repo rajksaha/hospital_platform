@@ -2,7 +2,7 @@
 
 var httpHeaders;
 
-var jsVersion = "?v=13";
+var jsVersion = "?v=14";
 
 // This will store the original URL before login sequence
 var originalLocation = "/login";
@@ -626,54 +626,34 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
         }
     };
 
-    var drugs = {
-        name : 'root.drugs',
-        url : '/drugs',
+    var diseaseReport = {
+        name : 'root.diseaseReport',
+        url : '/diseaseReport',
         views : {
             'container@' : {
-                templateUrl : 'resources/javascript/templates/drugs/drugs.html',
-                controller : 'PrescribeDrugsController'
+                templateUrl : 'resources/javascript/templates/diseaseReport/diseaseReport.html',
+                controller : 'DiseaseReportController'
             }
         },
         resolve : {
             loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load(
                     {
-                        name: 'doctorPlatform',
-                        files: ['resources/javascript/services/jsonService.js' + jsVersion]
+                        name: 'echoApp',
+                        files: ['resources/javascript/services/diseaseReport/diseaseReportService.js' + jsVersion,]
                     });
             }],
             loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
                 // you can lazy load files for an existing module
                 return $ocLazyLoad.load(
                     {
-                        name: 'doctorPlatform',
-                        files: ['resources/javascript/controllers/drugs/drugs.js' ]
+                        name: 'echoApp',
+                        files: ['resources/javascript/controllers/diseaseReport/diseaseReportController.js' ]
                     });
             }]
         }
     };
 
-    var inv = {
-        name : 'root.inv',
-        url : '/inv',
-        views : {
-            'container@' : {
-                templateUrl : 'resources/javascript/templates/inv/inv.html',
-                controller : 'PrescribeInvController'
-            }
-        },
-        resolve : {
-            loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                // you can lazy load files for an existing module
-                return $ocLazyLoad.load(
-                    {
-                        name: 'doctorPlatform',
-                        files: ['resources/javascript/controllers/inv/inv.js' ]
-                    });
-            }]
-        }
-    };
 
 
 
@@ -697,6 +677,7 @@ app.config(function($stateProvider, $urlRouterProvider, $compileProvider, $contr
         .state(appointment)
         .state(doctorAppointment)
         .state(prescription)
+        .state(diseaseReport)
 
     //set debug:true if need ocLazyLoad log
 	$ocLazyLoadProvider.config({debug:false, events:true});
